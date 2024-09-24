@@ -5,7 +5,6 @@ on:
     branches: [dev, prod]
   pull_request:
     branches: [dev, prod]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,8 +18,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
-        run: npm install
+        run: yarn
       - name: Build
-        run: npm run build
+        run: yarn build
       - name: Test (Vitest)
-        run: npm test -- --no-watch
+        run: yarn test --no-watch
