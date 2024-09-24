@@ -5,6 +5,7 @@ on:
     branches: [dev, prod]
   pull_request:
     branches: [dev, prod]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,12 +19,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
-        run: npm i
+        run: npm install
       - name: Build
-        run: npm build
+        run: npm run build
       - name: Test (Vitest)
-        run: npm test --no-watch
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: npm test -- --no-watch
