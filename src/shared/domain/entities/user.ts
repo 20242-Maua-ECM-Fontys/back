@@ -1,95 +1,132 @@
-import { STATE, toEnum } from '../enums/state_enum'
-import { EntityError } from '../../helpers/errors/domain_errors'
+import { ROLE, toEnum, VALID_ROLES } from '../enums/role_enum';
+import { EntityError } from '../../helpers/errors/domain_errors';
 
 export type UserProps = {
   id: number;
   name: string;
   email: string;
-  state?: STATE;
+  role?: ROLE;
+  RA: string;
+  password: string;
 }
 
 export type JsonProps = {
   user_id: number;
   name: string;
   email: string;
-  state?: string;
+  role?: string;
+  RA: string;
+  password: string;
 }
 
 export class User {
-  constructor (public props: UserProps) {
-    if (!User.validateId(props.id as number)) {
-      throw new EntityError('props.id')
+  constructor(public props: UserProps) {
+    if (!User.validateId(props.id)) {
+      throw new EntityError('props.id');
     }
-    this.props.id = props.id
+    this.props.id = props.id;
 
     if (!User.validateName(props.name)) {
-      throw new EntityError('props.name')
+      throw new EntityError('props.name');
     }
-    this.props.name = props.name
+    this.props.name = props.name;
 
     if (!User.validateEmail(props.email)) {
-      throw new EntityError('props.email')
+      throw new EntityError('props.email');
     }
-    this.props.email = props.email
+    this.props.email = props.email;
 
-    if (!User.validateState(props.state as STATE)) {
-      throw new EntityError('props.state')
+    if (!User.validateRole(props.role as ROLE)) {
+      throw new EntityError('props.role');
     }
-    this.props.state = props.state
+    this.props.role = props.role;
 
+    if (!User.validateRA(props.RA)) {
+      throw new EntityError('props.RA');
+    }
+    this.props.RA = props.RA;
+
+    if (!User.validatePassword(props.password)) {
+      throw new EntityError('props.password');
+    }
+    this.props.password = props.password;
   }
 
   get id() {
-    return this.props.id
+    return this.props.id;
   }
 
   set setId(id: number) {
     if (!User.validateId(id)) {
-      throw new EntityError('props.id')
+      throw new EntityError('props.id');
     }
-    this.props.id = id
+    this.props.id = id;
   }
 
   get name() {
-    return this.props.name
+    return this.props.name;
   }
 
   set setName(name: string) {
     if (!User.validateName(name)) {
-      throw new EntityError('props.name')
+      throw new EntityError('props.name');
     }
-    this.props.name = name
+    this.props.name = name;
   }
 
   get email() {
-    return this.props.email
+    return this.props.email;
   }
 
   set setEmail(email: string) {
     if (!User.validateEmail(email)) {
-      throw new EntityError('props.email')
+      throw new EntityError('props.email');
     }
-    this.props.email = email
+    this.props.email = email;
   }
 
-  get state() {
-    return this.props.state
+  get role() {
+    return this.props.role;
   }
 
-  set setState(state: STATE) {
-    if (!User.validateState(state)) {
-      throw new EntityError('props.state')
+  set setRole(role: ROLE) {
+    if (!User.validateRole(role)) {
+      throw new EntityError('props.role');
     }
-    this.props.state = state
+    this.props.role = role;
   }
-    
+
+  get RA() {
+    return this.props.RA;
+  }
+
+  set setRA(RA: string) {
+    if (!User.validateRA(RA)) {
+      throw new EntityError('props.RA');
+    }
+    this.props.RA = RA;
+  }
+
+  get password() {
+    return this.props.password;
+  }
+
+  set setPassword(password: string) {
+    if (!User.validatePassword(password)) {
+      throw new EntityError('props.password');
+    }
+    this.props.password = password;
+  }
+
   static fromJSON(json: JsonProps) {
     return new User({
       id: json.user_id,
       name: json.name,
       email: json.email,
-      state: toEnum(json.state as string)
-    })
+      role: toEnum(json.role as string),
+      RA: json.RA,
+      password: json.password,
+    });
   }
 
   toJSON() {
@@ -97,53 +134,35 @@ export class User {
       id: this.id,
       name: this.name,
       email: this.email,
-      state: this.state
-    }
+      role: this.role,
+      RA: this.RA,
+      password: this.password,
+    };
   }
 
   static validateId(id: number): boolean {
-    if (id == null) {
-      return false
-    } else if (typeof(id) != 'number') {
-      return false
-    }
-    return true
+    return id != null && typeof id === 'number';
   }
 
   static validateName(name: string): boolean {
-    if (name == null) {
-      return false
-    } else if (typeof(name) != 'string') {
-      return false
-    } else if (name.length < 3) {
-      return false
-    }
-    return true
+    return name != null && typeof name === 'string' && name.length >= 3;
   }
 
   static validateEmail(email: string): boolean {
-    const regexp = '(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$)'
-
-    if (email == null) {
-      return false
-    }
-    if (typeof(email) != 'string') {
-      return false
-    }
-    if (!email.match(regexp)) {
-      return false
-    }
-    return true
+    const regexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return email != null && typeof email === 'string' && regexp.test(email);
   }
 
-  static validateState(state: STATE): boolean {
-    if (state == null) {
-      return false
-    } 
-    if (Object.values(STATE).includes(state) == false) {
-      return false
-    }
-    return true
+  static validateRole(role: ROLE): boolean {
+    return role != null && VALID_ROLES.includes(role);
   }
 
+  static validateRA(RA: string): boolean {
+    return RA != null && typeof RA === 'string' && RA.length === 10;
+  }
+
+  static validatePassword(password: string): boolean {
+    const passwordRegexp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return password != null && typeof password === 'string' && passwordRegexp.test(password);
+  }
 }
