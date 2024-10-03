@@ -17,16 +17,17 @@ export class CreateUserUsecase {
    if (User.validateRA(RA) === false) {
       throw new EntityError('RA')
     }
-    if (this.repo.getUser(id) !== null) {
-      throw new DuplicatedItem("user_id");
-  }
+
   if (User.validatePassword(password) === false) {
     throw new EntityError('password')
   }
   if (User.validateRole(role) === false) {
     throw new EntityError('role')
   }
+  
     const user = new User({id:id, name:name, email:email, role:role,RA:RA,password:password})
+
+
     return this.repo.createUser(user)
 
   }
