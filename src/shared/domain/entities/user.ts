@@ -5,7 +5,7 @@ export type UserProps = {
   id: number;
   name: string;
   email: string;
-  role?: ROLE;
+  role: ROLE;
   RA: string;
   password: string;
 }
@@ -14,7 +14,7 @@ export type JsonProps = {
   user_id: number;
   name: string;
   email: string;
-  role?: string;
+  role: string;
   RA: string;
   password: string;
 }
