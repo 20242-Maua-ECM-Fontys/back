@@ -49,7 +49,7 @@ describe('Assert Create User presenter is correct at all', () => {
         'time': '12/Mar/2020:19:03:58 +0000',
         'timeEpoch': 1583348638390
       },
-      'body': {'id': '10', 'name': 'usuario10', 'email': 'usuario10@gmail.com'},
+      'body': {'id': '35', 'name': 'usuario1', 'email': 'usuario10@gmail.com', 'RA': '21.00000-1', 'password': 'Password1@', 'role': 'STAFF'},
       'pathParameters': null,
       'isBase64Encoded': null,
       'stageVariables': null
