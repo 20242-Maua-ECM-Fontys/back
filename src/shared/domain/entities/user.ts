@@ -154,7 +154,7 @@ export class User {
   }
 
   static validateRole(role: ROLE): boolean {
-    return role != null && VALID_ROLES.includes(role)
+    return role != null && Object.values(ROLE).includes(role as ROLE)
   }
 
   static validateRA(RA: string): boolean {

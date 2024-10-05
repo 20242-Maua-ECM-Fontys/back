@@ -1,9 +1,8 @@
 export enum ROLE {
   PROFESSOR = 'PROFESSOR',
   STAFF = 'STAFF',
-  COORDINATOR = 'COORDINATOR'
+  COORDINATOR = 'COORDINATOR',
 }
-export const VALID_ROLES = ['PROFESSOR', 'STAFF', 'COORDINATOR'];
 export function toEnum(value: string): ROLE {
   switch (value) {
     case 'PROFESSOR':
