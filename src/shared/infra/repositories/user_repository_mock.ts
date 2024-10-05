@@ -11,7 +11,7 @@ export class UserRepositoryMock implements IUserRepository {
       email: 'user1@gmail.com',
       role: ROLE.STAFF,
       RA: '21.00000-1',
-      password:'Password1@'
+      password: 'Password1@',
     }),
     new User({
       id: 2,
@@ -19,7 +19,7 @@ export class UserRepositoryMock implements IUserRepository {
       email: 'user2@gmail.com',
       role: ROLE.COORDINATOR,
       RA: '22.00000-2',
-      password:'Password2@'
+      password: 'Password2@',
     }),
   ]
 
@@ -30,7 +30,7 @@ export class UserRepositoryMock implements IUserRepository {
   private userCounter: number = 2
 
   async getUser(id: number): Promise<User> {
-    const user = this.users.find(user => user.id === id)
+    const user = this.users.find((user) => user.id === id)
     if (!user) {
       throw new NoItemsFound('id')
     }
@@ -46,8 +46,12 @@ export class UserRepositoryMock implements IUserRepository {
     return user
   }
 
-  async updateUser(id: number, newName: string, newEmail: string): Promise<User> {
-    const user = this.users.find(user => user.id === id)
+  async updateUser(
+    id: number,
+    newName: string,
+    newEmail: string,
+  ): Promise<User> {
+    const user = this.users.find((user) => user.id === id)
     if (!user) {
       throw new NoItemsFound('id')
     }
@@ -57,11 +61,11 @@ export class UserRepositoryMock implements IUserRepository {
   }
 
   async deleteUser(id: number): Promise<User> {
-    const user = this.users.find(user => user.id === id)
+    const user = this.users.find((user) => user.id === id)
     if (!user) {
       throw new NoItemsFound('id')
     }
-    this.users = this.users.filter(user => user.id !== id)
+    this.users = this.users.filter((user) => user.id !== id)
     return user
   }
 
