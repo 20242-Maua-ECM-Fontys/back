@@ -11,7 +11,7 @@ describe('[User Entity Tests]', () => {
       email: 'user1@gmail.com',
       role: ROLE.STAFF,
       RA: '21.00000-1',
-      password:'Password1@'
+      password: 'Password1@',
     })
 
     expect(user).toBeInstanceOf(User)
@@ -25,7 +25,7 @@ describe('[User Entity Tests]', () => {
         email: 'user1@gmail.com',
         role: ROLE.STAFF,
         RA: '21.00000-1',
-        password:'Password1@'
+        password: 'Password1@',
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -35,7 +35,7 @@ describe('[User Entity Tests]', () => {
         email: 'user1@gmail.com',
         role: ROLE.STAFF,
         RA: '21.00000-1',
-        password:'Password1@'
+        password: 'Password1@',
       })
     }).toThrowError('Field props.name is not valid')
   })
@@ -47,7 +47,7 @@ describe('[User Entity Tests]', () => {
         email: 'user1m',
         role: ROLE.STAFF,
         RA: '21.00000-1',
-        password:'Password1@'
+        password: 'Password1@',
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -57,7 +57,7 @@ describe('[User Entity Tests]', () => {
         email: 'user1m',
         role: ROLE.STAFF,
         RA: '21.00000-1',
-        password:'Password1@'
+        password: 'Password1@',
       })
     }).toThrowError('Field props.email is not valid')
   })
@@ -68,16 +68,16 @@ describe('[User Entity Tests]', () => {
         name: 'user1',
         email: 'user1@gmail.com',
         RA: '21.00000-1',
-        password:'Password1@'
+        password: 'Password1@',
       })
     }).toThrowError(EntityError)
     expect(() => {
       new User({
         id: 5,
         name: 'user1',
-        email:'user1@gmail.com',
+        email: 'user1@gmail.com',
         RA: '21.00000-1',
-        password:'Password1@'
+        password: 'Password1@',
       })
     }).toThrowError('Field props.role is not valid')
   })
@@ -91,17 +91,17 @@ it('Assert User Entity has errors with RA not passed', () => {
       email: 'user1@gmail.com',
       role: ROLE.STAFF,
       RA: '21.00000-',
-      password:'Password1@'
+      password: 'Password1@',
     })
   }).toThrowError(EntityError)
   expect(() => {
     new User({
       id: 5,
       name: 'user1',
-      email:'user1@gmail.com',
+      email: 'user1@gmail.com',
       role: ROLE.STAFF,
       RA: '21.00000-',
-      password:'Password1@'
+      password: 'Password1@',
     })
   }).toThrowError('Field props.RA is not valid')
 })
@@ -114,17 +114,17 @@ it('Assert User Entity has errors with password not passed', () => {
       email: 'user1@gmail.com',
       role: ROLE.STAFF,
       RA: '21.00000-2',
-      password:'Password1'
+      password: 'Password1',
     })
   }).toThrowError(EntityError)
   expect(() => {
     new User({
       id: 5,
       name: 'user1',
-      email:'user1@gmail.com',
+      email: 'user1@gmail.com',
       role: ROLE.STAFF,
       RA: '21.00000-2',
-      password:'Password1'
+      password: 'Password1',
     })
   }).toThrowError('Field props.password is not valid')
 })
