@@ -90,7 +90,7 @@ it('Assert User Entity has errors with RA not passed', () => {
       name: 'user1',
       email: 'user1@gmail.com',
       role: ROLE.STAFF,
-      RA: '21.00000-',
+      RA: 21.0,
       password: 'Password1@',
     })
   }).toThrowError(EntityError)
@@ -100,7 +100,7 @@ it('Assert User Entity has errors with RA not passed', () => {
       name: 'user1',
       email: 'user1@gmail.com',
       role: ROLE.STAFF,
-      RA: '21.00000-',
+      RA: 21.0,
       password: 'Password1@',
     })
   }).toThrowError('Field props.RA is not valid')
