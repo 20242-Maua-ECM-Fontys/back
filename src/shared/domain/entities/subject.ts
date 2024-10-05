@@ -1,16 +1,16 @@
-import { EntityError } from '@/shared/helpers/errors/domain_errors'
-import { PERIOD, toEnum } from '@/shared/domain/enums/period_enum'
+import { EntityError } from '../../helpers/errors/domain_errors'
+import { PERIOD, toEnum } from '../enums/period_enum'
 
 export type SubjectProps = {
   code: string
   name: string
-  period: PERIOD
+  period?: PERIOD
 }
 
 export type JsonProps = {
   subjectCode: string
   name: string
-  period: string
+  period?: string
 }
 
 export class Subject {
@@ -25,7 +25,7 @@ export class Subject {
     }
     this.props.name = props.name
 
-    if (!Subject.validatePeriod(props.period)) {
+    if (!Subject.validatePeriod(props.period as PERIOD)) {
       throw new EntityError('props.period')
     }
     this.props.period = props.period
@@ -53,9 +53,26 @@ export class Subject {
   static validatePeriod(period: PERIOD): boolean {
     if (period === null) {
       return false
-    } else if (!toEnum(period)) {
+    }
+    if (Object.values(PERIOD).includes(period) == false) {
       return false
     }
     return true
+  }
+
+  static fromJSON(json: JsonProps) {
+    return new Subject({
+      code: json.subjectCode,
+      name: json.name,
+      period: toEnum(json.period as string),
+    })
+  }
+
+  toJSON() {
+    return {
+      code: this.props.code,
+      name: this.props.name,
+      period: this.props.period,
+    }
   }
 }
