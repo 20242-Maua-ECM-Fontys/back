@@ -1,7 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { marshall } from '@aws-sdk/util-dynamodb'
 
-import { BatchWriteItemCommand, BatchWriteItemCommandInput, DeleteItemCommand, DeleteItemCommandInput, DynamoDBClient, GetItemCommand, GetItemCommandInput, PutItemCommand, PutItemCommandInput, QueryCommand, QueryInput, ScanCommand, ScanInput, UpdateItemCommand, UpdateItemCommandInput } from '@aws-sdk/client-dynamodb'
+import {
+  BatchWriteItemCommand,
+  BatchWriteItemCommandInput,
+  DeleteItemCommand,
+  DeleteItemCommandInput,
+  DynamoDBClient,
+  GetItemCommand,
+  GetItemCommandInput,
+  PutItemCommand,
+  PutItemCommandInput,
+  QueryCommand,
+  QueryInput,
+  ScanCommand,
+  ScanInput,
+  UpdateItemCommand,
+  UpdateItemCommandInput,
+} from '@aws-sdk/client-dynamodb'
 
 export class DynamoDatasource {
   private dynamoTable: DynamoDBClient
@@ -18,12 +34,11 @@ export class DynamoDatasource {
     gsiPartitionKey?: string,
     gsiSortKey?: string,
     endpointUrl?: string,
-    sortKey?: string
+    sortKey?: string,
   ) {
-
     this.dynamoTable = new DynamoDBClient({
       region: region,
-      endpoint: endpointUrl
+      endpoint: endpointUrl,
     })
     this.partitionKey = partitionKey
     this.sortKey = sortKey || ''
@@ -33,10 +48,17 @@ export class DynamoDatasource {
   }
 
   private static parseFloatToDecimal(item: any): any {
-    return JSON.parse(JSON.stringify(item), (key, value) => (typeof value === 'number' ? value.toFixed : value))
+    return JSON.parse(JSON.stringify(item), (key, value) =>
+      typeof value === 'number' ? value.toFixed : value,
+    )
   }
 
-  async putItem(item: Record<string, any>, partitionKey: string, sortKey?: string, options?: Record<string, any>): Promise<any> {
+  async putItem(
+    item: Record<string, any>,
+    partitionKey: string,
+    sortKey?: string,
+    options?: Record<string, any>,
+  ): Promise<any> {
     item = DynamoDatasource.parseFloatToDecimal(item)
 
     item[this.partitionKey] = partitionKey
@@ -48,7 +70,7 @@ export class DynamoDatasource {
     const params: PutItemCommandInput = {
       TableName: this.dynamoTableName,
       Item: marshall(item),
-      ...options
+      ...options,
     }
 
     return await this.dynamoTable.send(new PutItemCommand(params))
@@ -59,8 +81,8 @@ export class DynamoDatasource {
       TableName: this.dynamoTableName,
       Key: {
         [this.partitionKey]: { S: partitionKey },
-        [this.sortKey]: { S: sortKey || '' }
-      }
+        [this.sortKey]: { S: sortKey || '' },
+      },
     }
 
     console.log('params - [DYNAMO_DATASOURCE] - ', params)
@@ -76,10 +98,13 @@ export class DynamoDatasource {
     } catch (error: any) {
       console.error(error)
     }
-
   }
 
-  async hardUpdateItem(partitionKey: string, sortKey: string, item: Record<string, any>): Promise<any> {
+  async hardUpdateItem(
+    partitionKey: string,
+    sortKey: string,
+    item: Record<string, any>,
+  ): Promise<any> {
     item[this.partitionKey] = partitionKey
 
     if (sortKey) {
@@ -88,13 +113,17 @@ export class DynamoDatasource {
 
     const params: PutItemCommandInput = {
       TableName: this.dynamoTableName,
-      Item: DynamoDatasource.parseFloatToDecimal(item)
+      Item: DynamoDatasource.parseFloatToDecimal(item),
     }
 
     return await this.dynamoTable.send(new PutItemCommand(params))
   }
 
-  async updateItem(partitionKey: string, sortKey: string, item: Record<string, any>): Promise<any> {
+  async updateItem(
+    partitionKey: string,
+    sortKey: string,
+    item: Record<string, any>,
+  ): Promise<any> {
     item[this.partitionKey] = partitionKey
 
     if (sortKey) {
@@ -106,37 +135,43 @@ export class DynamoDatasource {
     // const expressionAttributeNames = Object.keys(item).reduce((acc, key) => ({ ...acc, [`#${key}`]: key }), {});
 
     const updateExpression = Object.keys(item)
-      .filter(key => key !== 'PK' && key !== 'SK')  // Exclua as chaves primárias
-      .map(key => `#${key} = :${key}`)
+      .filter((key) => key !== 'PK' && key !== 'SK') // Exclua as chaves primárias
+      .map((key) => `#${key} = :${key}`)
       .join(', ')
 
     // expressionAttributeValues - [DYNAMO_DATASOURCE] -  { ':COUNTER': 1, ':PK': 1, ':SK': 1 }
     const expressionAttributeValues = Object.fromEntries(
       Object.entries(item)
-        .filter(([key]) => key !== 'PK' && key !== 'SK')  // Exclua as chaves primárias
-        .map(([key, value]) => [`:${key}`, value])
+        .filter(([key]) => key !== 'PK' && key !== 'SK') // Exclua as chaves primárias
+        .map(([key, value]) => [`:${key}`, value]),
     )
 
     const expressionAttributeNames = Object.fromEntries(
       Object.keys(item)
-        .filter(key => key !== 'PK' && key !== 'SK')  // Exclua as chaves primárias
-        .map(key => [`#${key}`, key])
+        .filter((key) => key !== 'PK' && key !== 'SK') // Exclua as chaves primárias
+        .map((key) => [`#${key}`, key]),
     )
 
     console.log('updateExpression - [DYNAMO_DATASOURCE] - ', updateExpression)
-    console.log('expressionAttributeValues - [DYNAMO_DATASOURCE] - ', expressionAttributeValues)
-    console.log('expressionAttributeNames - [DYNAMO_DATASOURCE] - ', expressionAttributeNames)
+    console.log(
+      'expressionAttributeValues - [DYNAMO_DATASOURCE] - ',
+      expressionAttributeValues,
+    )
+    console.log(
+      'expressionAttributeNames - [DYNAMO_DATASOURCE] - ',
+      expressionAttributeNames,
+    )
 
     const params: UpdateItemCommandInput = {
       TableName: this.dynamoTableName,
       Key: marshall({
         [this.partitionKey]: partitionKey,
-        [this.sortKey]: sortKey
+        [this.sortKey]: sortKey,
       }),
       UpdateExpression: `SET ${updateExpression}`,
       ExpressionAttributeNames: expressionAttributeNames,
       ExpressionAttributeValues: marshall(expressionAttributeValues),
-      ReturnValues: 'ALL_NEW'
+      ReturnValues: 'ALL_NEW',
     }
 
     return await this.dynamoTable.send(new UpdateItemCommand(params))
@@ -147,8 +182,8 @@ export class DynamoDatasource {
       TableName: this.dynamoTableName,
       Key: marshall({
         [this.partitionKey]: partitionKey,
-        [this.sortKey]: sortKey || null
-      })
+        [this.sortKey]: sortKey || null,
+      }),
     }
 
     return await this.dynamoTable.send(new DeleteItemCommand(params))
@@ -162,7 +197,7 @@ export class DynamoDatasource {
       const params: ScanInput = {
         TableName: this.dynamoTableName,
         Select: 'ALL_ATTRIBUTES',
-        ExclusiveStartKey: lastEvaluatedKey
+        ExclusiveStartKey: lastEvaluatedKey,
       }
 
       const response = await this.dynamoTable.send(new ScanCommand(params))
@@ -174,11 +209,14 @@ export class DynamoDatasource {
     return {
       Items: items,
       Count: items.length,
-      ScannedCount: items.length
+      ScannedCount: items.length,
     }
   }
 
-  async scanItems(filterExpression: string, options: Record<string, any> = {}): Promise<any> {
+  async scanItems(
+    filterExpression: string,
+    options: Record<string, any> = {},
+  ): Promise<any> {
     const params: ScanInput = {
       TableName: this.dynamoTableName,
       FilterExpression: filterExpression,
@@ -188,11 +226,14 @@ export class DynamoDatasource {
     return await this.dynamoTable.send(new ScanCommand(params))
   }
 
-  async query(keyConditionExpression: string, options: Record<string, any> = {}): Promise<any> {
+  async query(
+    keyConditionExpression: string,
+    options: Record<string, any> = {},
+  ): Promise<any> {
     const params: QueryInput = {
       TableName: this.dynamoTableName,
       KeyConditionExpression: keyConditionExpression,
-      ...options
+      ...options,
     }
 
     return await this.dynamoTable.send(new QueryCommand(params))
@@ -201,12 +242,12 @@ export class DynamoDatasource {
   async batchWriteItems(items: Record<string, any>[]): Promise<any> {
     const params: BatchWriteItemCommandInput = {
       RequestItems: {
-        [`${''}`]: items.map(item => ({
+        [`${''}`]: items.map((item) => ({
           PutRequest: {
-            Item: DynamoDatasource.parseFloatToDecimal(item)
-          }
-        }))
-      }
+            Item: DynamoDatasource.parseFloatToDecimal(item),
+          },
+        })),
+      },
     }
 
     return await this.dynamoTable.send(new BatchWriteItemCommand(params))
@@ -215,12 +256,12 @@ export class DynamoDatasource {
   async batchDeleteItems(keys: Record<string, any>[]): Promise<any> {
     const params: BatchWriteItemCommandInput = {
       RequestItems: {
-        [`${''}`]: keys.map(key => ({
+        [`${''}`]: keys.map((key) => ({
           DeleteRequest: {
-            Key: key
-          }
-        }))
-      }
+            Key: key,
+          },
+        })),
+      },
     }
 
     return await this.dynamoTable.send(new BatchWriteItemCommand(params))
