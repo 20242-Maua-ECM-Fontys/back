@@ -1,4 +1,4 @@
-import { ROLE, toEnum, VALID_ROLES } from '../enums/role_enum'
+import { ROLE, toEnum } from '../enums/role_enum'
 import { EntityError } from '../../helpers/errors/domain_errors'
 
 export type UserProps = {
