@@ -4,7 +4,7 @@ export enum CLASSTYPE {
   LAB = 'LAB',
 }
 
-export function toEnum(value: string): CLASSTYPE {
+export function ClasstypeToEnum(value: string): CLASSTYPE {
   switch (value) {
     case 'THEORY':
       return CLASSTYPE.THEORY
