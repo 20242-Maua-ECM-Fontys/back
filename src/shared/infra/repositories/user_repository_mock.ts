@@ -21,6 +21,14 @@ export class UserRepositoryMock implements IUserRepository {
       RA: '22.00000-2',
       password: 'Password2@',
     }),
+    new User({
+      id: 3,
+      name: 'user3',
+      email: 'user3@gmail.com',
+      role: ROLE.PROFESSOR,
+      RA: '33.00000-3',
+      password: 'Password3@',
+    }),
   ]
 
   getLength(): number {
