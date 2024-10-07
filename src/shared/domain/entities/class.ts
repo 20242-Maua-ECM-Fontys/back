@@ -97,7 +97,7 @@ export class Class {
       name: json.name,
       modality: ModalityToEnum(json.modality as string),
       classType: ClasstypeToEnum(json.classType as string),
-      subjectCode: json.subjectCode
+      subjectCode: json.subjectCode,
     })
   }
 
@@ -107,7 +107,7 @@ export class Class {
       name: this.props.name,
       modality: this.props.modality,
       classType: this.props.classType,
-      subjectCode: this.props.subjectCode
+      subjectCode: this.props.subjectCode,
     }
   }
 

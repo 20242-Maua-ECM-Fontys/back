@@ -43,5 +43,4 @@ export class UserRepositoryMock implements IUserRepository {
     this.users.push(user)
     return user
   }
-
 }

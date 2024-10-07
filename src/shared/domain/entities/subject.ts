@@ -51,23 +51,22 @@ export class Subject {
   }
 
   static validatePeriod(period: PERIOD | undefined): boolean {
-  // Se undefined for um valor aceitável, retorne true aqui
-  if (period === undefined) {
-    return true;
+    // Se undefined for um valor aceitável, retorne true aqui
+    if (period === undefined) {
+      return true
+    }
+
+    // Caso contrário, continua com as verificações de PERIOD
+    if (period === null) {
+      return false
+    }
+
+    if (!Object.values(PERIOD).includes(period)) {
+      return false
+    }
+
+    return true
   }
-
-  // Caso contrário, continua com as verificações de PERIOD
-  if (period === null) {
-    return false;
-  }
-
-  if (!Object.values(PERIOD).includes(period)) {
-    return false;
-  }
-
-  return true;
-}
-
 
   static fromJSON(json: JsonProps) {
     return new Subject({
@@ -95,7 +94,7 @@ export class Subject {
       throw new EntityError('code')
     }
     this.props.code = code
-  } 
+  }
 
   set name(name: string) {
     if (!Subject.validateName(name)) {
