@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { Class } from '../../../../src/shared/domain/entities/class'
 import { ClassRepositoryMock } from '../../../../src/shared/infra/repositories/class_repository_mock'
-import { ROLE } from '../../../../src/shared/domain/enums/role_enum'
 import { MODALITY } from '../../../../src/shared/domain/enums/modality_enum'
 import { CLASSTYPE } from '../../../../src/shared/domain/enums/class_type_enum'
 

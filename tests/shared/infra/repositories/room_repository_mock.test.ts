@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { Room } from '../../../../src/shared/domain/entities/room'
 import { RoomRepositoryMock } from '../../../../src/shared/infra/repositories/room_repository_mock'
-import { PERIOD } from '../../../../src/shared/domain/enums/period_enum'
 
 describe('Assert Room Repository Mock is correct at all', () => {
   it('Should get length correctly', async () => {
