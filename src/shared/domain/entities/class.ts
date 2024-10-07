@@ -7,6 +7,7 @@ export type ClassProps = {
   name: string
   modality: MODALITY
   classType: CLASSTYPE
+  subjectCode: string
 }
 
 export type JsonProps = {
@@ -14,6 +15,7 @@ export type JsonProps = {
   name: string
   modality: string
   classType: string
+  subjectCode: string
 }
 const CLASS_ID_LENGTH = 36
 const CLASS_NAME_MIN_LENGTH = 3
@@ -81,12 +83,21 @@ export class Class {
     return true
   }
 
+  static validateCode(subjectCode: string): boolean {
+    if (subjectCode === null || !subjectCode.match(/^[A-Z]{3}\d{3}$/)) {
+      return false
+    } else {
+      return true
+    }
+  }
+
   static fromJSON(json: JsonProps) {
     return new Class({
       id: json.classId,
       name: json.name,
       modality: ModalityToEnum(json.modality as string),
       classType: ClasstypeToEnum(json.classType as string),
+      subjectCode: json.subjectCode
     })
   }
 
@@ -96,10 +107,10 @@ export class Class {
       name: this.props.name,
       modality: this.props.modality,
       classType: this.props.classType,
+      subjectCode: this.props.subjectCode
     }
   }
 
-  // getter and setters
   get id(): string {
     return this.props.id
   }
@@ -114,6 +125,10 @@ export class Class {
 
   get classType(): CLASSTYPE {
     return this.props.classType
+  }
+
+  get subjectCode(): string {
+    return this.props.subjectCode
   }
 
   set id(id: string) {
@@ -142,5 +157,12 @@ export class Class {
       throw new EntityError('classType')
     }
     this.props.classType = classType
+  }
+
+  set subjectCode(subjectCode: string) {
+    if (!Class.validateCode(subjectCode)) {
+      throw new EntityError('subjectCode')
+    }
+    this.props.subjectCode = subjectCode
   }
 }

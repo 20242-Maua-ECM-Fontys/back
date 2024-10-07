@@ -1,75 +1,40 @@
-import { User } from '../../domain/entities/user'
-import { ROLE } from '../../domain/enums/role_enum'
-import { IUserRepository } from '../../domain/repositories/user_repository_interface'
+import { PERIOD } from '../../../shared/domain/enums/period_enum'
+import { Subject } from '../../domain/entities/subject'
+import { ISubjectRepository } from '../../domain/repositories/subject_repository_interface'
 import { NoItemsFound } from '../../helpers/errors/usecase_errors'
 
-export class UserRepositoryMock implements IUserRepository {
-  private users: User[] = [
-    new User({
-      id: 1,
-      name: 'user1',
-      email: 'user1@gmail.com',
-      role: ROLE.STAFF,
-      RA: '21.00000-1',
-      password: 'Password1@',
+export class SubjectRepositoryMock implements ISubjectRepository {
+  private subjects: Subject[] = [
+    new Subject({
+      code: 'ECM256',
+      name: 'Programming Languages II',
+      period: PERIOD.MORNING,
     }),
-    new User({
-      id: 2,
-      name: 'user2',
-      email: 'user2@gmail.com',
-      role: ROLE.COORDINATOR,
-      RA: '22.00000-2',
-      password: 'Password2@',
+    new Subject({
+      code: 'EFB207',
+      name: 'Physics I',
+      period: PERIOD.AFTERNOON,
     }),
   ]
 
   getLength(): number {
-    return this.users.length
+    return this.subjects.length
   }
 
-  private userCounter: number = 2
-
-  async getUser(id: number): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
-      throw new NoItemsFound('id')
+  async getSubject(code: string): Promise<Subject> {
+    const subject = this.subjects.find((subject) => subject.code === code)
+    if (!subject) {
+      throw new NoItemsFound('code')
     }
-    return user
+    return subject
   }
 
-  async getAllUsers(): Promise<User[]> {
-    return this.users
+  async getAllSubjects(): Promise<Subject[]> {
+    return this.subjects
   }
 
-  async createUser(user: User): Promise<User> {
-    this.users.push(user)
-    return user
-  }
-
-  async updateUser(
-    id: number,
-    newName: string,
-    newEmail: string,
-  ): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
-      throw new NoItemsFound('id')
-    }
-    user.setName = newName
-    user.setEmail = newEmail
-    return user
-  }
-
-  async deleteUser(id: number): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
-      throw new NoItemsFound('id')
-    }
-    this.users = this.users.filter((user) => user.id !== id)
-    return user
-  }
-
-  async getUserCounter(): Promise<number> {
-    return this.userCounter
+  async createSubject(subject: Subject): Promise<Subject> {
+    this.subjects.push(subject)
+    return subject
   }
 }

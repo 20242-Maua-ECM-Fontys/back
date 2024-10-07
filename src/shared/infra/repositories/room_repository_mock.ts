@@ -1,75 +1,55 @@
-import { User } from '../../domain/entities/user'
-import { ROLE } from '../../domain/enums/role_enum'
-import { IUserRepository } from '../../domain/repositories/user_repository_interface'
+import { Room } from '../../domain/entities/room'
+import { IRoomRepository } from '../../domain/repositories/room_repository_interface'
 import { NoItemsFound } from '../../helpers/errors/usecase_errors'
 
-export class UserRepositoryMock implements IUserRepository {
-  private users: User[] = [
-    new User({
-      id: 1,
-      name: 'user1',
-      email: 'user1@gmail.com',
-      role: ROLE.STAFF,
-      RA: '21.00000-1',
-      password: 'Password1@',
+export class RoomRepositoryMock implements IRoomRepository {
+  private rooms: Room[] = [
+    new Room({
+      id: 'E1',
+      block: 'E',
+      roomNumber: '1',
+      capacity: 20,
     }),
-    new User({
-      id: 2,
-      name: 'user2',
-      email: 'user2@gmail.com',
-      role: ROLE.COORDINATOR,
-      RA: '22.00000-2',
-      password: 'Password2@',
+    new Room({
+      id: 'E2',
+      block: 'E',
+      roomNumber: '2',
+      capacity: 20,
+    }),
+    new Room({
+      id: 'H204',
+      block: 'H',
+      roomNumber: '204',
+      capacity: 60,
+    }),
+    new Room({
+      id: 'W401',
+      block: 'W',
+      roomNumber: '401',
+      capacity: 30,
     }),
   ]
 
   getLength(): number {
-    return this.users.length
+    return this.rooms.length
   }
 
-  private userCounter: number = 2
+  private roomCounter: number = 2
 
-  async getUser(id: number): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
+  async getRoom(id: string): Promise<Room> {
+    const room = this.rooms.find((room) => room.id === id)
+    if (!room) {
       throw new NoItemsFound('id')
     }
-    return user
+    return room
   }
 
-  async getAllUsers(): Promise<User[]> {
-    return this.users
+  async getAllRooms(): Promise<Room[]> {
+    return this.rooms
   }
 
-  async createUser(user: User): Promise<User> {
-    this.users.push(user)
-    return user
-  }
-
-  async updateUser(
-    id: number,
-    newName: string,
-    newEmail: string,
-  ): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
-      throw new NoItemsFound('id')
-    }
-    user.setName = newName
-    user.setEmail = newEmail
-    return user
-  }
-
-  async deleteUser(id: number): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
-      throw new NoItemsFound('id')
-    }
-    this.users = this.users.filter((user) => user.id !== id)
-    return user
-  }
-
-  async getUserCounter(): Promise<number> {
-    return this.userCounter
+  async createRoom(room: Room): Promise<Room> {
+    this.rooms.push(room)
+    return room
   }
 }

@@ -1,75 +1,61 @@
-import { User } from '../../domain/entities/user'
-import { ROLE } from '../../domain/enums/role_enum'
-import { IUserRepository } from '../../domain/repositories/user_repository_interface'
+import { CLASSTYPE } from '../../../shared/domain/enums/class_type_enum'
+import { MODALITY } from '../../../shared/domain/enums/modality_enum'
+import { Class } from '../../domain/entities/class'
+import { IClassRepository } from '../../domain/repositories/class_repository_interface'
 import { NoItemsFound } from '../../helpers/errors/usecase_errors'
 
-export class UserRepositoryMock implements IUserRepository {
-  private users: User[] = [
-    new User({
-      id: 1,
-      name: 'user1',
-      email: 'user1@gmail.com',
-      role: ROLE.STAFF,
-      RA: '21.00000-1',
-      password: 'Password1@',
+export class ClassRepositoryMock implements IClassRepository {
+  private classes: Class[] = [
+    new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ab923',
+      name: 'Linguagens de Programacao II',
+      modality: MODALITY.IN_PERSON,
+      classType: CLASSTYPE.THEORY,
+      subjectCode: 'ECM256',
     }),
-    new User({
-      id: 2,
-      name: 'user2',
-      email: 'user2@gmail.com',
-      role: ROLE.COORDINATOR,
-      RA: '22.00000-2',
-      password: 'Password2@',
+    new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ac923',
+      name: 'Linguagens de Programacao II',
+      modality: MODALITY.IN_PERSON,
+      classType: CLASSTYPE.THEORY,
+      subjectCode: 'ECM256',
     }),
+    new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ac922',
+      name: 'Physics I',
+      modality: MODALITY.REMOTE,
+      classType: CLASSTYPE.THEORY,
+      subjectCode: 'EFB207',
+    }),
+    new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ac921',
+      name: 'Physics I',
+      modality: MODALITY.IN_PERSON,
+      classType: CLASSTYPE.LAB,
+      subjectCode: 'EFB207',
+    }),
+
   ]
 
   getLength(): number {
-    return this.users.length
+    return this.classes.length
   }
 
-  private userCounter: number = 2
-
-  async getUser(id: number): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
+  async getClass(id: string): Promise<Class> {
+    const selectedClass = this.classes.find((c) => c.id === id)
+    if (!selectedClass) {
       throw new NoItemsFound('id')
     }
-    return user
+    return selectedClass
   }
 
-  async getAllUsers(): Promise<User[]> {
-    return this.users
+  async getAllClasss(): Promise<Class[]> {
+    return this.classes
   }
 
-  async createUser(user: User): Promise<User> {
-    this.users.push(user)
-    return user
+  async createClass(newClass: Class): Promise<Class> {
+    this.classes.push(newClass)
+    return newClass
   }
 
-  async updateUser(
-    id: number,
-    newName: string,
-    newEmail: string,
-  ): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
-      throw new NoItemsFound('id')
-    }
-    user.setName = newName
-    user.setEmail = newEmail
-    return user
-  }
-
-  async deleteUser(id: number): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
-      throw new NoItemsFound('id')
-    }
-    this.users = this.users.filter((user) => user.id !== id)
-    return user
-  }
-
-  async getUserCounter(): Promise<number> {
-    return this.userCounter
-  }
 }

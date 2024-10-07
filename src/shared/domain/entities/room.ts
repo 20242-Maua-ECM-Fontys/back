@@ -9,7 +9,7 @@ export type RoomProps = {
 
 export type JsonProps = {
   block: string
-  roomNumber: number
+  roomNumber: string
   roomId: string
   capacity: number
 }
@@ -81,7 +81,6 @@ export class Room {
     return true
   }
 
-  // getter and setters
   get block() {
     return this.props.block
   }

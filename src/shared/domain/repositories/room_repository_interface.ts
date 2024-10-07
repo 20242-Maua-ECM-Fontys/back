@@ -1,10 +1,7 @@
-import { User } from '../entities/user'
+import { Room } from '../entities/room'
 
-export interface IUserRepository {
-  getUser(id: number): Promise<User>
-  getAllUsers(): Promise<User[]>
-  createUser(user: User): Promise<User>
-  updateUser(id: number, newName: string, newEmail: string): Promise<User>
-  deleteUser(id: number): Promise<User>
-  getUserCounter(): Promise<number>
+export interface IRoomRepository {
+  getRoom(id: string): Promise<Room>
+  getAllRooms(): Promise<Room[]>
+  createRoom(room: Room): Promise<Room>
 }
