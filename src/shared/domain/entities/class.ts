@@ -1,5 +1,5 @@
-import { MODALITY, ModalityToEnum } from '../enums/modality_enum'
-import { CLASSTYPE, ClasstypeToEnum } from '../enums/class_type_enum'
+import { MODALITY, toEnum as ModalityToEnum } from '../enums/modality_enum'
+import { CLASSTYPE, toEnum as ClasstypeToEnum } from '../enums/class_type_enum'
 import { EntityError } from '../../helpers/errors/domain_errors'
 
 export type ClassProps = {

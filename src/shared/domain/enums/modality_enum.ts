@@ -4,7 +4,7 @@ export enum MODALITY {
   HYBRID = 'HYBRID',
 }
 
-export function ModalityToEnum(value: string): MODALITY {
+export function toEnum(value: string): MODALITY {
   switch (value) {
     case 'IN_PERSON':
       return MODALITY.IN_PERSON
