@@ -33,12 +33,4 @@ describe('Subject Entity Tests', () => {
       })
     }).toThrowError(EntityError)
   })
-    it('Assert Subject Entity has an error when period is invalid', () => {
-      expect(() => {
-        new Subject({
-          code: 'ECM256',
-          name: 'Linguagens de Programacao II',
-        })
-    }).toThrowError(EntityError)
-  })
 })

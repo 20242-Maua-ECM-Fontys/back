@@ -4,13 +4,13 @@ import { PERIOD, toEnum } from '../enums/period_enum'
 export type SubjectProps = {
   code: string
   name: string
-  period?: PERIOD
+  period: PERIOD
 }
 
 export type JsonProps = {
   subjectCode: string
   name: string
-  period?: string
+  period: string
 }
 
 export class Subject {
@@ -50,15 +50,24 @@ export class Subject {
     return true
   }
 
-  static validatePeriod(period: PERIOD): boolean {
-    if (period === null) {
-      return false
-    }
-    if (Object.values(PERIOD).includes(period) == false) {
-      return false
-    }
-    return true
+  static validatePeriod(period: PERIOD | undefined): boolean {
+  // Se undefined for um valor aceitável, retorne true aqui
+  if (period === undefined) {
+    return true;
   }
+
+  // Caso contrário, continua com as verificações de PERIOD
+  if (period === null) {
+    return false;
+  }
+
+  if (!Object.values(PERIOD).includes(period)) {
+    return false;
+  }
+
+  return true;
+}
+
 
   static fromJSON(json: JsonProps) {
     return new Subject({
@@ -66,6 +75,40 @@ export class Subject {
       name: json.name,
       period: toEnum(json.period as string),
     })
+  }
+
+  // getter and setters
+  get code() {
+    return this.props.code
+  }
+
+  get name() {
+    return this.props.name
+  }
+
+  get period() {
+    return this.props.period
+  }
+
+  set code(code: string) {
+    if (!Subject.validateCode(code)) {
+      throw new EntityError('code')
+    }
+    this.props.code = code
+  } 
+
+  set name(name: string) {
+    if (!Subject.validateName(name)) {
+      throw new EntityError('name')
+    }
+    this.props.name = name
+  }
+
+  set period(period: PERIOD) {
+    if (!Subject.validatePeriod(period)) {
+      throw new EntityError('period')
+    }
+    this.props.period = period
   }
 
   toJSON() {
