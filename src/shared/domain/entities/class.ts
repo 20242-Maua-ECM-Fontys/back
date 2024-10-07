@@ -98,4 +98,49 @@ export class Class {
       classType: this.props.classType,
     }
   }
+
+  // getter and setters
+  get id(): string {
+    return this.props.id
+  }
+
+  get name(): string {
+    return this.props.name
+  }
+
+  get modality(): MODALITY {
+    return this.props.modality
+  }
+
+  get classType(): CLASSTYPE {
+    return this.props.classType
+  }
+
+  set id(id: string) {
+    if (!Class.validateId(id)) {
+      throw new EntityError('id')
+    }
+    this.props.id = id
+  }
+
+  set name(name: string) {
+    if (!Class.validateName(name)) {
+      throw new EntityError('name')
+    }
+    this.props.name = name
+  }
+
+  set modality(modality: MODALITY) {
+    if (!Class.validateModality(modality)) {
+      throw new EntityError('modality')
+    }
+    this.props.modality = modality
+  }
+
+  set classType(classType: CLASSTYPE) {
+    if (!Class.validateClassType(classType)) {
+      throw new EntityError('classType')
+    }
+    this.props.classType = classType
+  }
 }
