@@ -64,18 +64,39 @@ export class UploadCSVUsecase {
           try {
             if (row._0 === 'professor') {
               const newId = this.userRepo.getLength() + 1
+              const newName = row._2
+              const newEmail = row._10
+              const newRA = row._11
+              const newPassword = row._12
+
+              if (
+                newName === '' ||
+                newEmail === '' ||
+                newRA === '' ||
+                newPassword === ''
+              ) {
+                noProblems = 'invalidCSVFormat'
+                return
+              }
+
               const newUser = new User({
                 id: newId,
-                name: row._2,
-                email: row._10,
+                name: newName,
+                email: newEmail,
                 role: ROLE.PROFESSOR,
-                RA: row._11!,
-                password: row._12!,
+                RA: newRA,
+                password: newPassword,
               })
               userList.push(newUser)
             } else if (row._0 === 'room') {
               const newId = row._7! + row._8!
               const newCapacity = parseInt(row._9!)
+              const newBlock = row._7!
+              const newNumber = row._8!
+              if (newBlock === '' || newNumber === '' || isNaN(newCapacity)) {
+                noProblems = 'invalidCSVFormat'
+                return
+              }
               const newRoom = new Room({
                 id: newId,
                 block: row._7!,
@@ -85,6 +106,12 @@ export class UploadCSVUsecase {
               roomList.push(newRoom)
             } else if (row._0 === 'subject') {
               const newPeriod = periodToEnum(row._6!)
+              const newCode = row._5!
+              const newName = row._2!
+              if (newCode === '' || newName === '') {
+                noProblems = 'invalidCSVFormat'
+                return
+              }
               const newSubject = new Subject({
                 code: row._5!,
                 name: row._2!,
@@ -94,6 +121,17 @@ export class UploadCSVUsecase {
             } else if (row._0 === 'class') {
               const newModality = modalityToEnum(row._3!)
               const newType = classTypeToEnum(row._4!)
+              const newClassId = row._1!
+              const newSubjectCode = row._5!
+              const newName = row._2!
+              if (
+                newClassId === '' ||
+                newSubjectCode === '' ||
+                newName === ''
+              ) {
+                noProblems = 'invalidCSVFormat'
+                return
+              }
               const newClass = new Class({
                 id: row._1!,
                 name: row._2!,
