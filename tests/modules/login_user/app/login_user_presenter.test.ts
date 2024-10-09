@@ -3,7 +3,7 @@ import { loginUserPresenter } from '../../../../src/modules/login_user/app/login
 import { LoginUserController } from '../../../../src/modules/login_user/app/login_user_controller';
 import { HttpRequest, HttpResponse } from  '../../../../src/shared/helpers/external_interfaces/http_models.js';
 
-// Mock das dependências
+
 vi.mock('./login_user_usecase')
 vi.mock('./login_user_controller')
 vi.mock('../../../../src/shared/environments', () => ({

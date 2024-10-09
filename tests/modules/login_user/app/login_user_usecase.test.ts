@@ -33,7 +33,7 @@ describe('Assert Login User usecase is correct', () => {
     const repo = new UserRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
 
-    await expect(usecase.execute('user1@gmail.com', 'WrongPassword')).rejects.toThrow(NoItemsFound)
+    await expect(usecase.execute('user1@gmail.com', 'WrongPassword')).rejects.toThrow('Invalid password format')
   })
 
   it('Should throw an error if email or password are missing', async () => {

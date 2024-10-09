@@ -42,7 +42,7 @@ describe('Assert Login User controller is correct at all', () => {
     const response = await controller.handle(request);
 
     expect(response?.statusCode).toEqual(400);
-    expect(response?.body).toBe('Field email and password is missing');
+    expect(response?.body).toBe('Field email is missing');
   });
 
   it('Assert Login User controller is not correct when password is missing', async () => {
@@ -55,7 +55,7 @@ describe('Assert Login User controller is correct at all', () => {
     const response = await controller.handle(request);
 
     expect(response?.statusCode).toEqual(400);
-    expect(response?.body).toBe('Field email and password is missing');
+    expect(response?.body).toBe('Field password is missing');
   });
 
   it('Assert Login User controller is not correct when credentials are invalid', async () => {
@@ -63,7 +63,7 @@ describe('Assert Login User controller is correct at all', () => {
     const usecase = new LoginUserUsecase(repo);
     const controller = new LoginUserController(usecase);
 
-    const request = new HttpRequest(undefined, undefined, { email: 'invalid@gmail.com', password: 'wrongPassword' });
+    const request = new HttpRequest(undefined, undefined, { email: 'invalid@gmail.com', password: 'wrongPassword1@' });
 
     const response = await controller.handle(request);
 

@@ -13,7 +13,9 @@ export class LoginUserController {
   async handle(request: IRequest) {
     try {
       const { email, password } = request.data as { email: string, password: string }
-
+      if (!email && !password) {
+        throw new MissingParameters('email and password')
+      }
       if (!email) {
         throw new MissingParameters('email')
       }
