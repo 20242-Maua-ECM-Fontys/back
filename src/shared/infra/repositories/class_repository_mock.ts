@@ -34,7 +34,6 @@ export class ClassRepositoryMock implements IClassRepository {
       classType: CLASSTYPE.LAB,
       subjectCode: 'EFB207',
     }),
-
   ]
 
   getLength(): number {
@@ -57,5 +56,4 @@ export class ClassRepositoryMock implements IClassRepository {
     this.classes.push(newClass)
     return newClass
   }
-
 }

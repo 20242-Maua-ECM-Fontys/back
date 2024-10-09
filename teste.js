@@ -8,6 +8,22 @@ function bufferToStream(buffer) {
   return stream
 }
 
+interface ParsedData {
+  type: 'professor' | 'room' | 'subject' | 'class' // type of entity
+  classId?: string
+  name?: string
+  classModality?: string
+  classType?: string
+  subjectCode?: string
+  subjectPeriod?: string
+  roomBlock?: string
+  roomNumber?: string
+  roomCapacity?: string
+  professorEmail?: string
+  professorRA?: string
+  professorPassword?: string
+}
+
 function main(buffer) {
   bufferToStream(buffer)
     .pipe(csv())

@@ -13,8 +13,14 @@ export class DuplicatedItem extends BaseError {
 }
 
 export class InvalidCSVFormat extends BaseError {
-  constructor(entity: string) {
-    super(`CSV file with invalid format on entity ${entity}`)
+  constructor() {
+    super('CSV file with invalid format')
+  }
+}
+
+export class InvalidCSVRowType extends BaseError {
+  constructor(rowType: string) {
+    super(`CSV file with invalid row type: ${rowType}`)
   }
 }
 
