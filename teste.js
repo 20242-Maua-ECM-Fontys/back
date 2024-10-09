@@ -1,30 +1,30 @@
-const csv = require('csv-parser');
-const { Readable } = require('stream');
+const csv = require('csv-parser')
+const { Readable } = require('stream')
 
 function bufferToStream(buffer) {
-  const stream = new Readable();
-  stream.push(buffer);
-  stream.push(null); // Indica o fim do stream
-  return stream;
+  const stream = new Readable()
+  stream.push(buffer)
+  stream.push(null) // Indica o fim do stream
+  return stream
 }
 
-function main(buffer){
+function main(buffer) {
   bufferToStream(buffer)
-      .pipe(csv())
-      .on('data', (row) => {
-        if (row._0 === 'professor') {
-          console.log('Professor');
-        }
-        if (row._0 === 'room') {
-          console.log('Room');
-        }
-        if (row._0 === 'subject') {
-          console.log('Subject');
-        }
-        if (row._0 === 'class') {
-          console.log('Class');
-        }
-        console.log(row);
+    .pipe(csv())
+    .on('data', (row) => {
+      if (row._0 === 'professor') {
+        console.log('Professor')
+      }
+      if (row._0 === 'room') {
+        console.log('Room')
+      }
+      if (row._0 === 'subject') {
+        console.log('Subject')
+      }
+      if (row._0 === 'class') {
+        console.log('Class')
+      }
+      console.log(row)
     })
 }
 
@@ -38,6 +38,6 @@ professor,123e4567-e89b-12d3-a456-426614174004,Dr. Jane Smith,REMOTE,LAB,CSE201,
 room,123e4567-e89b-12d3-a456-426614174005,Room B202,HYBRID,PRACTICE,CSE202,MORNING,F,106,50,placeholder@example.com,00000,PlaceholderPass123!
 subject,123e4567-e89b-12d3-a456-426614174006,Algorithms,IN_PERSON,THEORY,CSE203,AFTERNOON,G,107,45,placeholder@example.com,00000,PlaceholderPass123!
 class,123e4567-e89b-12d3-a456-426614174007,Class 202,REMOTE,LAB,CSE204,EVENING,H,108,15,placeholder@example.com,00000,PlaceholderPass123!
-`);
+`)
 
-main(csvBuffer) 
+main(csvBuffer)
