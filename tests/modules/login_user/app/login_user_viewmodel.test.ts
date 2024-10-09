@@ -1,9 +1,9 @@
 import { it, expect, describe } from 'vitest'
 import { User } from '../../../../src/shared/domain/entities/user'
 import { ROLE } from '../../../../src/shared/domain/enums/role_enum'
-import { LoginUserViewmodel } from '../../../../src/modules/loginUser/app/loginUserViewmodel'
+import { LoginUserViewmodel } from '../../../../src/modules/login_user/app/login_user_viewmodel'
 import { UserRepositoryMock } from '../../../../src/shared/infra/repositories/user_repository_mock'
-import { LoginUserUsecase } from '../../../../src/modules/loginUser/app/LoginUserUsecase'
+import { LoginUserUsecase } from '../../../../src/modules/login_user/app/login_user_usecase'
 
 describe('Assert Login User viewmodel is correct', () => {
   it('Should correctly transform user data to viewmodel', async () => {

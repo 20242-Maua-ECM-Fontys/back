@@ -1,6 +1,6 @@
 import { it, expect, describe } from 'vitest'
 import { UserRepositoryMock } from '../../../../src/shared/infra/repositories/user_repository_mock'
-import { LoginUserUsecase } from '../../../../src/modules/loginUser/app/LoginUserUsecase'
+import { LoginUserUsecase } from '../../../../src/modules/login_user/app/login_user_usecase'
 import { ROLE } from '../../../../src/shared/domain/enums/role_enum'
 import { NoItemsFound } from '../../../../src/shared/helpers/errors/usecase_errors'
 
