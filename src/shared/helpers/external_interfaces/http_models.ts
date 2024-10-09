@@ -15,12 +15,13 @@ class HttpRequest implements IRequest {
     body: Record<string, any> = {},
     headers: Record<string, any> = {},
     query_params: Record<string, any> = {},
-    file: Express.Multer.File | null = null,
+    file: Express.Multer.File | null = null,  // Aqui o file pode ser null por padrão
   ) {
     this.body = body || {}
     this.headers = headers || {}
     this.query_params = query_params || {}
-    this.file = file || null
+    this.file = file || null;
+
 
     const data_json: Record<string, any> = {}
 

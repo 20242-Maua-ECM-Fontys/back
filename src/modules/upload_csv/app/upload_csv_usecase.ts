@@ -19,19 +19,19 @@ import {
 } from '../../../shared/helpers/errors/usecase_errors'
 
 interface ParsedData {
-  _0: 'professor' | 'room' | 'subject' | 'class' // type
-  _1: string // classId
-  _2: string // name -> for subject, class and professor
-  _3: string // classModality
-  _4: string // classType
-  _5: string // subjectCode
-  _6: string // subjectPeriod
-  _7: string // roomBlock
-  _8: string // roomNumber
-  _9: string // roomCapacity
-  _10: string // professorEmail
-  _11: string // professorRa
-  _12: string // professorPassword
+  type: 'professor' | 'room' | 'subject' | 'class'
+  classId: string
+  name: string
+  classModality: string
+  classType: string
+  subjectCode: string
+  subjectPeriod: string
+  roomBlock: string
+  roomNumber: string
+  roomCapacity: string
+  professorEmail: string
+  professorRa: string
+  professorPassword: string
 }
 
 function bufferToStream(buffer: Buffer): Readable {
@@ -56,19 +56,23 @@ export class UploadCSVUsecase {
     const classList: Class[] = []
     let noProblems = ''
     let possibleRowTypeError = ''
+    let rowNumber = 0
+    let rowError = 0
+    let entireRow: string[]
 
     return new Promise((resolve, reject) => {
+      // I want to print a matrix (json inside json) with all the rows and values from the csv buffer
       bufferToStream(buffer)
         .pipe(csv())
         .on('data', (row: ParsedData) => {
           try {
-            if (row._0 === 'professor') {
+            if (row.type === 'professor') {
               const newId = this.userRepo.getLength() + 1
-              const newName = row._2
-              const newEmail = row._10
-              const newRA = row._11
-              const newPassword = row._12
-
+              const newName = row.name
+              const newEmail = row.professorEmail
+              const newRA = row.professorRa
+              const newPassword = row.professorPassword
+        
               if (
                 newName === '' ||
                 newEmail === '' ||
@@ -78,7 +82,7 @@ export class UploadCSVUsecase {
                 noProblems = 'invalidCSVFormat'
                 return
               }
-
+        
               const newUser = new User({
                 id: newId,
                 name: newName,
@@ -88,42 +92,42 @@ export class UploadCSVUsecase {
                 password: newPassword,
               })
               userList.push(newUser)
-            } else if (row._0 === 'room') {
-              const newId = row._7! + row._8!
-              const newCapacity = parseInt(row._9!)
-              const newBlock = row._7!
-              const newNumber = row._8!
+            } else if (row.type === 'room') {
+              const newId = row.roomBlock! + row.roomNumber!
+              const newCapacity = parseInt(row.roomCapacity!)
+              const newBlock = row.roomBlock!
+              const newNumber = row.roomNumber!
               if (newBlock === '' || newNumber === '' || isNaN(newCapacity)) {
                 noProblems = 'invalidCSVFormat'
                 return
               }
               const newRoom = new Room({
                 id: newId,
-                block: row._7!,
-                roomNumber: row._8!,
+                block: row.roomBlock!,
+                roomNumber: row.roomNumber!,
                 capacity: newCapacity,
               })
               roomList.push(newRoom)
-            } else if (row._0 === 'subject') {
-              const newPeriod = periodToEnum(row._6!)
-              const newCode = row._5!
-              const newName = row._2!
+            } else if (row.type === 'subject') {
+              const newPeriod = periodToEnum(row.subjectPeriod!)
+              const newCode = row.subjectCode!
+              const newName = row.name!
               if (newCode === '' || newName === '') {
                 noProblems = 'invalidCSVFormat'
                 return
               }
               const newSubject = new Subject({
-                code: row._5!,
-                name: row._2!,
+                code: row.subjectCode!,
+                name: row.name!,
                 period: newPeriod,
               })
               subjectList.push(newSubject)
-            } else if (row._0 === 'class') {
-              const newModality = modalityToEnum(row._3!)
-              const newType = classTypeToEnum(row._4!)
-              const newClassId = row._1!
-              const newSubjectCode = row._5!
-              const newName = row._2!
+            } else if (row.type === 'class') {
+              const newModality = modalityToEnum(row.classModality!)
+              const newType = classTypeToEnum(row.classType!)
+              const newClassId = row.classId!
+              const newSubjectCode = row.subjectCode!
+              const newName = row.name!
               if (
                 newClassId === '' ||
                 newSubjectCode === '' ||
@@ -133,33 +137,36 @@ export class UploadCSVUsecase {
                 return
               }
               const newClass = new Class({
-                id: row._1!,
-                name: row._2!,
+                id: row.classId!,
+                name: row.name!,
                 modality: newModality,
                 classType: newType,
-                subjectCode: row._5!,
+                subjectCode: row.subjectCode!,
               })
               classList.push(newClass)
             } else if (
-              row._0 === 'type' &&
-              row._1 === 'classId' &&
-              row._2 === 'name' &&
-              row._3 === 'classModality' &&
-              row._4 === 'classType' &&
-              row._5 === 'subjectCode' &&
-              row._6 === 'subjectPeriod' &&
-              row._7 === 'roomBlock' &&
-              row._8 === 'roomNumber' &&
-              row._9 === 'roomCapacity' &&
-              row._10 === 'professorEmail' &&
-              row._11 === 'professorRa' &&
-              row._12 === 'professorPassword'
+              row.type === 'type' &&
+              row.classId === 'classId' &&
+              row.name === 'name' &&
+              row.classModality === 'classModality' &&
+              row.classType === 'classType' &&
+              row.subjectCode === 'subjectCode' &&
+              row.subjectPeriod === 'subjectPeriod' &&
+              row.roomBlock === 'roomBlock' &&
+              row.roomNumber === 'roomNumber' &&
+              row.roomCapacity === 'roomCapacity' &&
+              row.professorEmail === 'professorEmail' &&
+              row.professorRa === 'professorRa' &&
+              row.professorPassword === 'professorPassword'
             ) {
               // Do nothing
             } else {
               noProblems = 'invalidCSVRowType'
-              possibleRowTypeError = row._0
+              possibleRowTypeError = row.type
+              rowError = rowNumber
+              entireRow = Object.entries(row).map(([key, value]) => `${key}: ${value}`)
             }
+            rowNumber++
           } catch (error) {
             noProblems = 'invalidCSVFormat'
           }
@@ -181,7 +188,9 @@ export class UploadCSVUsecase {
             )
             resolve('ok') // Retorna 'ok' ao final da execução
           } else if (noProblems === 'invalidCSVRowType') {
-            reject(new InvalidCSVRowType(possibleRowTypeError))
+            // create a string with the entire row
+            const entireRowString = entireRow.join(', ') 
+            reject(new InvalidCSVRowType(entireRowString , rowError))
           } else if (noProblems === 'invalidCSVFormat') {
             reject(new InvalidCSVFormat())
           }

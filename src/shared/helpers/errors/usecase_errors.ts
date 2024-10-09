@@ -19,8 +19,8 @@ export class InvalidCSVFormat extends BaseError {
 }
 
 export class InvalidCSVRowType extends BaseError {
-  constructor(rowType: string) {
-    super(`CSV file with invalid row type: ${rowType}`)
+  constructor(rowType: string, rowNumber: number) {
+    super(`CSV file with invalid row type: ${rowType} at row ${rowNumber}`)
   }
 }
 
