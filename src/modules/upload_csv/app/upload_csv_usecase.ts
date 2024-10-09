@@ -72,7 +72,7 @@ export class UploadCSVUsecase {
               const newEmail = row.professorEmail
               const newRA = row.professorRa
               const newPassword = row.professorPassword
-        
+
               if (
                 newName === '' ||
                 newEmail === '' ||
@@ -82,7 +82,7 @@ export class UploadCSVUsecase {
                 noProblems = 'invalidCSVFormat'
                 return
               }
-        
+
               const newUser = new User({
                 id: newId,
                 name: newName,
@@ -164,7 +164,9 @@ export class UploadCSVUsecase {
               noProblems = 'invalidCSVRowType'
               possibleRowTypeError = row.type
               rowError = rowNumber
-              entireRow = Object.entries(row).map(([key, value]) => `${key}: ${value}`)
+              entireRow = Object.entries(row).map(
+                ([key, value]) => `${key}: ${value}`,
+              )
             }
             rowNumber++
           } catch (error) {
@@ -189,8 +191,8 @@ export class UploadCSVUsecase {
             resolve('ok') // Retorna 'ok' ao final da execução
           } else if (noProblems === 'invalidCSVRowType') {
             // create a string with the entire row
-            const entireRowString = entireRow.join(', ') 
-            reject(new InvalidCSVRowType(entireRowString , rowError))
+            const entireRowString = entireRow.join(', ')
+            reject(new InvalidCSVRowType(possibleRowTypeError, rowError))
           } else if (noProblems === 'invalidCSVFormat') {
             reject(new InvalidCSVFormat())
           }
