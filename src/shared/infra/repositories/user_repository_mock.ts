@@ -80,11 +80,9 @@ export class UserRepositoryMock implements IUserRepository {
   async getUserCounter(): Promise<number> {
     return this.userCounter
   }
-  async loginUser(email: string, password: string): Promise<User> {
+  async loginUser(email: string, password: string): Promise<User | null> {
     const user = this.users.find(user => user.email === email && user.password === password)
-    if (!user) {
-      throw new NoItemsFound('Invalid email or password')
-    }
-    return user
+    return user || null  
   }
+  
 }

@@ -41,7 +41,7 @@ describe('Assert User Repository Mock is correct at all', () => {
   it('Should get all users correctly', async () => {
     const users = await repo.getAllUsers();
 
-    expect(users.length).toEqual(3); // Updated to reflect the initial users count
+    expect(users.length).toEqual(3); 
   });
 
   it('Should update user correctly', async () => {
@@ -75,11 +75,12 @@ describe('Assert User Repository Mock is correct at all', () => {
 
   it('Should login user correctly', async () => {
     const user = await repo.loginUser('user1@gmail.com', 'Password1@');
+    expect(user).not.toBeNull();
     expect(user.id).toEqual(1);
   });
 
-  it('Should throw error when logging in with invalid credentials', async () => {
-    await expect(repo.loginUser('user1@gmail.com', 'WrongPassword')).rejects.toThrow(NoItemsFound);
-    await expect(repo.loginUser('wrongemail@gmail.com', 'Password1@')).rejects.toThrow(NoItemsFound);
+  it('Should return null when logging in with invalid credentials', async () => {
+    await expect(repo.loginUser('user1@gmail.com', 'WrongPassword')).resolves.toBeNull();
+    await expect(repo.loginUser('wrongemail@gmail.com', 'Password1@')).resolves.toBeNull();
   });
 });

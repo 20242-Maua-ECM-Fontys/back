@@ -1,22 +1,13 @@
-import { Environments } from '../../../shared/environments'
-import { LambdaHttpRequest, LambdaHttpResponse } from '../../../shared/helpers/external_interfaces/http_lambda_requests'
+import { HttpRequest, HttpResponse } from '../../../shared/helpers/external_interfaces/http_models.js'
 import { LoginUserController } from './login_user_controller'
 import { LoginUserUsecase } from './login_user_usecase'
+import { Environments } from '../../../shared/environments'
 
 const repo = Environments.getUserRepo()
 const usecase = new LoginUserUsecase(repo)
 const controller = new LoginUserController(usecase)
 
-export async function loginUserPresenter(event: Record<string, any>) {
-
-    const httpRequest = new LambdaHttpRequest(event)
+export async function loginUserPresenter(httpRequest: HttpRequest): Promise<HttpResponse> {
     const response = await controller.handle(httpRequest)
-    const httpResponse = new LambdaHttpResponse(response?.body, response?.statusCode, response?.headers)
-
-    return httpResponse.toJSON()
-}
-
-export async function handler(event: any, context: any) {
-  const response = await loginUserPresenter(event)
-  return response
+    return new HttpResponse(response?.statusCode, response?.body, response?.headers)
 }

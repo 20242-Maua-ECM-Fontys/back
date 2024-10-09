@@ -14,8 +14,11 @@ export class LoginUserController {
     try {
       const { email, password } = request.data as { email: string, password: string }
 
-      if (!email || !password) {
-        throw new MissingParameters('email and password')
+      if (!email) {
+        throw new MissingParameters('email')
+      }
+      if (!password) {
+        throw new MissingParameters('password')
       }
 
       const user = await this.usecase.execute(email, password)
