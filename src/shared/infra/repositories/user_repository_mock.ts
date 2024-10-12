@@ -27,8 +27,6 @@ export class UserRepositoryMock implements IUserRepository {
     return this.users.length
   }
 
-  private userCounter: number = 2
-
   async getUser(id: number): Promise<User> {
     const user = this.users.find((user) => user.id === id)
     if (!user) {
@@ -44,32 +42,5 @@ export class UserRepositoryMock implements IUserRepository {
   async createUser(user: User): Promise<User> {
     this.users.push(user)
     return user
-  }
-
-  async updateUser(
-    id: number,
-    newName: string,
-    newEmail: string,
-  ): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
-      throw new NoItemsFound('id')
-    }
-    user.setName = newName
-    user.setEmail = newEmail
-    return user
-  }
-
-  async deleteUser(id: number): Promise<User> {
-    const user = this.users.find((user) => user.id === id)
-    if (!user) {
-      throw new NoItemsFound('id')
-    }
-    this.users = this.users.filter((user) => user.id !== id)
-    return user
-  }
-
-  async getUserCounter(): Promise<number> {
-    return this.userCounter
   }
 }
