@@ -142,7 +142,7 @@ export class User {
   }
 
   static validateId(id: number): boolean {
-    return id != null && typeof id === 'number'
+    return id != null && typeof id === 'number' && id >= 0
   }
 
   static validateName(name: string): boolean {

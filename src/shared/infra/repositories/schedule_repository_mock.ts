@@ -27,13 +27,29 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       RA: '22.00000-2',
       password: 'Password2@',
     }),
-    new User({
+    new User({ // professor with 0 suitability
       id: 3,
       name: 'user3',
       email: 'user3@gmail.com',
       role: ROLE.PROFESSOR,
       RA: '33.00000-3',
       password: 'Password3@',
+    }),
+    new User({ // professor with 1 suitability
+      id: 4,
+      name: 'user4',
+      email: 'user4@gmail.com',
+      role: ROLE.PROFESSOR,
+      RA: '44.00000-4',
+      password: 'Password4@',
+    }),
+    new User({ // professor with 0 suitability
+      id: 5,
+      name: 'user5',
+      email: 'user5@gmail.com',
+      role: ROLE.PROFESSOR,
+      RA: '5.00000-5',
+      password: 'Password5@',
     }),
   ]
 
