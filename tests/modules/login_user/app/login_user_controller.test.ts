@@ -35,7 +35,7 @@ describe('Assert Login User controller is correct at all', () => {
     const response = await controller.handle(request)
 
     expect(response?.statusCode).toEqual(400)
-    expect(response?.body).toBe('Field email and password is missing')
+    expect(response?.body).toBe('Field email is missing')
   })
 
   it('Assert Login User controller is not correct when email is missing', async () => {
@@ -83,6 +83,6 @@ describe('Assert Login User controller is correct at all', () => {
     const response = await controller.handle(request)
 
     expect(response?.statusCode).toEqual(404)
-    expect(response?.body).toBe('No items found for Invalid email or password')
+    expect(response?.body).toBe('No items found for email')
   })
 })

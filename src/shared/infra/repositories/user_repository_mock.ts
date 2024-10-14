@@ -75,10 +75,6 @@ export class UserRepositoryMock implements IUserRepository {
     return user
   }
 
-  async getUserCounter(): Promise<number> {
-    return this.userCounter
-  }
-
   async loginUser(email: string, password: string): Promise<User | null> {
     const user = this.users.find(
       (user) => user.email === email && user.password === password,
