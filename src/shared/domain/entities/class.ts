@@ -8,6 +8,7 @@ export type ClassProps = {
   modality: MODALITY
   classType: CLASSTYPE
   subjectCode: string
+  roomCode?: string
 }
 
 export type JsonProps = {
@@ -16,6 +17,7 @@ export type JsonProps = {
   modality: string
   classType: string
   subjectCode: string
+  roomCode?: string
 }
 const CLASS_ID_LENGTH = 36
 const CLASS_NAME_MIN_LENGTH = 3
@@ -41,6 +43,16 @@ export class Class {
       throw new EntityError('props.classType')
     }
     this.props.classType = props.classType
+
+    if (!Class.validateCode(props.subjectCode)) {
+      throw new EntityError('props.subjectCode')
+    }
+    this.props.subjectCode = props.subjectCode
+
+    if (!Class.validateRoomCode(props.roomCode)) {
+      throw new EntityError('props.roomCode')
+    }
+    this.props.roomCode = props.roomCode
   }
 
   static validateId(id: string): boolean {
@@ -91,6 +103,17 @@ export class Class {
     }
   }
 
+  static validateRoomCode(roomCode: string | undefined): boolean {
+    if (roomCode === null || roomCode === undefined) {
+      return true
+    } else if (!roomCode.match(/^[A-Z]\d{2,3}$/)) {
+      return false
+    } else if (typeof roomCode != 'string') {
+        return false
+    }
+    return true
+  }
+
   static fromJSON(json: JsonProps) {
     return new Class({
       id: json.classId,
@@ -131,6 +154,10 @@ export class Class {
     return this.props.subjectCode
   }
 
+  get roomCode(): string | undefined {
+    return this.props.roomCode
+  }
+
   set id(id: string) {
     if (!Class.validateId(id)) {
       throw new EntityError('id')
@@ -164,5 +191,12 @@ export class Class {
       throw new EntityError('subjectCode')
     }
     this.props.subjectCode = subjectCode
+  }
+
+  set roomCode(roomCode: string | undefined) {
+    if (!Class.validateRoomCode(roomCode)) {
+      throw new EntityError('roomCode')
+    }
+    this.props.roomCode = roomCode
   }
 }
