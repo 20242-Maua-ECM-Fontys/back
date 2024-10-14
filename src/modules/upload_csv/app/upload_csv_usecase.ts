@@ -1,13 +1,8 @@
 import { Readable } from 'stream'
 import csv from 'csv-parser'
 
-import { IClassRepository } from '../../../shared/domain/repositories/class_repository_interface'
-import { IRoomRepository } from '../../../shared/domain/repositories/room_repository_interface'
-import { ISubjectRepository } from '../../../shared/domain/repositories/subject_repository_interface'
-import { IUserRepository } from '../../../shared/domain/repositories/user_repository_interface'
 import { ROLE } from '../../../shared/domain/enums/role_enum'
 import { User } from '../../../shared/domain/entities/user'
-import { Room } from '../../../shared/domain/entities/room'
 import { Subject } from '../../../shared/domain/entities/subject'
 import { toEnum as periodToEnum } from '../../../shared/domain/enums/period_enum'
 import { toEnum as modalityToEnum } from '../../../shared/domain/enums/modality_enum'
@@ -17,21 +12,20 @@ import {
   InvalidCSVFormat,
   InvalidCSVRowType,
 } from '../../../shared/helpers/errors/usecase_errors'
+import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
 
 interface ParsedData {
-  type: 'professor' | 'room' | 'subject' | 'class'
+  type: 'professor' | 'subject' | 'class'
   classId: string
   name: string
   classModality: string
   classType: string
   subjectCode: string
   subjectPeriod: string
-  roomBlock: string
-  roomNumber: string
-  roomCapacity: string
   professorEmail: string
   professorRa: string
   professorPassword: string
+  roomCode: string
 }
 
 function bufferToStream(buffer: Buffer): Readable {
@@ -43,15 +37,11 @@ function bufferToStream(buffer: Buffer): Readable {
 
 export class UploadCSVUsecase {
   constructor(
-    private userRepo: IUserRepository,
-    private roomRepo: IRoomRepository,
-    private subjectRepo: ISubjectRepository,
-    private classRepo: IClassRepository,
+    private repo: IScheduleRepository,
   ) {}
 
   async execute(buffer: Buffer): Promise<string> {
     const userList: User[] = []
-    const roomList: Room[] = []
     const subjectList: Subject[] = []
     const classList: Class[] = []
     let noProblems = ''
@@ -67,7 +57,7 @@ export class UploadCSVUsecase {
         .on('data', (row: ParsedData) => {
           try {
             if (row.type === 'professor') {
-              const newId = this.userRepo.getLength() + 1
+              const newId = this.repo.getUsersLength() + 1
               const newName = row.name
               const newEmail = row.professorEmail
               const newRA = row.professorRa
@@ -92,22 +82,6 @@ export class UploadCSVUsecase {
                 password: newPassword,
               })
               userList.push(newUser)
-            } else if (row.type === 'room') {
-              const newId = row.roomBlock! + row.roomNumber!
-              const newCapacity = parseInt(row.roomCapacity!)
-              const newBlock = row.roomBlock!
-              const newNumber = row.roomNumber!
-              if (newBlock === '' || newNumber === '' || isNaN(newCapacity)) {
-                noProblems = 'invalidCSVFormat'
-                return
-              }
-              const newRoom = new Room({
-                id: newId,
-                block: row.roomBlock!,
-                roomNumber: row.roomNumber!,
-                capacity: newCapacity,
-              })
-              roomList.push(newRoom)
             } else if (row.type === 'subject') {
               const newPeriod = periodToEnum(row.subjectPeriod!)
               const newCode = row.subjectCode!
@@ -128,6 +102,7 @@ export class UploadCSVUsecase {
               const newClassId = row.classId!
               const newSubjectCode = row.subjectCode!
               const newName = row.name!
+              const newRoomCode = row.roomCode || undefined
               if (
                 newClassId === '' ||
                 newSubjectCode === '' ||
@@ -142,6 +117,7 @@ export class UploadCSVUsecase {
                 modality: newModality,
                 classType: newType,
                 subjectCode: row.subjectCode!,
+                roomCode: newRoomCode
               })
               classList.push(newClass)
             } else if (
@@ -152,12 +128,10 @@ export class UploadCSVUsecase {
               row.classType === 'classType' &&
               row.subjectCode === 'subjectCode' &&
               row.subjectPeriod === 'subjectPeriod' &&
-              row.roomBlock === 'roomBlock' &&
-              row.roomNumber === 'roomNumber' &&
-              row.roomCapacity === 'roomCapacity' &&
               row.professorEmail === 'professorEmail' &&
               row.professorRa === 'professorRa' &&
-              row.professorPassword === 'professorPassword'
+              row.professorPassword === 'professorPassword' &&
+              row.roomCode === 'roomCode'
             ) {
               // Do nothing
             } else {
@@ -176,22 +150,17 @@ export class UploadCSVUsecase {
         .on('end', () => {
           if (noProblems === '') {
             userList.forEach(
-              async (newUser) => await this.userRepo.createUser(newUser),
-            )
-            roomList.forEach(
-              async (newRoom) => await this.roomRepo.createRoom(newRoom),
+              async (newUser) => await this.repo.createUser(newUser),
             )
             subjectList.forEach(
               async (newSubject) =>
-                await this.subjectRepo.createSubject(newSubject),
+                await this.repo.createSubject(newSubject),
             )
             classList.forEach(
-              async (newClass) => await this.classRepo.createClass(newClass),
+              async (newClass) => await this.repo.createClass(newClass),
             )
             resolve('ok') // Retorna 'ok' ao final da execução
           } else if (noProblems === 'invalidCSVRowType') {
-            // create a string with the entire row
-            const entireRowString = entireRow.join(', ')
             reject(new InvalidCSVRowType(possibleRowTypeError, rowError))
           } else if (noProblems === 'invalidCSVFormat') {
             reject(new InvalidCSVFormat())

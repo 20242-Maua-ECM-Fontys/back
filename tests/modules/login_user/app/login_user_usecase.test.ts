@@ -1,12 +1,12 @@
 import { it, expect, describe } from 'vitest'
-import { UserRepositoryMock } from '../../../../src/shared/infra/repositories/user_repository_mock'
+import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 import { LoginUserUsecase } from '../../../../src/modules/login_user/app/login_user_usecase'
 import { ROLE } from '../../../../src/shared/domain/enums/role_enum'
 import { NoItemsFound } from '../../../../src/shared/helpers/errors/usecase_errors'
 
 describe('Assert Login User usecase is correct', () => {
   it('Should login the user with correct email and password', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
 
     const user = await usecase.execute('user1@gmail.com', 'Password1@')
@@ -22,7 +22,7 @@ describe('Assert Login User usecase is correct', () => {
   })
 
   it('Should throw an error if email is incorrect', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
 
     await expect(
@@ -31,7 +31,7 @@ describe('Assert Login User usecase is correct', () => {
   })
 
   it('Should throw an error if password is incorrect', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
 
     await expect(
@@ -40,7 +40,7 @@ describe('Assert Login User usecase is correct', () => {
   })
 
   it('Should throw an error if email or password are missing', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
 
     await expect(usecase.execute('', 'Password1@')).rejects.toThrow(
@@ -51,7 +51,7 @@ describe('Assert Login User usecase is correct', () => {
     )
   })
   it('Should throw an error if email is in an invalid format', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
 
     await expect(
@@ -60,7 +60,7 @@ describe('Assert Login User usecase is correct', () => {
   })
 
   it('Should throw an error if password is in an invalid format (missing special character)', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
 
     await expect(
@@ -69,7 +69,7 @@ describe('Assert Login User usecase is correct', () => {
   })
 
   it('Should throw an error if password is in an invalid format (missing uppercase letter)', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
 
     await expect(
@@ -78,7 +78,7 @@ describe('Assert Login User usecase is correct', () => {
   })
 
   it('Should throw an error if password is in an invalid format (missing lowercase letter)', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
 
     await expect(
@@ -87,7 +87,7 @@ describe('Assert Login User usecase is correct', () => {
   })
 
   it('Should throw an error if password is too short (less than 8 characters)', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
 
     await expect(usecase.execute('user1@gmail.com', 'P1@')).rejects.toThrow(
