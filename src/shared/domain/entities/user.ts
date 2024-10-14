@@ -11,7 +11,8 @@ export type UserProps = {
 }
 
 export type JsonProps = {
-  userId: number
+
+  id: number
   name: string
   email: string
   role: string
@@ -120,7 +121,7 @@ export class User {
 
   static fromJSON(json: JsonProps) {
     return new User({
-      id: json.userId,
+      id: json.id,
       name: json.name,
       email: json.email,
       role: toEnum(json.role as string),

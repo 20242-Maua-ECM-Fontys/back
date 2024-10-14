@@ -21,6 +21,14 @@ export class UserRepositoryMock implements IUserRepository {
       RA: '22.00000-2',
       password: 'Password2@',
     }),
+    new User({
+      id: 3,
+      name: 'user3',
+      email: 'user3@gmail.com',
+      role: ROLE.PROFESSOR,
+      RA: '33.00000-3',
+      password: 'Password3@',
+    }),
   ]
 
   getLength(): number {
@@ -42,5 +50,35 @@ export class UserRepositoryMock implements IUserRepository {
   async createUser(user: User): Promise<User> {
     this.users.push(user)
     return user
+  }
+
+  async updateUser(
+    id: number,
+    newName: string,
+    newEmail: string,
+  ): Promise<User> {
+    const user = this.users.find((user) => user.id === id)
+    if (!user) {
+      throw new NoItemsFound('id')
+    }
+    user.setName = newName
+    user.setEmail = newEmail
+    return user
+  }
+
+  async deleteUser(id: number): Promise<User> {
+    const user = this.users.find((user) => user.id === id)
+    if (!user) {
+      throw new NoItemsFound('id')
+    }
+    this.users = this.users.filter((user) => user.id !== id)
+    return user
+  }
+
+  async loginUser(email: string, password: string): Promise<User | null> {
+    const user = this.users.find(
+      (user) => user.email === email && user.password === password,
+    )
+    return user || null
   }
 }
