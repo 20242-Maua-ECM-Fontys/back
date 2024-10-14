@@ -35,8 +35,6 @@ export class UserRepositoryMock implements IUserRepository {
     return this.users.length
   }
 
-  private userCounter: number = 2
-
   async getUser(id: number): Promise<User> {
     const user = this.users.find((user) => user.id === id)
     if (!user) {
@@ -85,4 +83,4 @@ export class UserRepositoryMock implements IUserRepository {
     return user || null  
   }
   
-}
+
