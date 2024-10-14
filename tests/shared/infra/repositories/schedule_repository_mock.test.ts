@@ -1,0 +1,133 @@
+import { describe, it, expect } from 'vitest'
+import { Class } from '../../../../src/shared/domain/entities/class'
+import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
+import { MODALITY } from '../../../../src/shared/domain/enums/modality_enum'
+import { CLASSTYPE } from '../../../../src/shared/domain/enums/class_type_enum'
+import { ROLE } from '../../../../src/shared/domain/enums/role_enum'
+import { User } from '../../../../src/shared/domain/entities/user'
+import { PERIOD } from '../../../../src/shared/domain/enums/period_enum'
+import { Subject } from '../../../../src/shared/domain/entities/subject'
+
+// User methods
+describe('Assert Schedule Repository Mock is correct at all for User methods', () => {
+  it('Should get length correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const length = repo.getUsersLength()
+
+    expect(length).toEqual(3)
+  })
+  it('Should get user correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const user = await repo.getUser(1)
+
+    expect(user?.id).toEqual(1)
+    expect(user?.name).toEqual('user1')
+    expect(user?.email).toEqual('user1@gmail.com')
+    expect(user?.role).toEqual(ROLE.STAFF)
+    expect(user?.RA).toEqual('21.00000-1')
+    expect(user?.password).toEqual('Password1@')
+  })
+  it('Should get all users correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const users = await repo.getAllUsers()
+
+    expect(users.length).toEqual(3)
+  })
+  it('Should create user correctly', async () => {
+    const user = new User({
+      id: 10,
+      name: 'usuario10',
+      email: 'usuario10@gmail.com',
+      role: ROLE.PROFESSOR,
+      RA: '10.00000-1',
+      password: 'Password10@',
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getUsersLength()
+    await repo.createUser(user)
+    const newLength = repo.getUsersLength()
+
+    expect(newLength).toEqual(lastLength + 1)
+  })
+})
+
+// Subject methods
+describe('Assert Schedule Repository Mock is correct at all for Subject methods', () => {
+  it('Should get length correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const length = repo.getSubjectsLength()
+
+    expect(length).toEqual(2)
+  })
+  it('Should get subject correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const subject = await repo.getSubject("ECM256")
+
+    expect(subject?.code).toEqual("ECM256")
+    expect(subject?.name).toEqual('Programming Languages II')
+    expect(subject?.period).toEqual(PERIOD.MORNING)
+  })
+  it('Should get all subjects correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const subjects = await repo.getAllSubjects()
+
+    expect(subjects.length).toEqual(2)
+  })
+  it('Should create subject correctly', async () => {
+    const subject = new Subject({
+      code: 'EFB803',
+      name: 'Statistics',
+      period: PERIOD.AFTERNOON,
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getSubjectsLength()
+    await repo.createSubject(subject)
+    const newLength = repo.getSubjectsLength()
+
+    expect(newLength).toEqual(lastLength + 1)
+  })
+})
+
+// Class methods
+describe('Assert Schedule Repository Mock is correct at all for Class methods', () => {
+  it('Should get length correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const length = repo.getClassesLength()
+
+    expect(length).toEqual(4)
+  })
+  it('Should get class correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const selectedClass = await repo.getClass("0a8c5357-1f07-5b24-9845-9318c47ac922")
+
+    expect(selectedClass.id).toBe('0a8c5357-1f07-5b24-9845-9318c47ac922')
+    expect(selectedClass.name).toBe('Physics I')
+    expect(selectedClass.modality).toBe(MODALITY.REMOTE)
+    expect(selectedClass.classType).toBe(CLASSTYPE.THEORY)
+    expect(selectedClass.subjectCode).toBe('EFB207')
+  })
+  it('Should get all classes correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const classes = await repo.getAllClasss()
+
+    expect(classes.length).toEqual(4)
+  })
+  it('Should create class correctly', async () => {
+    const classEntity = new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ab929',
+      name: 'Programming Language II',
+      modality: MODALITY.REMOTE,
+      classType: CLASSTYPE.THEORY,
+      subjectCode: 'ECM256',
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getClassesLength()
+    await repo.createClass(classEntity)
+    const newLength = repo.getClassesLength()
+
+    expect(newLength).toEqual(lastLength + 1)
+  })
+})
