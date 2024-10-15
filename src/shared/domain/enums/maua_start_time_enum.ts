@@ -11,23 +11,23 @@ export enum MAUA_START_TIME {
   H20_50_22_30 = 1350 - interval,
 }
 
-export function toEnum(value: string): MAUA_START_TIME {
+export function toEnum(value: number): MAUA_START_TIME {
   switch (value) {
-    case 'H07_40_09_20':
+    case 460:
       return MAUA_START_TIME.H07_40_09_20
-    case 'H09_30_11_10':
+    case 570:
       return MAUA_START_TIME.H09_30_11_10
-    case 'H11_20_13_00':
+    case 680:
       return MAUA_START_TIME.H11_20_13_00
-    case 'H13_30_15_10':
+    case 790:
       return MAUA_START_TIME.H13_30_15_10
-    case 'H15_20_17_00':
+    case 900:
       return MAUA_START_TIME.H15_20_17_00
-    case 'H16_50_18_30':
+    case 1010:
       return MAUA_START_TIME.H16_50_18_30
-    case 'H19_00_20_40':
+    case 1140:
       return MAUA_START_TIME.H19_00_20_40
-    case 'H20_50_22_30':
+    case 1250:
       return MAUA_START_TIME.H20_50_22_30
     default:
       throw new Error('Invalid value')
