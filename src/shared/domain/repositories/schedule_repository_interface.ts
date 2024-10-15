@@ -29,4 +29,6 @@ export interface IScheduleRepository {
   getSuitabilitiesLength(): number
   getAllSuitabilities(): Promise<Suitability[]>
   createSuitability(userId: number, codeSubject: string): Promise<Suitability>
+
+  // Schedule methods
 }
