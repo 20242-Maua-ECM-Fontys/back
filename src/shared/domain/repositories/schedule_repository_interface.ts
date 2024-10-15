@@ -1,5 +1,6 @@
 import { Class } from '../entities/class'
 import { Subject } from '../entities/subject'
+import { Suitability } from '../entities/suitability'
 import { User } from '../entities/user'
 
 export interface IScheduleRepository {
@@ -23,4 +24,9 @@ export interface IScheduleRepository {
   getSubject(code: string): Promise<Subject>
   getAllSubjects(): Promise<Subject[]>
   createSubject(subject: Subject): Promise<Subject>
+
+  // Suitability methods
+  getSuitabilitiesLength(): number
+  getAllSuitabilities(): Promise<Suitability[]>
+  createSuitability(userId: number, codeSubject: string): Promise<Suitability>
 }

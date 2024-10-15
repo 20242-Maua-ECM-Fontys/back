@@ -14,7 +14,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     const length = repo.getUsersLength()
 
-    expect(length).toEqual(3)
+    expect(length).toEqual(5)
   })
   it('Should get user correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -27,11 +27,16 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     expect(user?.RA).toEqual('21.00000-1')
     expect(user?.password).toEqual('Password1@')
   })
+  it('Should get user wrongly: userId does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+    await expect(repo.getUser(repo.getUsersLength() + 1)).rejects.toThrowError('No items found for userId')
+
+  })
   it('Should get all users correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const users = await repo.getAllUsers()
 
-    expect(users.length).toEqual(3)
+    expect(users.length).toEqual(5)
   })
   it('Should create user correctly', async () => {
     const user = new User({
@@ -67,6 +72,12 @@ describe('Assert Schedule Repository Mock is correct at all for Subject methods'
     expect(subject?.code).toEqual("ECM256")
     expect(subject?.name).toEqual('Programming Languages II')
     expect(subject?.period).toEqual(PERIOD.MORNING)
+  })
+  it('Should get subject wrongly: codeSubject does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getSubject("ECM25678")).rejects.toThrowError('No items found for codeSubject')
+
   })
   it('Should get all subjects correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -130,4 +141,84 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
 
     expect(newLength).toEqual(lastLength + 1)
   })
+})
+
+// Suitability methods
+describe('Assert Schedule Repository Mock is correct at all for Suitability methods', () => {
+  it('Should get length correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const length = repo.getSuitabilitiesLength()
+
+    expect(length).toEqual(3)
+  })
+  it('Should get all suitabilities correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const users = await repo.getAllSuitabilities()
+
+    expect(users.length).toEqual(3)
+  })
+  it('Should create suitability correctly', async () => {
+    const userId = 3
+    const codeSubject = 'ECM256'
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getSuitabilitiesLength()
+    await repo.createSuitability(userId, codeSubject)
+    const newLength = repo.getSuitabilitiesLength()
+
+    expect(newLength).toEqual(lastLength + 1)
+  })
+  it('Should create suitability wrongly: suitability already exists', async () => {
+    const userId = 4
+    const codeSubject = 'ECM256'
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getSuitabilitiesLength()
+
+    await expect(repo.createSuitability(userId, codeSubject)).rejects.toThrowError('Suitability already exists')
+    const newLength = repo.getSuitabilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should create suitability wrongly: user does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    const userId = repo.getUsersLength() + 1
+    const codeSubject = 'ECM256'
+
+    const lastLength = repo.getSuitabilitiesLength()
+
+    await expect(repo.createSuitability(userId, codeSubject)).rejects.toThrowError('No items found for userId')
+    const newLength = repo.getSuitabilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should create suitability wrongly: user is not a professor', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    const userId = 1
+    const codeSubject = 'ECM256'
+
+    const lastLength = repo.getSuitabilitiesLength()
+
+    await expect(repo.createSuitability(userId, codeSubject)).rejects.toThrowError('The data rule "user must be a professor" was violated')
+    const newLength = repo.getSuitabilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should create suitability wrongly: codeSubject does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    const userId = 3
+    const codeSubject = 'EDP123'
+
+    const lastLength = repo.getSuitabilitiesLength()
+
+    await expect(repo.createSuitability(userId, codeSubject)).rejects.toThrowError('No items found for codeSubject')
+    const newLength = repo.getSuitabilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+
+
 })

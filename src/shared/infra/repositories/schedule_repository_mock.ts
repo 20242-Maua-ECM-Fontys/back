@@ -1,12 +1,13 @@
 import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
 import { User } from '../../domain/entities/user'
 import { ROLE } from '../../domain/enums/role_enum'
-import { NoItemsFound } from '../../helpers/errors/usecase_errors'
 import { Class } from '../../../shared/domain/entities/class'
 import { MODALITY } from '../../../shared/domain/enums/modality_enum'
 import { CLASSTYPE } from '../../../shared/domain/enums/class_type_enum'
 import { Subject } from '../../../shared/domain/entities/subject'
 import { PERIOD } from '../../../shared/domain/enums/period_enum'
+import { Suitability } from '../../../shared/domain/entities/suitability'
+import { ViolateDataRule, DuplicatedItem, NoItemsFound } from '../../../shared/helpers/errors/repo_error'
 
 export class ScheduleRepositoryMock implements IScheduleRepository {
   // Mock Data
@@ -97,6 +98,21 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
   ]
 
+  private suitabilities: Suitability[] = [
+    new Suitability({
+      userId: 4,
+      codeSubject: 'ECM256',
+    }),
+    new Suitability({
+      userId: 5,
+      codeSubject: 'EFB207',
+    }),
+    new Suitability({
+      userId: 5,
+      codeSubject: 'ECM256',
+    }),
+  ]
+
   // User methods
   getUsersLength(): number {
     return this.users.length
@@ -105,7 +121,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   async getUser(id: number): Promise<User> {
     const user = this.users.find((user) => user.id === id)
     if (!user) {
-      throw new NoItemsFound('id')
+      throw new NoItemsFound('userId')
     }
     return user
   }
@@ -179,7 +195,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   async getSubject(code: string): Promise<Subject> {
     const subject = this.subjects.find((subject) => subject.code === code)
     if (!subject) {
-      throw new NoItemsFound('code')
+      throw new NoItemsFound('codeSubject')
     }
     return subject
   }
@@ -192,5 +208,45 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     this.subjects.push(subject)
     return subject
   }
+
+  // Suitability methods
+  getSuitabilitiesLength(): number {
+    return this.suitabilities.length
+  }
+
+  async getAllSuitabilities(): Promise<Suitability[]> {
+    return this.suitabilities
+  }
+
+  async createSuitability(userId: number, codeSubject: string): Promise<Suitability> {
+    const suitability = new Suitability({
+      userId,
+      codeSubject,
+    })
+
+    // Check if the suitability already exists
+    const exists = this.suitabilities.find(
+      (s) => s.userId === userId && s.codeSubject === codeSubject,
+    )
+    if (exists) {
+      throw new DuplicatedItem('Suitability')
+    }
+
+    // Check if the user exists
+    const user = await this.getUser(userId)
+
+    // Check if the user is a professor
+    if (user.role !== ROLE.PROFESSOR) {
+      throw new ViolateDataRule('user must be a professor')
+    }
+
+    // Check if the subject exists
+    await this.getSubject(codeSubject)
+
+    this.suitabilities.push(suitability)
+
+    return Promise.resolve(suitability) 
+  }
+
 
 }
