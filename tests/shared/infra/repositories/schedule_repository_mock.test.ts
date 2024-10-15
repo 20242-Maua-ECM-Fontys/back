@@ -8,6 +8,7 @@ import { User } from '../../../../src/shared/domain/entities/user'
 import { PERIOD } from '../../../../src/shared/domain/enums/period_enum'
 import { Subject } from '../../../../src/shared/domain/entities/subject'
 import { Suitability } from '../../../../src/shared/domain/entities/suitability'
+import { Schedule } from '../../../../src/shared/domain/entities/schedule'
 
 // User methods
 describe('Assert Schedule Repository Mock is correct at all for User methods', () => {
@@ -220,6 +221,85 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     expect(newLength).toEqual(lastLength)
   })
+
+
+})
+
+// Schedule methods
+describe('Assert Schedule Repository Mock is correct at all for Schedule methods', () => {
+  it('Should get length correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const length = repo.getSchedulesLength()
+
+    expect(length).toEqual(4)
+  })
+  it('Should get all schedules correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const users = await repo.getAllSchedules()
+
+    expect(users.length).toEqual(4)
+  })
+  it('Should create schedule correctly', async () => {
+    const schedule = new Schedule({
+      scheduleId: '2S-2CM-D5@2024(SCS)',
+      courseName: 'Compute Engineering',
+      groupNumber: 1,
+      userId: 2,
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getSchedulesLength()
+    await repo.createSchedule(schedule)
+    const newLength = repo.getSchedulesLength()
+
+    expect(newLength).toEqual(lastLength + 1)
+  })
+  it('Should create schedule wrongly: sxists', async () => {
+    const schedule = new Schedule({
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+      courseName: 'Compute Engineering',
+      groupNumber: 1,
+      userId: 2,
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getSchedulesLength()
+    await expect(repo.createSchedule(schedule)).rejects.toThrowError('Schedule already exists')
+    const newLength = repo.getSchedulesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should create schedule wrongly: user does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const schedule = new Schedule({
+      scheduleId: '2S-2CM-D5@2024(SCS)',
+      courseName: 'Compute Engineering',
+      groupNumber: 1,
+      userId: repo.getUsersLength() + 1,
+    })
+
+    const lastLength = repo.getSchedulesLength()
+    await expect(repo.createSchedule(schedule)).rejects.toThrowError('No items found for userId')
+    const newLength = repo.getSchedulesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should create schedule wrongly: user is not a coordinator', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const schedule = new Schedule({
+      scheduleId: '2S-2CM-D5@2024(SCS)',
+      courseName: 'Compute Engineering',
+      groupNumber: 1,
+      userId: 1,
+    })
+
+    const lastLength = repo.getSchedulesLength()
+    await expect(repo.createSchedule(schedule)).rejects.toThrowError('The data rule "user must be a coordinator" was violated')
+    const newLength = repo.getSchedulesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  
 
 
 })

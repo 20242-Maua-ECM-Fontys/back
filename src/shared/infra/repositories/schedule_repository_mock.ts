@@ -301,6 +301,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     if (user.role !== ROLE.COORDINATOR) {
       throw new ViolateDataRule('user must be a coordinator')
     }
+
     this.schedules.push(schedule)
     return schedule
   }
