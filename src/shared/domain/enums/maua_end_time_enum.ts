@@ -2,8 +2,8 @@ export enum MAUA_END_TIME {
   H07_40_09_20 = 560,
   H09_30_11_10 = 670,
   H11_20_13_00 = 780,
-  H13_30_15_10 = 890,
-  H15_20_17_00 = 1000,
+  H13_10_14_50 = 890,
+  H15_00_16_40 = 1000,
   H16_50_18_30 = 1110,
   H19_00_20_40 = 1240,
   H20_50_22_30 = 1350,
@@ -18,9 +18,9 @@ export function toEnum(value: number): MAUA_END_TIME {
     case 780:
       return MAUA_END_TIME.H11_20_13_00
     case 890:
-      return MAUA_END_TIME.H13_30_15_10
+      return MAUA_END_TIME.H13_10_14_50
     case 1000:
-      return MAUA_END_TIME.H15_20_17_00
+      return MAUA_END_TIME.H15_00_16_40
     case 1110:
       return MAUA_END_TIME.H16_50_18_30
     case 1240:
