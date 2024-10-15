@@ -8,6 +8,7 @@ import { Subject } from '../../../shared/domain/entities/subject'
 import { PERIOD } from '../../../shared/domain/enums/period_enum'
 import { Suitability } from '../../../shared/domain/entities/suitability'
 import { ViolateDataRule, DuplicatedItem, NoItemsFound } from '../../../shared/helpers/errors/repo_error'
+import { Schedule } from '../../../shared/domain/entities/schedule'
 
 export class ScheduleRepositoryMock implements IScheduleRepository {
   // Mock Data
@@ -110,6 +111,33 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     new Suitability({
       userId: 5,
       codeSubject: 'ECM256',
+    }),
+  ]
+
+  private schedules: Schedule[] = [
+    new Schedule({
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+      courseName: 'Compute Engineering',
+      groupNumber: 1,
+      userId: 2,
+    }),
+    new Schedule({
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+      courseName: 'Compute Engineering',
+      groupNumber: 2,
+      userId: 2,
+    }),
+    new Schedule({
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      courseName: 'Compute Engineering',
+      groupNumber: 1,
+      userId: 2,
+    }),
+    new Schedule({
+      scheduleId: '1S-2CIC-D4@2024(SCS)',
+      courseName: 'Cience Coputing',
+      groupNumber: 1,
+      userId: 2,
     }),
   ]
 
@@ -218,22 +246,18 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.suitabilities
   }
 
-  async createSuitability(userId: number, codeSubject: string): Promise<Suitability> {
-    const suitability = new Suitability({
-      userId,
-      codeSubject,
-    })
+  async createSuitability(suitability: Suitability): Promise<Suitability> {
 
     // Check if the suitability already exists
     const exists = this.suitabilities.find(
-      (s) => s.userId === userId && s.codeSubject === codeSubject,
+      (s) => s.userId === suitability.userId && s.codeSubject === suitability.codeSubject,
     )
     if (exists) {
       throw new DuplicatedItem('Suitability')
     }
 
     // Check if the user exists
-    const user = await this.getUser(userId)
+    const user = await this.getUser(suitability.userId)
 
     // Check if the user is a professor
     if (user.role !== ROLE.PROFESSOR) {
@@ -241,12 +265,43 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }
 
     // Check if the subject exists
-    await this.getSubject(codeSubject)
+    await this.getSubject(suitability.codeSubject)
 
     this.suitabilities.push(suitability)
 
     return Promise.resolve(suitability) 
   }
 
+  // Schedule methods
+  getSchedulesLength(): number {
+    return this.schedules.length
+  }
 
+  async getSchedule(id: string): Promise<Schedule> {
+    const schedule = this.schedules.find((schedule) => schedule.scheduleId === id)
+    if (!schedule) {
+      throw new NoItemsFound('scheduleId')
+    }
+    return schedule
+  }
+
+  async getAllSchedules(): Promise<Schedule[]> {
+    return this.schedules
+  }
+
+  async createSchedule(schedule: Schedule): Promise<Schedule> {
+    const exists = this.schedules.find(
+      (s) => s.scheduleId === schedule.scheduleId,
+    )
+    if (exists) {
+      throw new DuplicatedItem('Schedule')
+    }
+
+    const user = await this.getUser(schedule.userId)
+    if (user.role !== ROLE.COORDINATOR) {
+      throw new ViolateDataRule('user must be a coordinator')
+    }
+    this.schedules.push(schedule)
+    return schedule
+  }
 }

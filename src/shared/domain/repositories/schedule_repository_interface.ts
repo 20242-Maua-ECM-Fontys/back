@@ -1,4 +1,5 @@
 import { Class } from '../entities/class'
+import { Schedule } from '../entities/schedule'
 import { Subject } from '../entities/subject'
 import { Suitability } from '../entities/suitability'
 import { User } from '../entities/user'
@@ -28,7 +29,11 @@ export interface IScheduleRepository {
   // Suitability methods
   getSuitabilitiesLength(): number
   getAllSuitabilities(): Promise<Suitability[]>
-  createSuitability(userId: number, codeSubject: string): Promise<Suitability>
+  createSuitability(suitability: Suitability): Promise<Suitability>
 
   // Schedule methods
+  getSchedulesLength(): number
+  getSchedule(id: string): Promise<Schedule>
+  getAllSchedules(): Promise<Schedule[]>
+  createSchedule(schedule: Schedule): Promise<Schedule>
 }

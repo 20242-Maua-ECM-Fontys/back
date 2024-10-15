@@ -7,6 +7,7 @@ import { ROLE } from '../../../../src/shared/domain/enums/role_enum'
 import { User } from '../../../../src/shared/domain/entities/user'
 import { PERIOD } from '../../../../src/shared/domain/enums/period_enum'
 import { Subject } from '../../../../src/shared/domain/entities/subject'
+import { Suitability } from '../../../../src/shared/domain/entities/suitability'
 
 // User methods
 describe('Assert Schedule Repository Mock is correct at all for User methods', () => {
@@ -163,7 +164,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     const repo = new ScheduleRepositoryMock()
     const lastLength = repo.getSuitabilitiesLength()
-    await repo.createSuitability(userId, codeSubject)
+    await repo.createSuitability(new Suitability({userId, codeSubject}))
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength + 1)
@@ -175,7 +176,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     const repo = new ScheduleRepositoryMock()
     const lastLength = repo.getSuitabilitiesLength()
 
-    await expect(repo.createSuitability(userId, codeSubject)).rejects.toThrowError('Suitability already exists')
+    await expect(repo.createSuitability(new Suitability({userId, codeSubject}))).rejects.toThrowError('Suitability already exists')
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
@@ -188,7 +189,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     const lastLength = repo.getSuitabilitiesLength()
 
-    await expect(repo.createSuitability(userId, codeSubject)).rejects.toThrowError('No items found for userId')
+    await expect(repo.createSuitability(new Suitability({userId, codeSubject}))).rejects.toThrowError('No items found for userId')
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
@@ -201,7 +202,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     const lastLength = repo.getSuitabilitiesLength()
 
-    await expect(repo.createSuitability(userId, codeSubject)).rejects.toThrowError('The data rule "user must be a professor" was violated')
+    await expect(repo.createSuitability(new Suitability({userId, codeSubject}))).rejects.toThrowError('The data rule "user must be a professor" was violated')
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
@@ -214,7 +215,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     const lastLength = repo.getSuitabilitiesLength()
 
-    await expect(repo.createSuitability(userId, codeSubject)).rejects.toThrowError('No items found for codeSubject')
+    await expect(repo.createSuitability(new Suitability({userId, codeSubject}))).rejects.toThrowError('No items found for codeSubject')
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
