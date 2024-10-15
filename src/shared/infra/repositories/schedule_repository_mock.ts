@@ -62,6 +62,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
+      scheduleId: '1S-2CIC-D4@2024(SCS)'
     }),
     new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ac923',
@@ -69,6 +70,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
+      scheduleId: '2S-4CM-D5@2024(SCS)'
     }),
     new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ac922',
@@ -76,6 +78,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.REMOTE,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'EFB207',
+      scheduleId: '2S-3CM-D5@2024(SCS)'
     }),
     new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ac921',
@@ -83,6 +86,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.LAB,
       subjectCode: 'EFB207',
+      scheduleId: '2S-4CM-D5@2024(SCS)'
     }),
   ]
 

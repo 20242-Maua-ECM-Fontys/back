@@ -134,6 +134,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
       modality: MODALITY.REMOTE,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
+      scheduleId: '2S-4CM-D5@2024(SCS)',
     })
 
     const repo = new ScheduleRepositoryMock()
@@ -299,7 +300,5 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
 
     expect(newLength).toEqual(lastLength)
   })
-  
-
-
 })
+

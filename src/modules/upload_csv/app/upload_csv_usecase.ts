@@ -26,6 +26,7 @@ interface ParsedData {
   professorRa: string
   professorPassword: string
   roomCode: string
+  scheduleId: string
 }
 
 function bufferToStream(buffer: Buffer): Readable {
@@ -117,7 +118,8 @@ export class UploadCSVUsecase {
                 modality: newModality,
                 classType: newType,
                 subjectCode: row.subjectCode!,
-                roomCode: newRoomCode
+                roomCode: newRoomCode,
+                scheduleId: row.scheduleId!,
               })
               classList.push(newClass)
             } else if (
@@ -131,7 +133,8 @@ export class UploadCSVUsecase {
               row.professorEmail === 'professorEmail' &&
               row.professorRa === 'professorRa' &&
               row.professorPassword === 'professorPassword' &&
-              row.roomCode === 'roomCode'
+              row.roomCode === 'roomCode' &&
+              row.scheduleId === 'scheduleId'
             ) {
               // Do nothing
             } else {

@@ -9,6 +9,7 @@ export type ClassProps = {
   classType: CLASSTYPE
   subjectCode: string
   roomCode?: string
+  scheduleId: string
 }
 
 export type JsonProps = {
@@ -18,6 +19,7 @@ export type JsonProps = {
   classType: string
   subjectCode: string
   roomCode?: string
+  scheduleId: string
 }
 const CLASS_ID_LENGTH = 36
 const CLASS_NAME_MIN_LENGTH = 3
@@ -53,6 +55,11 @@ export class Class {
       throw new EntityError('props.roomCode')
     }
     this.props.roomCode = props.roomCode
+
+    if (!Class.validateScheduleId(props.scheduleId)) {
+      throw new EntityError('props.scheduleId')
+    }
+    this.props.scheduleId = props.scheduleId
   }
 
   static validateId(id: string): boolean {
@@ -114,6 +121,23 @@ export class Class {
     return true
   }
 
+  static validateScheduleId(scheduleId: string): boolean {
+    if (scheduleId === undefined) {
+      return false;
+    }
+    if (typeof scheduleId !== 'string') {
+      return false;
+    }
+  
+    const scheduleIdRegex = /^[0-9]+S-.+-[DN][2-6]@[0-9]{4}\(SCS\)$/;
+  
+    if (!scheduleIdRegex.test(scheduleId)) {
+      return false;
+    }
+  
+    return true;
+  }
+
   static fromJSON(json: JsonProps) {
     return new Class({
       id: json.classId,
@@ -121,6 +145,8 @@ export class Class {
       modality: ModalityToEnum(json.modality as string),
       classType: ClasstypeToEnum(json.classType as string),
       subjectCode: json.subjectCode,
+      roomCode: json.roomCode,
+      scheduleId: json.scheduleId
     })
   }
 
@@ -131,6 +157,8 @@ export class Class {
       modality: this.props.modality,
       classType: this.props.classType,
       subjectCode: this.props.subjectCode,
+      roomCode: this.props.roomCode,
+      scheduleId: this.props.scheduleId
     }
   }
 
@@ -156,6 +184,10 @@ export class Class {
 
   get roomCode(): string | undefined {
     return this.props.roomCode
+  }
+
+  get scheduleId(): string {
+    return this.props.scheduleId
   }
 
   set id(id: string) {
@@ -198,5 +230,12 @@ export class Class {
       throw new EntityError('roomCode')
     }
     this.props.roomCode = roomCode
+  }
+
+  set scheduleId(scheduleId: string) {
+    if (!Class.validateScheduleId(scheduleId)) {
+      throw new EntityError('scheduleId')
+    }
+    this.props.scheduleId = scheduleId
   }
 }

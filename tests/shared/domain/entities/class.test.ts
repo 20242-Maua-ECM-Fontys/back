@@ -12,8 +12,9 @@ describe('Class Entity Tests', () => {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
+      scheduleId: '2S-4CM-D5@2024(SCS)'
     })
-
+    
     expect(classEntity).toBeInstanceOf(Class)
     expect(classEntity.id).toBe('0a8c5357-1f07-5b24-9845-9318c47ab923')
     expect(classEntity.name).toBe('Programming Language II')
@@ -22,7 +23,7 @@ describe('Class Entity Tests', () => {
     expect(classEntity.subjectCode).toBe('ECM256')
     expect(classEntity.roomCode).toBeUndefined()
   })
-
+  
   it('Assert Class Entity is correct at all with roomCode', () => {
     const classEntity = new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ab923',
@@ -31,8 +32,9 @@ describe('Class Entity Tests', () => {
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
       roomCode: 'A01',
+      scheduleId: '2S-4CM-D5@2024(SCS)'
     })
-
+    
     expect(classEntity).toBeInstanceOf(Class)
     expect(classEntity.id).toBe('0a8c5357-1f07-5b24-9845-9318c47ab923')
     expect(classEntity.name).toBe('Programming Language II')
@@ -50,6 +52,7 @@ describe('Class Entity Tests', () => {
         modality: MODALITY.IN_PERSON,
         classType: CLASSTYPE.THEORY,
         subjectCode: 'ECM256',
+        scheduleId: '2S-4CM-D5@2024(SCS)'
       })
     }).toThrowError(EntityError)
   })
@@ -62,6 +65,7 @@ describe('Class Entity Tests', () => {
         modality: MODALITY.IN_PERSON,
         classType: CLASSTYPE.THEORY,
         subjectCode: 'ECM256',
+        scheduleId: '2S-4CM-D5@2024(SCS)'
       })
     }).toThrowError(EntityError)
   })
@@ -74,6 +78,7 @@ describe('Class Entity Tests', () => {
         modality: 'PRESENCIAL',
         classType: CLASSTYPE.THEORY,
         subjectCode: 'ECM256',
+        scheduleId: '2S-4CM-D5@2024(SCS)'
       })
     }).toThrowError(EntityError)
   })
@@ -86,6 +91,7 @@ describe('Class Entity Tests', () => {
         modality: MODALITY.IN_PERSON,
         classType: 'TEORIA',
         subjectCode: 'ECM256',
+        scheduleId: '2S-4CM-D5@2024(SCS)'
       })
     }).toThrowError(EntityError)
   })
@@ -98,6 +104,20 @@ describe('Class Entity Tests', () => {
         modality: MODALITY.IN_PERSON,
         classType: CLASSTYPE.THEORY,
         subjectCode: 'ECM',
+        scheduleId: '2S-4CM-D5@2024(SCS)'
+      })
+    }).toThrowError(EntityError)
+  })
+
+  it('Assert Class Entity has an error when scheduleId is invalid', () => {
+    expect(() => {
+      new Class({
+        id: 'E4',
+        name: 'Programming Language II',
+        modality: MODALITY.IN_PERSON,
+        classType: CLASSTYPE.THEORY,
+        subjectCode: 'ECM',
+        scheduleId: '52'
       })
     }).toThrowError(EntityError)
   })
