@@ -7,7 +7,15 @@ import { CLASSTYPE } from '../../../shared/domain/enums/class_type_enum'
 import { Subject } from '../../../shared/domain/entities/subject'
 import { PERIOD } from '../../../shared/domain/enums/period_enum'
 import { Suitability } from '../../../shared/domain/entities/suitability'
-import { ViolateDataRule, DuplicatedItem, NoItemsFound } from '../../../shared/helpers/errors/repo_error'
+import { Possibility } from '../../../shared/domain/entities/possibility'
+import { WEEK_DAY } from '../../../shared/domain/enums/week_day_enum'
+import { MAUA_START_TIME } from '../../../shared/domain/enums/maua_start_time_enum'
+import { MAUA_END_TIME } from '../../../shared/domain/enums/maua_end_time_enum'
+import {
+  ViolateDataRule,
+  DuplicatedItem,
+  NoItemsFound,
+} from '../../../shared/helpers/errors/repo_error'
 import { Schedule } from '../../../shared/domain/entities/schedule'
 
 export class ScheduleRepositoryMock implements IScheduleRepository {
@@ -29,7 +37,8 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       RA: '22.00000-2',
       password: 'Password2@',
     }),
-    new User({ // professor with 0 suitability
+    new User({
+      // professor with 0 suitability
       id: 3,
       name: 'user3',
       email: 'user3@gmail.com',
@@ -37,7 +46,8 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       RA: '33.00000-3',
       password: 'Password3@',
     }),
-    new User({ // professor with 1 suitability
+    new User({
+      // professor with 1 suitability
       id: 4,
       name: 'user4',
       email: 'user4@gmail.com',
@@ -45,7 +55,8 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       RA: '44.00000-4',
       password: 'Password4@',
     }),
-    new User({ // professor with 0 suitability
+    new User({
+      // professor with 0 suitability
       id: 5,
       name: 'user5',
       email: 'user5@gmail.com',
@@ -62,7 +73,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
-      scheduleId: '1S-2CIC-D4@2024(SCS)'
+      scheduleId: '1S-2CIC-D4@2024(SCS)',
     }),
     new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ac923',
@@ -70,7 +81,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
-      scheduleId: '2S-4CM-D5@2024(SCS)'
+      scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ac922',
@@ -78,7 +89,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.REMOTE,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'EFB207',
-      scheduleId: '2S-3CM-D5@2024(SCS)'
+      scheduleId: '2S-3CM-D5@2024(SCS)',
     }),
     new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ac921',
@@ -86,7 +97,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.LAB,
       subjectCode: 'EFB207',
-      scheduleId: '2S-4CM-D5@2024(SCS)'
+      scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
   ]
 
@@ -142,6 +153,136 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       courseName: 'Cience Coputing',
       groupNumber: 1,
       userId: 2,
+    }),
+  ]
+
+  private possibilities: Possibility[] = [
+    // MON - SAT | 07:40 - 13:00 | 2S-4CM-D5@2024(SCS)
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.TUE,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.TUE,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.TUE,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.WED,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.WED,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.WED,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.THU,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.THU,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.THU,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.FRI,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.FRI,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.FRI,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.SAT,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.SAT,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.SAT,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
   ]
 
@@ -218,7 +359,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     this.classes.push(newClass)
     return newClass
   }
-  
+
   // Subject methods
   getSubjectsLength(): number {
     return this.subjects.length
@@ -251,10 +392,11 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   async createSuitability(suitability: Suitability): Promise<Suitability> {
-
     // Check if the suitability already exists
     const exists = this.suitabilities.find(
-      (s) => s.userId === suitability.userId && s.codeSubject === suitability.codeSubject,
+      (s) =>
+        s.userId === suitability.userId &&
+        s.codeSubject === suitability.codeSubject,
     )
     if (exists) {
       throw new DuplicatedItem('Suitability')
@@ -273,7 +415,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
     this.suitabilities.push(suitability)
 
-    return Promise.resolve(suitability) 
+    return Promise.resolve(suitability)
   }
 
   // Schedule methods
@@ -282,7 +424,9 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   async getSchedule(id: string): Promise<Schedule> {
-    const schedule = this.schedules.find((schedule) => schedule.scheduleId === id)
+    const schedule = this.schedules.find(
+      (schedule) => schedule.scheduleId === id,
+    )
     if (!schedule) {
       throw new NoItemsFound('scheduleId')
     }
@@ -308,5 +452,40 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
     this.schedules.push(schedule)
     return schedule
+  }
+
+  // Possibility methods
+
+  getPossibilitiesLength(): number {
+    return this.possibilities.length
+  }
+
+  async getPossibility(id: string): Promise<Possibility> {
+    const possibility = this.possibilities.find(
+      (possibility) => possibility.id === id,
+    )
+    if (!possibility) {
+      throw new NoItemsFound('id')
+    }
+    return possibility
+  }
+
+  async getAllPossibilities(): Promise<Possibility[]> {
+    return this.possibilities
+  }
+
+  async createPossibility(possibility: Possibility): Promise<Possibility> {
+    const exists = this.possibilities.find((p) => p.id === possibility.id)
+    if (exists) {
+      throw new DuplicatedItem('id')
+    }
+
+    const schedule = await this.getSchedule(possibility.scheduleId)
+    if (!schedule) {
+      throw new NoItemsFound('scheduleId')
+    }
+
+    this.possibilities.push(possibility)
+    return possibility
   }
 }

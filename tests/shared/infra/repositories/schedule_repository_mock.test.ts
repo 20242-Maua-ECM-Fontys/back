@@ -9,6 +9,10 @@ import { PERIOD } from '../../../../src/shared/domain/enums/period_enum'
 import { Subject } from '../../../../src/shared/domain/entities/subject'
 import { Suitability } from '../../../../src/shared/domain/entities/suitability'
 import { Schedule } from '../../../../src/shared/domain/entities/schedule'
+import { Possibility } from '../../../../src/shared/domain/entities/possibility'
+import { WEEK_DAY } from '../../../../src/shared/domain/enums/week_day_enum'
+import { MAUA_START_TIME } from '../../../../src/shared/domain/enums/maua_start_time_enum'
+import { MAUA_END_TIME } from '../../../../src/shared/domain/enums/maua_end_time_enum'
 
 // User methods
 describe('Assert Schedule Repository Mock is correct at all for User methods', () => {
@@ -31,8 +35,9 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
   })
   it('Should get user wrongly: userId does not exists', async () => {
     const repo = new ScheduleRepositoryMock()
-    await expect(repo.getUser(repo.getUsersLength() + 1)).rejects.toThrowError('No items found for userId')
-
+    await expect(repo.getUser(repo.getUsersLength() + 1)).rejects.toThrowError(
+      'No items found for userId',
+    )
   })
   it('Should get all users correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -69,17 +74,18 @@ describe('Assert Schedule Repository Mock is correct at all for Subject methods'
   })
   it('Should get subject correctly', async () => {
     const repo = new ScheduleRepositoryMock()
-    const subject = await repo.getSubject("ECM256")
+    const subject = await repo.getSubject('ECM256')
 
-    expect(subject?.code).toEqual("ECM256")
+    expect(subject?.code).toEqual('ECM256')
     expect(subject?.name).toEqual('Programming Languages II')
     expect(subject?.period).toEqual(PERIOD.MORNING)
   })
   it('Should get subject wrongly: codeSubject does not exists', async () => {
     const repo = new ScheduleRepositoryMock()
 
-    await expect(repo.getSubject("ECM25678")).rejects.toThrowError('No items found for codeSubject')
-
+    await expect(repo.getSubject('ECM25678')).rejects.toThrowError(
+      'No items found for codeSubject',
+    )
   })
   it('Should get all subjects correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -113,7 +119,9 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
   })
   it('Should get class correctly', async () => {
     const repo = new ScheduleRepositoryMock()
-    const selectedClass = await repo.getClass("0a8c5357-1f07-5b24-9845-9318c47ac922")
+    const selectedClass = await repo.getClass(
+      '0a8c5357-1f07-5b24-9845-9318c47ac922',
+    )
 
     expect(selectedClass.id).toBe('0a8c5357-1f07-5b24-9845-9318c47ac922')
     expect(selectedClass.name).toBe('Physics I')
@@ -166,7 +174,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     const repo = new ScheduleRepositoryMock()
     const lastLength = repo.getSuitabilitiesLength()
-    await repo.createSuitability(new Suitability({userId, codeSubject}))
+    await repo.createSuitability(new Suitability({ userId, codeSubject }))
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength + 1)
@@ -178,7 +186,9 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     const repo = new ScheduleRepositoryMock()
     const lastLength = repo.getSuitabilitiesLength()
 
-    await expect(repo.createSuitability(new Suitability({userId, codeSubject}))).rejects.toThrowError('Suitability already exists')
+    await expect(
+      repo.createSuitability(new Suitability({ userId, codeSubject })),
+    ).rejects.toThrowError('Suitability already exists')
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
@@ -191,7 +201,9 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     const lastLength = repo.getSuitabilitiesLength()
 
-    await expect(repo.createSuitability(new Suitability({userId, codeSubject}))).rejects.toThrowError('No items found for userId')
+    await expect(
+      repo.createSuitability(new Suitability({ userId, codeSubject })),
+    ).rejects.toThrowError('No items found for userId')
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
@@ -204,7 +216,11 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     const lastLength = repo.getSuitabilitiesLength()
 
-    await expect(repo.createSuitability(new Suitability({userId, codeSubject}))).rejects.toThrowError('The data rule "user must be a professor" was violated')
+    await expect(
+      repo.createSuitability(new Suitability({ userId, codeSubject })),
+    ).rejects.toThrowError(
+      'The data rule "user must be a professor" was violated',
+    )
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
@@ -217,13 +233,13 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     const lastLength = repo.getSuitabilitiesLength()
 
-    await expect(repo.createSuitability(new Suitability({userId, codeSubject}))).rejects.toThrowError('No items found for codeSubject')
+    await expect(
+      repo.createSuitability(new Suitability({ userId, codeSubject })),
+    ).rejects.toThrowError('No items found for codeSubject')
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
   })
-
-
 })
 
 // Schedule methods
@@ -265,7 +281,9 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
 
     const repo = new ScheduleRepositoryMock()
     const lastLength = repo.getSchedulesLength()
-    await expect(repo.createSchedule(schedule)).rejects.toThrowError('Schedule already exists')
+    await expect(repo.createSchedule(schedule)).rejects.toThrowError(
+      'Schedule already exists',
+    )
     const newLength = repo.getSchedulesLength()
 
     expect(newLength).toEqual(lastLength)
@@ -280,7 +298,9 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
     })
 
     const lastLength = repo.getSchedulesLength()
-    await expect(repo.createSchedule(schedule)).rejects.toThrowError('No items found for userId')
+    await expect(repo.createSchedule(schedule)).rejects.toThrowError(
+      'No items found for userId',
+    )
     const newLength = repo.getSchedulesLength()
 
     expect(newLength).toEqual(lastLength)
@@ -295,10 +315,77 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
     })
 
     const lastLength = repo.getSchedulesLength()
-    await expect(repo.createSchedule(schedule)).rejects.toThrowError('The data rule "user must be a coordinator" was violated')
+    await expect(repo.createSchedule(schedule)).rejects.toThrowError(
+      'The data rule "user must be a coordinator" was violated',
+    )
     const newLength = repo.getSchedulesLength()
 
     expect(newLength).toEqual(lastLength)
   })
 })
 
+// Possibility methods
+describe('Assert Schedule Repository Mock is correct at all for Possibility methods', () => {
+  it('Should get length correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const length = repo.getPossibilitiesLength()
+
+    expect(length).toEqual(18)
+  })
+  it('Should get all possibilities correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const possibilities = await repo.getAllPossibilities()
+
+    expect(possibilities.length).toEqual(18)
+  })
+  it('Should create possibility correctly', async () => {
+    const possibility = new Possibility({
+      id: '1afe4137-dd2f-5719-a780-e6d53e68960e',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getPossibilitiesLength()
+    await repo.createPossibility(possibility)
+    const newLength = repo.getPossibilitiesLength()
+
+    expect(newLength).toEqual(lastLength + 1)
+  })
+  it('Should not create possibility: exists', async () => {
+    const possibility = new Possibility({
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getPossibilitiesLength()
+    await expect(repo.createPossibility(possibility)).rejects.toThrowError(
+      'id already exists',
+    )
+    const newLength = repo.getPossibilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should create possibility wrongly: schedule does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const possibility = new Possibility({
+      id: '698b0f2c-3235-5afd-9b4b-97e916240cf0',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-4CV-D5@2024(SCS)',
+    })
+    const lastLength = repo.getPossibilitiesLength()
+    await expect(repo.createPossibility(possibility)).rejects.toThrowError(
+      'No items found for scheduleId',
+    )
+    const newLength = repo.getPossibilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+})

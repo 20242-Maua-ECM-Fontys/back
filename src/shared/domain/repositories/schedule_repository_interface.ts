@@ -1,4 +1,5 @@
 import { Class } from '../entities/class'
+import { Possibility } from '../entities/possibility'
 import { Schedule } from '../entities/schedule'
 import { Subject } from '../entities/subject'
 import { Suitability } from '../entities/suitability'
@@ -19,7 +20,7 @@ export interface IScheduleRepository {
   getClass(id: string): Promise<Class>
   getAllClasss(): Promise<Class[]>
   createClass(newClass: Class): Promise<Class>
-  
+
   // Subject methods
   getSubjectsLength(): number
   getSubject(code: string): Promise<Subject>
@@ -36,4 +37,10 @@ export interface IScheduleRepository {
   getSchedule(id: string): Promise<Schedule>
   getAllSchedules(): Promise<Schedule[]>
   createSchedule(schedule: Schedule): Promise<Schedule>
+
+  // Possibility methods
+  getPossibilitiesLength(): number
+  getPossibility(id: string): Promise<Possibility>
+  getAllPossibilities(): Promise<Possibility[]>
+  createPossibility(possibility: Possibility): Promise<Possibility>
 }

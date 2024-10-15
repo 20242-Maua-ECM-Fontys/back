@@ -101,21 +101,20 @@ export class Schedule {
 
   static validateScheduleId(scheduleId: string): boolean {
     if (scheduleId === undefined) {
-      return false;
+      return false
     }
     if (typeof scheduleId !== 'string') {
-      return false;
+      return false
     }
-  
-    const scheduleIdRegex = /^[0-9]+S-.+-[DN][2-6]@[0-9]{4}\(SCS\)$/;
-  
+
+    const scheduleIdRegex = /^[0-9]+S-.+-[DN][2-6]@[0-9]{4}\(SCS\)$/
+
     if (!scheduleIdRegex.test(scheduleId)) {
-      return false;
+      return false
     }
-  
-    return true;
+
+    return true
   }
-  
 
   static validateCourseName(courseName: string) {
     if (courseName === undefined) {
@@ -146,5 +145,4 @@ export class Schedule {
   static validateUserId(userId: number) {
     return userId != null && typeof userId === 'number' && userId >= 0
   }
-
 }

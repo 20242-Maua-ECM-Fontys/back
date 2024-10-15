@@ -116,26 +116,26 @@ export class Class {
     } else if (!roomCode.match(/^[A-Z]\d{2,3}$/)) {
       return false
     } else if (typeof roomCode != 'string') {
-        return false
+      return false
     }
     return true
   }
 
   static validateScheduleId(scheduleId: string): boolean {
     if (scheduleId === undefined) {
-      return false;
+      return false
     }
     if (typeof scheduleId !== 'string') {
-      return false;
+      return false
     }
-  
-    const scheduleIdRegex = /^[0-9]+S-.+-[DN][2-6]@[0-9]{4}\(SCS\)$/;
-  
+
+    const scheduleIdRegex = /^[0-9]+S-.+-[DN][2-6]@[0-9]{4}\(SCS\)$/
+
     if (!scheduleIdRegex.test(scheduleId)) {
-      return false;
+      return false
     }
-  
-    return true;
+
+    return true
   }
 
   static fromJSON(json: JsonProps) {
@@ -146,7 +146,7 @@ export class Class {
       classType: ClasstypeToEnum(json.classType as string),
       subjectCode: json.subjectCode,
       roomCode: json.roomCode,
-      scheduleId: json.scheduleId
+      scheduleId: json.scheduleId,
     })
   }
 
@@ -158,7 +158,7 @@ export class Class {
       classType: this.props.classType,
       subjectCode: this.props.subjectCode,
       roomCode: this.props.roomCode,
-      scheduleId: this.props.scheduleId
+      scheduleId: this.props.scheduleId,
     }
   }
 

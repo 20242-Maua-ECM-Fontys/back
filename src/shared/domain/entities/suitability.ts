@@ -20,7 +20,6 @@ export class Suitability {
       throw new EntityError('props.codeSubject')
     }
     this.props.codeSubject = props.codeSubject
-
   }
 
   static validateUserId(id: number): boolean {
@@ -38,14 +37,14 @@ export class Suitability {
   static fromJSON(json: JsonProps) {
     return new Suitability({
       userId: json.userId,
-      codeSubject: json.codeSubject
+      codeSubject: json.codeSubject,
     })
   }
 
   toJSON() {
     return {
       userId: this.userId,
-      codeSubject: this.codeSubject
+      codeSubject: this.codeSubject,
     }
   }
 
@@ -70,5 +69,4 @@ export class Suitability {
     }
     this.props.codeSubject = codeSubject
   }
-
 }
