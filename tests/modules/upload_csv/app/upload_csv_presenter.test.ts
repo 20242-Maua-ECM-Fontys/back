@@ -29,8 +29,6 @@ class,123e4567-e89b-12d3-a456-426614174007,Class 202,REMOTE,LAB,CSE204,,A02,,,,,
 
     const response = await UploadCSVPresenter(event, repo)
 
-    console.log(response.body)
-
     expect(response?.statusCode).toEqual(200)
   })
 })
