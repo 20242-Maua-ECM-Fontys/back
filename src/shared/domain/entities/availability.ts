@@ -8,10 +8,11 @@ import {
 } from '../enums/maua_end_time_enum'
 import { WEEK_DAY, toEnum as WeekDayToEnum } from '../enums/week_day_enum'
 import { EntityError } from '../../helpers/errors/domain_errors'
+import { User } from './user'
 
 export type AvailabilityProps = {
   id: string
-  userId: string
+  userId: number
   startTime: MAUA_START_TIME
   endTime: MAUA_END_TIME
   isTaken: boolean
@@ -20,7 +21,7 @@ export type AvailabilityProps = {
 
 export type JsonProps = {
   availabilityId: string
-  userId: string
+  userId: number
   startTime: MAUA_START_TIME
   endTime: MAUA_END_TIME
   isTaken: boolean
@@ -68,14 +69,8 @@ export class Availability {
     return true
   }
 
-  static validateUserId(id: string): boolean {
-    if (id === null) {
-      return false
-    }
-    if (id.length !== AVAILABILITY_ID_LENGTH) {
-      return false
-    }
-    return true
+  static validateUserId(id: number): boolean {
+    return User.validateId(id)
   }
 
   private static validateWeekDay(weekDay: WEEK_DAY): boolean {
