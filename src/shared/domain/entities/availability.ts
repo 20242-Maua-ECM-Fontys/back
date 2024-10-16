@@ -126,7 +126,7 @@ export class Availability {
     return this.props.id
   }
 
-  get userId(): string {
+  get userId(): number {
     return this.props.userId
   }
 
@@ -153,7 +153,7 @@ export class Availability {
     this.props.id = id
   }
 
-  set userId(userId: string) {
+  set userId(userId: number) {
     if (!Availability.validateUserId(userId)) {
       throw new EntityError('userId')
     }

@@ -1,3 +1,4 @@
+import { Availability } from '../entities/availability'
 import { Class } from '../entities/class'
 import { Possibility } from '../entities/possibility'
 import { Schedule } from '../entities/schedule'
@@ -43,4 +44,10 @@ export interface IScheduleRepository {
   getPossibility(id: string): Promise<Possibility>
   getAllPossibilities(): Promise<Possibility[]>
   createPossibility(possibility: Possibility): Promise<Possibility>
+
+  // Availability methods
+  getAvailabilitiesLength(): number
+  getAvailability(id: string): Promise<Availability>
+  getAllAvailabilities(): Promise<Availability[]>
+  createAvailability(availability: Availability): Promise<Availability>
 }

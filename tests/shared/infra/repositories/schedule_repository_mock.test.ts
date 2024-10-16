@@ -13,6 +13,7 @@ import { Possibility } from '../../../../src/shared/domain/entities/possibility'
 import { WEEK_DAY } from '../../../../src/shared/domain/enums/week_day_enum'
 import { MAUA_START_TIME } from '../../../../src/shared/domain/enums/maua_start_time_enum'
 import { MAUA_END_TIME } from '../../../../src/shared/domain/enums/maua_end_time_enum'
+import { Availability } from '../../../../src/shared/domain/entities/availability'
 
 // User methods
 describe('Assert Schedule Repository Mock is correct at all for User methods', () => {
@@ -431,6 +432,106 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
       'No items found for scheduleId',
     )
     const newLength = repo.getPossibilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+})
+
+// Availability methods
+describe('Assert Schedule Repository Mock is correct at all for Availability methods', () => {
+  it('Should get length correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const length = repo.getAvailabilitiesLength()
+
+    expect(length).toEqual(18)
+  })
+  it('Should get availability correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availability = await repo.getAvailability("0a8c5357-1f07-5b24-9845-9318c4000003")
+
+    expect(availability.availabilityId).toEqual("0a8c5357-1f07-5b24-9845-9318c4000003")
+  })
+  it('Should get availability wrongly: no availabilityId found', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getAvailability("0a8c5357-0007-5b24-9845-9318c4000003")).rejects.toThrowError(
+      'No items found for availabilityId',
+    )
+  })
+  it('Should get all availabilities correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilities = await repo.getAllAvailabilities()
+
+    expect(availabilities.length).toEqual(18)
+  })
+  it('Should create availability correctly', async () => {
+    const availability = new Availability({
+      id: '123e4567-0000-12d3-a456-426614174000',
+      userId: 5,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvailabilitiesLength()
+    await repo.createAvailability(availability)
+    const newLength = repo.getAvailabilitiesLength()
+
+    expect(newLength).toEqual(lastLength + 1)
+  })
+  it('Should not create availability: duplicated availabilityId', async () => {
+    const availability = new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000011',
+      userId: 5,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvailabilitiesLength()
+    await expect(repo.createAvailability(availability)).rejects.toThrowError(
+      'availabilityId already exists',
+    )
+    const newLength = repo.getAvailabilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should not create availability: user does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availability = new Availability({
+      id: '123e4567-0000-12d3-a456-426614174000',
+      userId: repo.getUsersLength() + 1,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    })
+    const lastLength = repo.getAvailabilitiesLength()
+    await expect(repo.createAvailability(availability)).rejects.toThrowError(
+      'No items found for userId',
+    )
+    const newLength = repo.getAvailabilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should not create availability: user is not a professor', async () => {
+    const availability = new Availability({
+      id: '123e4567-0000-12d3-a456-426614174000',
+      userId: 1,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvailabilitiesLength()
+    await expect(repo.createAvailability(availability)).rejects.toThrowError(
+      'The data rule "user must be a professor" was violated',
+    )
+    const newLength = repo.getAvailabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
   })

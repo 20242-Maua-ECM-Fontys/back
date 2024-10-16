@@ -17,6 +17,7 @@ import {
   NoItemsFound,
 } from '../../../shared/helpers/errors/repo_error'
 import { Schedule } from '../../../shared/domain/entities/schedule'
+import { Availability } from '../../../shared/domain/entities/availability'
 
 export class ScheduleRepositoryMock implements IScheduleRepository {
   // Mock Data
@@ -56,12 +57,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       password: 'Password4@',
     }),
     new User({
-      // professor with 0 suitability
+      // professor with 2 suitability
       id: 5,
       name: 'user5',
       email: 'user5@gmail.com',
       role: ROLE.PROFESSOR,
-      RA: '5.00000-5',
+      RA: '55.00000-5',
       password: 'Password5@',
     }),
   ]
@@ -426,6 +427,157 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
   ]
 
+  private availabilities: Availability[] = [
+    // Professor com userId = 3, todos os dias com H07_40_09_20 e H09_30_11_10
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000000',
+      userId: 3,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000001',
+      userId: 3,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000002',
+      userId: 3,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.TUE,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000003',
+      userId: 3,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.TUE,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000004',
+      userId: 3,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.WED,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000005',
+      userId: 3,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.WED,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000006',
+      userId: 3,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.THU,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000007',
+      userId: 3,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.THU,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      userId: 3,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.FRI,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000009',
+      userId: 3,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.FRI,
+    }),
+  
+    // Professor com userId = 4, apenas segunda-feira, em todos os horários
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000a',
+      userId: 4,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000b',
+      userId: 4,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000c',
+      userId: 4,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000d',
+      userId: 4,
+      startTime: MAUA_START_TIME.H13_10_14_50,
+      endTime: MAUA_END_TIME.H13_10_14_50,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000e',
+      userId: 4,
+      startTime: MAUA_START_TIME.H15_00_16_40,
+      endTime: MAUA_END_TIME.H15_00_16_40,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000f',
+      userId: 4,
+      startTime: MAUA_START_TIME.H16_50_18_30,
+      endTime: MAUA_END_TIME.H16_50_18_30,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000010',
+      userId: 4,
+      startTime: MAUA_START_TIME.H19_00_20_40,
+      endTime: MAUA_END_TIME.H19_00_20_40,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000011',
+      userId: 4,
+      startTime: MAUA_START_TIME.H20_50_22_30,
+      endTime: MAUA_END_TIME.H20_50_22_30,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+  ];
+  
+
   // User methods
   getUsersLength(): number {
     return this.users.length
@@ -625,5 +777,40 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
     this.possibilities.push(possibility)
     return possibility
+  }
+
+  // Availability methods
+  getAvailabilitiesLength(): number {
+    return this.availabilities.length
+  }
+
+  async getAvailability(id: string): Promise<Availability> {
+    const availability = this.availabilities.find(
+      (availability) => availability.availabilityId === id,
+    )
+    if (!availability) {
+      throw new NoItemsFound('availabilityId')
+    }
+    return availability
+  }
+
+  async getAllAvailabilities(): Promise<Availability[]> {
+    return this.availabilities
+  }
+
+  async createAvailability(availability: Availability): Promise<Availability> {
+    const exists = this.availabilities.find((a) => a.availabilityId === availability.availabilityId)
+    if (exists) {
+      throw new DuplicatedItem('availabilityId')
+    }
+
+    const user = await this.getUser(availability.userId)
+
+    if (user.role !== ROLE.PROFESSOR) {
+      throw new ViolateDataRule('user must be a professor')
+    }
+
+    this.availabilities.push(availability)
+    return availability
   }
 }
