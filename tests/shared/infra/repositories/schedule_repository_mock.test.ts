@@ -129,12 +129,20 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     expect(selectedClass.classType).toBe(CLASSTYPE.THEORY)
     expect(selectedClass.subjectCode).toBe('EFB207')
   })
+  it('Should get class wrongly: no classId found', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getClass('uuid')).rejects.toThrowError(
+      'No items found for classId',
+    )
+  })
   it('Should get all classes correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const classes = await repo.getAllClasss()
 
     expect(classes.length).toEqual(4)
   })
+  
   it('Should create class correctly', async () => {
     const classEntity = new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ab929',
@@ -250,6 +258,28 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
 
     expect(length).toEqual(4)
   })
+  
+  it('Should get schedule correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const schedule = await repo.getSchedule("2S-4CM-D5@2024(SCS)", 1)
+
+    expect(schedule.scheduleId).toEqual("2S-4CM-D5@2024(SCS)")
+    expect(schedule.groupNumber).toEqual(1)
+  })
+  it('Should get schedule correctly with different groupNumber', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const schedule = await repo.getSchedule("2S-4CM-D5@2024(SCS)", 2)
+
+    expect(schedule.scheduleId).toEqual("2S-4CM-D5@2024(SCS)")
+    expect(schedule.groupNumber).toEqual(2)
+  })
+  it('Should get schedule wrongly: no scheduleId found', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getSchedule("2S-4CM-D5@2024(SCS)123", 1)).rejects.toThrowError(
+      'No items found for scheduleId',
+    )
+  })
   it('Should get all schedules correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const users = await repo.getAllSchedules()
@@ -332,6 +362,19 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
 
     expect(length).toEqual(18)
   })
+  it('Should get possibility correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const possibility = await repo.getPossibility("123e4567-e89b-12d3-a456-426614174000")
+
+    expect(possibility.id).toEqual("123e4567-e89b-12d3-a456-426614174000")
+  })
+  it('Should get possibility wrongly: no possibilityId found', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getPossibility("123e4567-e892d3-a456-426614174000")).rejects.toThrowError(
+      'No items found for possibilityId',
+    )
+  })
   it('Should get all possibilities correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const possibilities = await repo.getAllPossibilities()
@@ -345,6 +388,7 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     })
 
     const repo = new ScheduleRepositoryMock()
@@ -361,6 +405,7 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     })
     const repo = new ScheduleRepositoryMock()
     const lastLength = repo.getPossibilitiesLength()
@@ -379,6 +424,7 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CV-D5@2024(SCS)',
+      groupNumber: 1,
     })
     const lastLength = repo.getPossibilitiesLength()
     await expect(repo.createPossibility(possibility)).rejects.toThrowError(

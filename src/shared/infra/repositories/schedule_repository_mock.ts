@@ -164,6 +164,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174001',
@@ -171,6 +172,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174002',
@@ -178,6 +180,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174000',
@@ -185,6 +188,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174001',
@@ -192,6 +196,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174002',
@@ -199,6 +204,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174000',
@@ -206,6 +212,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174001',
@@ -213,6 +220,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174002',
@@ -220,6 +228,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174000',
@@ -227,6 +236,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174001',
@@ -234,6 +244,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174002',
@@ -241,6 +252,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174000',
@@ -248,6 +260,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174001',
@@ -255,6 +268,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174002',
@@ -262,6 +276,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174000',
@@ -269,6 +284,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174001',
@@ -276,6 +292,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
     new Possibility({
       id: '123e4567-e89b-12d3-a456-426614174002',
@@ -283,7 +300,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     }),
+
+    // MON - FRI | 13:10 - 18:30 | 2S-3CM-D5@2024(SCS)
   ]
 
   // User methods
@@ -343,10 +363,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.classes.length
   }
 
-  async getClass(id: string): Promise<Class> {
-    const selectedClass = this.classes.find((c) => c.id === id)
+  async getClass(classId: string): Promise<Class> {
+    const selectedClass = this.classes.find((c) => c.id === classId)
     if (!selectedClass) {
-      throw new NoItemsFound('id')
+      throw new NoItemsFound('classId')
     }
     return selectedClass
   }
@@ -423,9 +443,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.schedules.length
   }
 
-  async getSchedule(id: string): Promise<Schedule> {
+  async getSchedule(id: string, groupNumber: number): Promise<Schedule> {
     const schedule = this.schedules.find(
-      (schedule) => schedule.scheduleId === id,
+      (schedule) =>
+        schedule.scheduleId === id && schedule.groupNumber === groupNumber,
     )
     if (!schedule) {
       throw new NoItemsFound('scheduleId')
@@ -460,12 +481,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.possibilities.length
   }
 
-  async getPossibility(id: string): Promise<Possibility> {
+  async getPossibility(possibilityId: string): Promise<Possibility> {
     const possibility = this.possibilities.find(
-      (possibility) => possibility.id === id,
+      (possibility) => possibility.id === possibilityId,
     )
     if (!possibility) {
-      throw new NoItemsFound('id')
+      throw new NoItemsFound('possibilityId')
     }
     return possibility
   }
@@ -480,10 +501,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       throw new DuplicatedItem('id')
     }
 
-    const schedule = await this.getSchedule(possibility.scheduleId)
-    if (!schedule) {
-      throw new NoItemsFound('scheduleId')
-    }
+    await this.getSchedule(possibility.scheduleId, 1)
 
     this.possibilities.push(possibility)
     return possibility

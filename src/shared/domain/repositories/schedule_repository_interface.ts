@@ -34,7 +34,7 @@ export interface IScheduleRepository {
 
   // Schedule methods
   getSchedulesLength(): number
-  getSchedule(id: string): Promise<Schedule>
+  getSchedule(id: string, groupNumber: number): Promise<Schedule>
   getAllSchedules(): Promise<Schedule[]>
   createSchedule(schedule: Schedule): Promise<Schedule>
 

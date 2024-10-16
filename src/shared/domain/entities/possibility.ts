@@ -16,6 +16,7 @@ export type PossibilityProps = {
   startTime: MAUA_START_TIME
   endTime: MAUA_END_TIME
   scheduleId: string
+  groupNumber: number
 }
 
 export type JsonProps = {
@@ -24,6 +25,7 @@ export type JsonProps = {
   startTime: number
   endTime: number
   scheduleId: string
+  groupNumber: number
 }
 
 export class Possibility {
@@ -47,6 +49,13 @@ export class Possibility {
     if (!Possibility.validateScheduleId(props.scheduleId)) {
       throw new EntityError('props.scheduleId')
     }
+    this.props.scheduleId = props.scheduleId
+
+    if (!Possibility.validateGroupNumber(props.groupNumber)) {
+      throw new EntityError('props.groupNumber')
+    }
+    this.props.groupNumber = props.groupNumber
+
   }
 
   private static validateId(id: string): boolean {
@@ -86,6 +95,16 @@ export class Possibility {
     return true
   }
 
+  private static validateGroupNumber(groupNumber: number): boolean {
+    if (typeof groupNumber !== 'number') {
+      return false
+    }
+    if (groupNumber < 0) {
+      return false
+    }
+    return true
+  }
+
   static fromJSON(json: JsonProps): Possibility {
     return new Possibility({
       id: json.possibilityId,
@@ -93,6 +112,7 @@ export class Possibility {
       startTime: StartTimeToEnum(json.startTime),
       endTime: EndTimeToEnum(json.endTime),
       scheduleId: json.scheduleId,
+      groupNumber: json.groupNumber,
     })
   }
 
@@ -103,6 +123,7 @@ export class Possibility {
       startTime: this.props.startTime,
       endTime: this.props.endTime,
       scheduleId: this.props.scheduleId,
+      groupNumber: this.props.groupNumber,
     }
   }
 
@@ -124,6 +145,10 @@ export class Possibility {
 
   get scheduleId(): string {
     return this.props.scheduleId
+  }
+
+  get groupNumber(): number {
+    return this.props.groupNumber
   }
 
   set weekDay(weekDay: WEEK_DAY) {
@@ -152,5 +177,12 @@ export class Possibility {
       throw new EntityError('scheduleId')
     }
     this.props.scheduleId = scheduleId
+  }
+
+  set groupNumber(groupNumber: number) {
+    if (!Possibility.validateGroupNumber(groupNumber)) {
+      throw new EntityError('groupNumber')
+    }
+    this.props.groupNumber = groupNumber
   }
 }
