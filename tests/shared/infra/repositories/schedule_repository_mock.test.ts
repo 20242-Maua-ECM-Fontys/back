@@ -360,13 +360,13 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
     const repo = new ScheduleRepositoryMock()
     const length = repo.getPossibilitiesLength()
 
-    expect(length).toEqual(18)
+    expect(length).toEqual(33)
   })
   it('Should get possibility correctly', async () => {
     const repo = new ScheduleRepositoryMock()
-    const possibility = await repo.getPossibility("123e4567-e89b-12d3-a456-426614174000")
+    const possibility = await repo.getPossibility("a13e4567-e89b-12d3-a456-426614174000")
 
-    expect(possibility.id).toEqual("123e4567-e89b-12d3-a456-426614174000")
+    expect(possibility.id).toEqual("a13e4567-e89b-12d3-a456-426614174000")
   })
   it('Should get possibility wrongly: no possibilityId found', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -379,7 +379,7 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
     const repo = new ScheduleRepositoryMock()
     const possibilities = await repo.getAllPossibilities()
 
-    expect(possibilities.length).toEqual(18)
+    expect(possibilities.length).toEqual(33)
   })
   it('Should create possibility correctly', async () => {
     const possibility = new Possibility({
@@ -400,11 +400,11 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
   })
   it('Should not create possibility: exists', async () => {
     const possibility = new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: 'a13e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.MON,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
-      scheduleId: '2S-4CM-D5@2024(SCS)',
+      scheduleId: '2S-3CM-D5@2024(SCS)',
       groupNumber: 1,
     })
     const repo = new ScheduleRepositoryMock()

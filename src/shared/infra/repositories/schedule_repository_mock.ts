@@ -159,7 +159,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   private possibilities: Possibility[] = [
     // MON - SAT | 07:40 - 13:00 | 2S-4CM-D5@2024(SCS)
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '113e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.MON,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
@@ -175,7 +175,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '133e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.MON,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
@@ -183,7 +183,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '143e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.TUE,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
@@ -191,7 +191,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174001',
+      id: '153e4567-e89b-12d3-a456-426614174001',
       weekDay: WEEK_DAY.TUE,
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
@@ -199,7 +199,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '163e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.TUE,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
@@ -207,7 +207,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '173e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.WED,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
@@ -215,7 +215,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174001',
+      id: '183e4567-e89b-12d3-a456-426614174001',
       weekDay: WEEK_DAY.WED,
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
@@ -223,7 +223,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '193e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.WED,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
@@ -231,7 +231,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '103e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.THU,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
@@ -239,7 +239,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174001',
+      id: '121e4567-e89b-12d3-a456-426614174001',
       weekDay: WEEK_DAY.THU,
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
@@ -247,7 +247,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '122e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.THU,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
@@ -255,7 +255,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '124e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.FRI,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
@@ -263,7 +263,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174001',
+      id: '125e4567-e89b-12d3-a456-426614174001',
       weekDay: WEEK_DAY.FRI,
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
@@ -271,7 +271,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '126e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.FRI,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
@@ -279,7 +279,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '127e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.SAT,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
@@ -287,7 +287,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174001',
+      id: '128e4567-e89b-12d3-a456-426614174001',
       weekDay: WEEK_DAY.SAT,
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
@@ -295,7 +295,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       groupNumber: 1,
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '129e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.SAT,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
@@ -304,6 +304,126 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
 
     // MON - FRI | 13:10 - 18:30 | 2S-3CM-D5@2024(SCS)
+    new Possibility({
+      id: 'a13e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'a23e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'a33e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'a43e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.TUE,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'a53e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.TUE,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'a63e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.TUE,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'a73e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.WED,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'a83e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.WED,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'b13e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.WED,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'b23e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.THU,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'b33e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.THU,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'b43e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.THU,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'b53e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.FRI,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'b63e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.FRI,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
+    new Possibility({
+      id: 'b73e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.FRI,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
+    }),
   ]
 
   // User methods
