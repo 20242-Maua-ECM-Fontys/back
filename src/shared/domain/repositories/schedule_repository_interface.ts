@@ -1,4 +1,5 @@
 import { Availability } from '../entities/availability'
+import { AvFullfilled } from '../entities/avFullfilled'
 import { Class } from '../entities/class'
 import { Possibility } from '../entities/possibility'
 import { Schedule } from '../entities/schedule'
@@ -50,4 +51,9 @@ export interface IScheduleRepository {
   getAvailability(id: string): Promise<Availability>
   getAllAvailabilities(): Promise<Availability[]>
   createAvailability(availability: Availability): Promise<Availability>
+
+  // AvFullfilled methods
+  getAvsFullfilledLength(): number
+  getAllAvsFullfilled(): Promise<AvFullfilled[]>
+  // createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled>
 }

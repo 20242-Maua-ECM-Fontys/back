@@ -1,8 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { AvFullfilled } from '../../../../src/shared/domain/entities/avFullfilled'
-import { Availability } from '../../../../src/shared/domain/entities/availability'
-import { Possibility } from '../../../../src/shared/domain/entities/possibility'
-import { Class } from '../../../../src/shared/domain/entities/class'
 import { EntityError } from '../../../../src/shared/helpers/errors/domain_errors'
 
 describe('AvFullfilled entity', () => {

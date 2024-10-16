@@ -12,7 +12,7 @@ describe('Class Entity Tests', () => {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
-      scheduleId: '2S-4CM-D5@2024(SCS)'
+      scheduleId: '2S-4CM-D5@2024(SCS)',
     })
     
     expect(classEntity).toBeInstanceOf(Class)
@@ -32,7 +32,7 @@ describe('Class Entity Tests', () => {
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
       roomCode: 'A01',
-      scheduleId: '2S-4CM-D5@2024(SCS)'
+      scheduleId: '2S-4CM-D5@2024(SCS)',
     })
     
     expect(classEntity).toBeInstanceOf(Class)
@@ -52,7 +52,7 @@ describe('Class Entity Tests', () => {
         modality: MODALITY.IN_PERSON,
         classType: CLASSTYPE.THEORY,
         subjectCode: 'ECM256',
-        scheduleId: '2S-4CM-D5@2024(SCS)'
+        scheduleId: '2S-4CM-D5@2024(SCS)',
       })
     }).toThrowError(EntityError)
   })
@@ -65,7 +65,7 @@ describe('Class Entity Tests', () => {
         modality: MODALITY.IN_PERSON,
         classType: CLASSTYPE.THEORY,
         subjectCode: 'ECM256',
-        scheduleId: '2S-4CM-D5@2024(SCS)'
+        scheduleId: '2S-4CM-D5@2024(SCS)',
       })
     }).toThrowError(EntityError)
   })
@@ -78,7 +78,7 @@ describe('Class Entity Tests', () => {
         modality: 'PRESENCIAL',
         classType: CLASSTYPE.THEORY,
         subjectCode: 'ECM256',
-        scheduleId: '2S-4CM-D5@2024(SCS)'
+        scheduleId: '2S-4CM-D5@2024(SCS)',
       })
     }).toThrowError(EntityError)
   })
@@ -91,7 +91,7 @@ describe('Class Entity Tests', () => {
         modality: MODALITY.IN_PERSON,
         classType: 'TEORIA',
         subjectCode: 'ECM256',
-        scheduleId: '2S-4CM-D5@2024(SCS)'
+        scheduleId: '2S-4CM-D5@2024(SCS)',
       })
     }).toThrowError(EntityError)
   })
@@ -104,7 +104,7 @@ describe('Class Entity Tests', () => {
         modality: MODALITY.IN_PERSON,
         classType: CLASSTYPE.THEORY,
         subjectCode: 'ECM',
-        scheduleId: '2S-4CM-D5@2024(SCS)'
+        scheduleId: '2S-4CM-D5@2024(SCS)',
       })
     }).toThrowError(EntityError)
   })
@@ -117,7 +117,7 @@ describe('Class Entity Tests', () => {
         modality: MODALITY.IN_PERSON,
         classType: CLASSTYPE.THEORY,
         subjectCode: 'ECM',
-        scheduleId: '52'
+        scheduleId: '52',
       })
     }).toThrowError(EntityError)
   })

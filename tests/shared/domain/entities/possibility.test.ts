@@ -13,7 +13,6 @@ describe('Possibility entity', () => {
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
-      groupNumber: 1,
     })
 
     expect(possibility).toBeDefined()
@@ -27,7 +26,7 @@ describe('Possibility entity', () => {
         startTime: MAUA_START_TIME.H07_40_09_20,
         endTime: MAUA_END_TIME.H07_40_09_20,
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        groupNumber: 1,
+
 
       })
     }).toThrowError(EntityError)
@@ -41,7 +40,7 @@ describe('Possibility entity', () => {
         startTime: MAUA_START_TIME.H07_40_09_20,
         endTime: MAUA_END_TIME.H07_40_09_20,
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        groupNumber: 1,
+
 
       })
     }).toThrowError(EntityError)
@@ -55,7 +54,7 @@ describe('Possibility entity', () => {
         startTime: 1 as MAUA_START_TIME,
         endTime: MAUA_END_TIME.H07_40_09_20,
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        groupNumber: 1,
+
 
       })
     }).toThrowError(EntityError)
@@ -69,7 +68,7 @@ describe('Possibility entity', () => {
         startTime: MAUA_START_TIME.H07_40_09_20,
         endTime: 1 as MAUA_END_TIME,
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        groupNumber: 1,
+
       })
     }).toThrowError(EntityError)
   })
@@ -82,7 +81,7 @@ describe('Possibility entity', () => {
         startTime: MAUA_START_TIME.H07_40_09_20,
         endTime: MAUA_END_TIME.H09_30_11_10,
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        groupNumber: 1,
+
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -92,7 +91,7 @@ describe('Possibility entity', () => {
         startTime: MAUA_START_TIME.H09_30_11_10,
         endTime: MAUA_END_TIME.H07_40_09_20,
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        groupNumber: 1,
+
       })
     }).toThrowError(EntityError)
   })
@@ -105,19 +104,7 @@ describe('Possibility entity', () => {
         startTime: 1 as MAUA_START_TIME,
         endTime: MAUA_END_TIME.H07_40_09_20,
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        groupNumber: 1,
-      })
-    }).toThrowError(EntityError)
-  })
-  it('should throw an error if groupNumber is invalid', () => {
-    expect(() => {
-      new Possibility({
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        weekDay: WEEK_DAY.FRI,
-        startTime: MAUA_START_TIME.H07_40_09_20,
-        endTime: MAUA_END_TIME.H07_40_09_20,
-        scheduleId: '2S-4CM-D5@2024(SCS)',
-        groupNumber: -1,
+
       })
     }).toThrowError(EntityError)
   })
