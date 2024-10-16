@@ -58,7 +58,7 @@ export class Possibility {
 
   }
 
-  private static validateId(id: string): boolean {
+  static validateId(id: string): boolean {
     if (typeof id !== 'string') {
       return false
     }
@@ -68,11 +68,11 @@ export class Possibility {
     return true
   }
 
-  private static validateWeekDay(weekDay: WEEK_DAY): boolean {
+  static validateWeekDay(weekDay: WEEK_DAY): boolean {
     return Object.values(WEEK_DAY).includes(weekDay)
   }
 
-  private static validateStartEndTime(
+  static validateStartEndTime(
     startTime: MAUA_START_TIME,
     endTime: MAUA_END_TIME,
   ): boolean {
@@ -88,14 +88,14 @@ export class Possibility {
     return true
   }
 
-  private static validateScheduleId(scheduleId: string): boolean {
+  static validateScheduleId(scheduleId: string): boolean {
     if (!Schedule.validateScheduleId(scheduleId)) {
       return false
     }
     return true
   }
 
-  private static validateGroupNumber(groupNumber: number): boolean {
+  static validateGroupNumber(groupNumber: number): boolean {
     if (typeof groupNumber !== 'number') {
       return false
     }

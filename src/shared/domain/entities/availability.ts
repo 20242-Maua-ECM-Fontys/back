@@ -32,7 +32,7 @@ const AVAILABILITY_ID_LENGTH = 36
 
 export class Availability {
   constructor(public props: AvailabilityProps) {
-    if (!Availability.validateAvailabilityId(props.id)) {
+    if (!Availability.validateId(props.id)) {
       throw new EntityError('id')
     }
     this.props.id = props.id
@@ -59,7 +59,7 @@ export class Availability {
     this.props.weekDay = props.weekDay
   }
 
-  static validateAvailabilityId(id: string): boolean {
+  static validateId(id: string): boolean {
     if (id === null) {
       return false
     }
@@ -147,7 +147,7 @@ export class Availability {
   }
 
   set availabilityId(id: string) {
-    if (!Availability.validateAvailabilityId(id)) {
+    if (!Availability.validateId(id)) {
       throw new EntityError('availabilityId')
     }
     this.props.id = id
