@@ -378,6 +378,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   async createSubject(subject: Subject): Promise<Subject> {
+    const exists = this.subjects.find((s) => s.code === subject.code)
+    if (exists) {
+      throw new DuplicatedItem('Subject')
+    }
     this.subjects.push(subject)
     return subject
   }

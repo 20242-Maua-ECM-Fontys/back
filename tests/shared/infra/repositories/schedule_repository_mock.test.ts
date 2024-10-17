@@ -107,6 +107,22 @@ describe('Assert Schedule Repository Mock is correct at all for Subject methods'
 
     expect(newLength).toEqual(lastLength + 1)
   })
+  it('Should not create subject: subject already exists', async () => {
+    const subject = new Subject({
+      code: 'ECM256',
+      name: 'Programming Languages II',
+      period: PERIOD.MORNING,
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getSubjectsLength()
+    await expect(repo.createSubject(subject)).rejects.toThrowError(
+      'Subject already exists',
+    )
+    const newLength = repo.getSubjectsLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
 })
 
 // Class methods

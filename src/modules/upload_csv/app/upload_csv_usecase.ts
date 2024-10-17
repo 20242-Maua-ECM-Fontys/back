@@ -37,9 +37,7 @@ function bufferToStream(buffer: Buffer): Readable {
 }
 
 export class UploadCSVUsecase {
-  constructor(
-    private repo: IScheduleRepository,
-  ) {}
+  constructor(private repo: IScheduleRepository) {}
 
   async execute(buffer: Buffer): Promise<string> {
     const userList: User[] = []
@@ -156,8 +154,7 @@ export class UploadCSVUsecase {
               async (newUser) => await this.repo.createUser(newUser),
             )
             subjectList.forEach(
-              async (newSubject) =>
-                await this.repo.createSubject(newSubject),
+              async (newSubject) => await this.repo.createSubject(newSubject),
             )
             classList.forEach(
               async (newClass) => await this.repo.createClass(newClass),
