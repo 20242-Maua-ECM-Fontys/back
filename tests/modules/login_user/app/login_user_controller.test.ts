@@ -1,12 +1,12 @@
 import { it, expect, describe } from 'vitest'
-import { UserRepositoryMock } from '../../../../src/shared/infra/repositories/user_repository_mock'
 import { LoginUserUsecase } from '../../../../src/modules/login_user/app/login_user_usecase'
 import { LoginUserController } from '../../../../src/modules/login_user/app/login_user_controller'
 import { HttpRequest } from '../../../../src/shared/helpers/external_interfaces/http_models'
+import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 
 describe('Assert Login User controller is correct at all', () => {
   it('Assert Login User controller is correct when logging in with valid credentials', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
     const controller = new LoginUserController(usecase)
 
@@ -23,7 +23,7 @@ describe('Assert Login User controller is correct at all', () => {
   })
 
   it('Assert Login User controller is not correct when email and password are missing', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
     const controller = new LoginUserController(usecase)
 
@@ -39,7 +39,7 @@ describe('Assert Login User controller is correct at all', () => {
   })
 
   it('Assert Login User controller is not correct when email is missing', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
     const controller = new LoginUserController(usecase)
 
@@ -55,7 +55,7 @@ describe('Assert Login User controller is correct at all', () => {
   })
 
   it('Assert Login User controller is not correct when password is missing', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
     const controller = new LoginUserController(usecase)
 
@@ -71,7 +71,7 @@ describe('Assert Login User controller is correct at all', () => {
   })
 
   it('Assert Login User controller is not correct when credentials are invalid', async () => {
-    const repo = new UserRepositoryMock()
+    const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
     const controller = new LoginUserController(usecase)
 
