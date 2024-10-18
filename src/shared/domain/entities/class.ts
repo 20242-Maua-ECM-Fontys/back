@@ -238,4 +238,5 @@ export class Class {
     }
     this.props.scheduleId = scheduleId
   }
+
 }

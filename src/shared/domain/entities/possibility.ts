@@ -47,9 +47,11 @@ export class Possibility {
     if (!Possibility.validateScheduleId(props.scheduleId)) {
       throw new EntityError('props.scheduleId')
     }
+    this.props.scheduleId = props.scheduleId
+
   }
 
-  private static validateId(id: string): boolean {
+  static validateId(id: string): boolean {
     if (typeof id !== 'string') {
       return false
     }
@@ -59,11 +61,11 @@ export class Possibility {
     return true
   }
 
-  private static validateWeekDay(weekDay: WEEK_DAY): boolean {
+  static validateWeekDay(weekDay: WEEK_DAY): boolean {
     return Object.values(WEEK_DAY).includes(weekDay)
   }
 
-  private static validateStartEndTime(
+  static validateStartEndTime(
     startTime: MAUA_START_TIME,
     endTime: MAUA_END_TIME,
   ): boolean {
@@ -79,7 +81,7 @@ export class Possibility {
     return true
   }
 
-  private static validateScheduleId(scheduleId: string): boolean {
+  static validateScheduleId(scheduleId: string): boolean {
     if (!Schedule.validateScheduleId(scheduleId)) {
       return false
     }
@@ -126,6 +128,7 @@ export class Possibility {
     return this.props.scheduleId
   }
 
+
   set weekDay(weekDay: WEEK_DAY) {
     if (!Possibility.validateWeekDay(weekDay)) {
       throw new EntityError('weekDay')
@@ -153,4 +156,5 @@ export class Possibility {
     }
     this.props.scheduleId = scheduleId
   }
+
 }

@@ -17,6 +17,8 @@ import {
   NoItemsFound,
 } from '../../../shared/helpers/errors/repo_error'
 import { Schedule } from '../../../shared/domain/entities/schedule'
+import { Availability } from '../../../shared/domain/entities/availability'
+import { AvFullfilled } from '../../../shared/domain/entities/avFullfilled'
 
 export class ScheduleRepositoryMock implements IScheduleRepository {
   // Mock Data
@@ -56,12 +58,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       password: 'Password4@',
     }),
     new User({
-      // professor with 0 suitability
+      // professor with 2 suitability
       id: 5,
       name: 'user5',
       email: 'user5@gmail.com',
       role: ROLE.PROFESSOR,
-      RA: '5.00000-5',
+      RA: '55.00000-5',
       password: 'Password5@',
     }),
   ]
@@ -76,15 +78,16 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       scheduleId: '1S-2CIC-D4@2024(SCS)',
     }),
     new Class({
-      id: '0a8c5357-1f07-5b24-9845-9318c47ac923',
+      id: '0a8c5357-1f07-5b24-9845-9318c47ac924',
       name: 'Linguagens de Programacao II',
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      
     }),
     new Class({
-      id: '0a8c5357-1f07-5b24-9845-9318c47ac922',
+      id: '0a8c5357-1f07-5b24-9845-9318c47ac925',
       name: 'Physics I',
       modality: MODALITY.REMOTE,
       classType: CLASSTYPE.THEORY,
@@ -92,7 +95,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       scheduleId: '2S-3CM-D5@2024(SCS)',
     }),
     new Class({
-      id: '0a8c5357-1f07-5b24-9845-9318c47ac921',
+      id: '0a8c5357-1f07-5b24-9845-9318c47ac926',
       name: 'Physics I',
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.LAB,
@@ -120,11 +123,11 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       codeSubject: 'ECM256',
     }),
     new Suitability({
-      userId: 5,
+      userId: 3,
       codeSubject: 'EFB207',
     }),
     new Suitability({
-      userId: 5,
+      userId: 4,
       codeSubject: 'ECM256',
     }),
   ]
@@ -159,7 +162,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   private possibilities: Possibility[] = [
     // MON - SAT | 07:40 - 13:00 | 2S-4CM-D5@2024(SCS)
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '113e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.MON,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
@@ -173,116 +176,398 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '133e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.MON,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '143e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.TUE,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174001',
+      id: '153e4567-e89b-12d3-a456-426614174001',
       weekDay: WEEK_DAY.TUE,
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '163e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.TUE,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '173e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.WED,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174001',
+      id: '183e4567-e89b-12d3-a456-426614174001',
       weekDay: WEEK_DAY.WED,
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '193e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.WED,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '103e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.THU,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174001',
+      id: '121e4567-e89b-12d3-a456-426614174001',
       weekDay: WEEK_DAY.THU,
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '122e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.THU,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '124e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.FRI,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174001',
+      id: '125e4567-e89b-12d3-a456-426614174001',
       weekDay: WEEK_DAY.FRI,
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '126e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.FRI,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '127e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.SAT,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174001',
+      id: '128e4567-e89b-12d3-a456-426614174001',
       weekDay: WEEK_DAY.SAT,
       startTime: MAUA_START_TIME.H09_30_11_10,
       endTime: MAUA_END_TIME.H09_30_11_10,
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
     new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174002',
+      id: '129e4567-e89b-12d3-a456-426614174002',
       weekDay: WEEK_DAY.SAT,
       startTime: MAUA_START_TIME.H11_20_13_00,
       endTime: MAUA_END_TIME.H11_20_13_00,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+
+    // MON - FRI | 07:40 - 11:20 | 2S-3CM-D5@2024(SCS)
+    new Possibility({
+      id: 'a13e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'a23e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'a33e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.MON,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'a43e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.TUE,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'a53e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.TUE,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'a63e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.TUE,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'a73e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.WED,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'a83e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.WED,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'b13e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.WED,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'b23e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.THU,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'b33e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.THU,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'b43e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.THU,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'b53e4567-e89b-12d3-a456-426614174000',
+      weekDay: WEEK_DAY.FRI,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'b63e4567-e89b-12d3-a456-426614174001',
+      weekDay: WEEK_DAY.FRI,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+    new Possibility({
+      id: 'b73e4567-e89b-12d3-a456-426614174002',
+      weekDay: WEEK_DAY.FRI,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+    }),
+  ]
+
+  private availabilities: Availability[] = [
+    // Professor com userId = 3, todos os dias com H07_40_09_20 e H09_30_11_10
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000000',
+      userId: 3,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000001',
+      userId: 3,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000002',
+      userId: 3,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.TUE,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000003',
+      userId: 3,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.TUE,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000004',
+      userId: 3,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.WED,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000005',
+      userId: 3,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.WED,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000006',
+      userId: 3,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.THU,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000007',
+      userId: 3,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.THU,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      userId: 3,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.FRI,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000009',
+      userId: 3,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: true,
+      weekDay: WEEK_DAY.FRI,
+    }),
+  
+    // Professor com userId = 4, apenas segunda-feira, em todos os horários
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000a',
+      userId: 4,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: true,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000b',
+      userId: 4,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000c',
+      userId: 4,
+      startTime: MAUA_START_TIME.H11_20_13_00,
+      endTime: MAUA_END_TIME.H11_20_13_00,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000d',
+      userId: 4,
+      startTime: MAUA_START_TIME.H13_10_14_50,
+      endTime: MAUA_END_TIME.H13_10_14_50,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000e',
+      userId: 4,
+      startTime: MAUA_START_TIME.H15_00_16_40,
+      endTime: MAUA_END_TIME.H15_00_16_40,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c400000f',
+      userId: 4,
+      startTime: MAUA_START_TIME.H16_50_18_30,
+      endTime: MAUA_END_TIME.H16_50_18_30,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000010',
+      userId: 4,
+      startTime: MAUA_START_TIME.H19_00_20_40,
+      endTime: MAUA_END_TIME.H19_00_20_40,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000011',
+      userId: 4,
+      startTime: MAUA_START_TIME.H20_50_22_30,
+      endTime: MAUA_END_TIME.H20_50_22_30,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+  ];
+
+  private avsFullfilled: AvFullfilled[] = [
+    /* 
+      professor with userId=4 
+      will teach Linguagens de Programacao II 
+      from 07:40 to 09:20 on Monday 
+      for course 2S-4CM-D5@2024(SCS)
+    */
+    new AvFullfilled({ 
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c400000a',
+      possibilityId: '113e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac924',
+    }),
+    /* 
+      professor with userId=3
+      will teach Physics I
+      from 09:30 to 11:10 on Friday 
+      for course 2S-3CM-D5@2024(SCS)
+    */
+    new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000009',
+      possibilityId: 'b63e4567-e89b-12d3-a456-426614174001',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac925',
     }),
   ]
 
@@ -347,10 +632,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.classes.length
   }
 
-  async getClass(id: string): Promise<Class> {
-    const selectedClass = this.classes.find((c) => c.id === id)
+  async getClass(classId: string): Promise<Class> {
+    const selectedClass = this.classes.find((c) => c.id === classId)
     if (!selectedClass) {
-      throw new NoItemsFound('id')
+      throw new NoItemsFound('classId')
     }
     return selectedClass
   }
@@ -435,9 +720,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.schedules.length
   }
 
-  async getSchedule(id: string): Promise<Schedule> {
+  async getSchedule(id: string, groupNumber: number): Promise<Schedule> {
     const schedule = this.schedules.find(
-      (schedule) => schedule.scheduleId === id,
+      (schedule) =>
+        schedule.scheduleId === id && schedule.groupNumber === groupNumber,
     )
     if (!schedule) {
       throw new NoItemsFound('scheduleId')
@@ -472,12 +758,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.possibilities.length
   }
 
-  async getPossibility(id: string): Promise<Possibility> {
+  async getPossibility(possibilityId: string): Promise<Possibility> {
     const possibility = this.possibilities.find(
-      (possibility) => possibility.id === id,
+      (possibility) => possibility.id === possibilityId,
     )
     if (!possibility) {
-      throw new NoItemsFound('id')
+      throw new NoItemsFound('possibilityId')
     }
     return possibility
   }
@@ -492,12 +778,80 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       throw new DuplicatedItem('id')
     }
 
-    const schedule = await this.getSchedule(possibility.scheduleId)
-    if (!schedule) {
-      throw new NoItemsFound('scheduleId')
-    }
+    await this.getSchedule(possibility.scheduleId, 1)
 
     this.possibilities.push(possibility)
     return possibility
   }
+
+  // Availability methods
+  getAvailabilitiesLength(): number {
+    return this.availabilities.length
+  }
+
+  async getAvailability(id: string): Promise<Availability> {
+    const availability = this.availabilities.find(
+      (availability) => availability.availabilityId === id,
+    )
+    if (!availability) {
+      throw new NoItemsFound('availabilityId')
+    }
+    return availability
+  }
+
+  async getAllAvailabilities(): Promise<Availability[]> {
+    return this.availabilities
+  }
+
+  async createAvailability(availability: Availability): Promise<Availability> {
+    const exists = this.availabilities.find((a) => a.availabilityId === availability.availabilityId)
+    if (exists) {
+      throw new DuplicatedItem('availabilityId')
+    }
+
+    const user = await this.getUser(availability.userId)
+
+    if (user.role !== ROLE.PROFESSOR) {
+      throw new ViolateDataRule('user must be a professor')
+    }
+
+    this.availabilities.push(availability)
+    return availability
+  }
+
+  // AvFullfilled methods
+  getAvsFullfilledLength(): number {
+    return this.avsFullfilled.length
+  }
+
+  async getAllAvsFullfilled(): Promise<AvFullfilled[]> {
+    return this.avsFullfilled
+  }
+
+  async createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled> {
+    const availability = await this.getAvailability(avFullfilled.availabilityId) // availability exists?
+    const possibility = await this.getPossibility(avFullfilled.possibilityId) // possibility exists?
+    const selectedClass = await this.getClass(avFullfilled.classId) // class exists?
+    
+    if (availability.isTaken) {
+      throw new ViolateDataRule('Availability is already taken')
+    }
+    if (possibility.scheduleId !== selectedClass.scheduleId) {
+      throw new ViolateDataRule('Possibility and Class must have the same scheduleId')
+    }
+    if (possibility.startTime !== availability.startTime || possibility.endTime !== availability.endTime) {
+      throw new ViolateDataRule('Possibility and Availability must have the same startTime and endTime')
+    }
+    if (possibility.weekDay !== availability.weekDay) {
+      throw new ViolateDataRule('Possibility and Availability must have the same weekDay')
+    }
+    
+
+    availability.isTaken = true
+
+    this.avsFullfilled.push(avFullfilled)
+    return avFullfilled
+  }
+
+
 }

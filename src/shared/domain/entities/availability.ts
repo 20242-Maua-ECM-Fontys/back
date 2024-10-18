@@ -8,10 +8,11 @@ import {
 } from '../enums/maua_end_time_enum'
 import { WEEK_DAY, toEnum as WeekDayToEnum } from '../enums/week_day_enum'
 import { EntityError } from '../../helpers/errors/domain_errors'
+import { User } from './user'
 
 export type AvailabilityProps = {
   id: string
-  userId: string
+  userId: number
   startTime: MAUA_START_TIME
   endTime: MAUA_END_TIME
   isTaken: boolean
@@ -20,7 +21,7 @@ export type AvailabilityProps = {
 
 export type JsonProps = {
   availabilityId: string
-  userId: string
+  userId: number
   startTime: MAUA_START_TIME
   endTime: MAUA_END_TIME
   isTaken: boolean
@@ -31,7 +32,7 @@ const AVAILABILITY_ID_LENGTH = 36
 
 export class Availability {
   constructor(public props: AvailabilityProps) {
-    if (!Availability.validateAvailabilityId(props.id)) {
+    if (!Availability.validateId(props.id)) {
       throw new EntityError('id')
     }
     this.props.id = props.id
@@ -58,7 +59,7 @@ export class Availability {
     this.props.weekDay = props.weekDay
   }
 
-  static validateAvailabilityId(id: string): boolean {
+  static validateId(id: string): boolean {
     if (id === null) {
       return false
     }
@@ -68,14 +69,8 @@ export class Availability {
     return true
   }
 
-  static validateUserId(id: string): boolean {
-    if (id === null) {
-      return false
-    }
-    if (id.length !== AVAILABILITY_ID_LENGTH) {
-      return false
-    }
-    return true
+  static validateUserId(id: number): boolean {
+    return User.validateId(id)
   }
 
   private static validateWeekDay(weekDay: WEEK_DAY): boolean {
@@ -131,7 +126,7 @@ export class Availability {
     return this.props.id
   }
 
-  get userId(): string {
+  get userId(): number {
     return this.props.userId
   }
 
@@ -152,13 +147,13 @@ export class Availability {
   }
 
   set availabilityId(id: string) {
-    if (!Availability.validateAvailabilityId(id)) {
+    if (!Availability.validateId(id)) {
       throw new EntityError('availabilityId')
     }
     this.props.id = id
   }
 
-  set userId(userId: string) {
+  set userId(userId: number) {
     if (!Availability.validateUserId(userId)) {
       throw new EntityError('userId')
     }

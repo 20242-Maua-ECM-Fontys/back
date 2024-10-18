@@ -13,6 +13,8 @@ import { Possibility } from '../../../../src/shared/domain/entities/possibility'
 import { WEEK_DAY } from '../../../../src/shared/domain/enums/week_day_enum'
 import { MAUA_START_TIME } from '../../../../src/shared/domain/enums/maua_start_time_enum'
 import { MAUA_END_TIME } from '../../../../src/shared/domain/enums/maua_end_time_enum'
+import { Availability } from '../../../../src/shared/domain/entities/availability'
+import { AvFullfilled } from '../../../../src/shared/domain/entities/avFullfilled'
 
 // User methods
 describe('Assert Schedule Repository Mock is correct at all for User methods', () => {
@@ -148,14 +150,21 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
   it('Should get class correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const selectedClass = await repo.getClass(
-      '0a8c5357-1f07-5b24-9845-9318c47ac922',
+      '0a8c5357-1f07-5b24-9845-9318c47ac924',
     )
 
-    expect(selectedClass.id).toBe('0a8c5357-1f07-5b24-9845-9318c47ac922')
-    expect(selectedClass.name).toBe('Physics I')
-    expect(selectedClass.modality).toBe(MODALITY.REMOTE)
+    expect(selectedClass.id).toBe('0a8c5357-1f07-5b24-9845-9318c47ac924')
+    expect(selectedClass.name).toBe('Linguagens de Programacao II')
+    expect(selectedClass.modality).toBe(MODALITY.IN_PERSON)
     expect(selectedClass.classType).toBe(CLASSTYPE.THEORY)
-    expect(selectedClass.subjectCode).toBe('EFB207')
+    expect(selectedClass.subjectCode).toBe('ECM256')
+  })
+  it('Should get class wrongly: no classId found', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getClass('uuid')).rejects.toThrowError(
+      'No items found for classId',
+    )
   })
   it('Should get all classes correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -163,6 +172,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
 
     expect(classes.length).toEqual(4)
   })
+  
   it('Should create class correctly', async () => {
     const classEntity = new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ab929',
@@ -171,6 +181,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      isTaken: false,
     })
 
     const repo = new ScheduleRepositoryMock()
@@ -216,7 +227,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     expect(users.length).toEqual(3)
   })
   it('Should create suitability correctly', async () => {
-    const userId = 3
+    const userId = 5
     const codeSubject = 'ECM256'
 
     const repo = new ScheduleRepositoryMock()
@@ -296,6 +307,28 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
     const length = repo.getSchedulesLength()
 
     expect(length).toEqual(4)
+  })
+  
+  it('Should get schedule correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const schedule = await repo.getSchedule("2S-4CM-D5@2024(SCS)", 1)
+
+    expect(schedule.scheduleId).toEqual("2S-4CM-D5@2024(SCS)")
+    expect(schedule.groupNumber).toEqual(1)
+  })
+  it('Should get schedule correctly with different groupNumber', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const schedule = await repo.getSchedule("2S-4CM-D5@2024(SCS)", 2)
+
+    expect(schedule.scheduleId).toEqual("2S-4CM-D5@2024(SCS)")
+    expect(schedule.groupNumber).toEqual(2)
+  })
+  it('Should get schedule wrongly: no scheduleId found', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getSchedule("2S-4CM-D5@2024(SCS)123", 1)).rejects.toThrowError(
+      'No items found for scheduleId',
+    )
   })
   it('Should get all schedules correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -377,13 +410,26 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
     const repo = new ScheduleRepositoryMock()
     const length = repo.getPossibilitiesLength()
 
-    expect(length).toEqual(18)
+    expect(length).toEqual(33)
+  })
+  it('Should get possibility correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const possibility = await repo.getPossibility("a13e4567-e89b-12d3-a456-426614174000")
+
+    expect(possibility.id).toEqual("a13e4567-e89b-12d3-a456-426614174000")
+  })
+  it('Should get possibility wrongly: no possibilityId found', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getPossibility("123e4567-e892d3-a456-426614174000")).rejects.toThrowError(
+      'No items found for possibilityId',
+    )
   })
   it('Should get all possibilities correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const possibilities = await repo.getAllPossibilities()
 
-    expect(possibilities.length).toEqual(18)
+    expect(possibilities.length).toEqual(33)
   })
   it('Should create possibility correctly', async () => {
     const possibility = new Possibility({
@@ -392,6 +438,7 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CM-D5@2024(SCS)',
+      groupNumber: 1,
     })
 
     const repo = new ScheduleRepositoryMock()
@@ -403,11 +450,12 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
   })
   it('Should not create possibility: exists', async () => {
     const possibility = new Possibility({
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: 'a13e4567-e89b-12d3-a456-426614174000',
       weekDay: WEEK_DAY.MON,
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
-      scheduleId: '2S-4CM-D5@2024(SCS)',
+      scheduleId: '2S-3CM-D5@2024(SCS)',
+      groupNumber: 1,
     })
     const repo = new ScheduleRepositoryMock()
     const lastLength = repo.getPossibilitiesLength()
@@ -426,6 +474,7 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
       startTime: MAUA_START_TIME.H07_40_09_20,
       endTime: MAUA_END_TIME.H07_40_09_20,
       scheduleId: '2S-4CV-D5@2024(SCS)',
+      groupNumber: 1,
     })
     const lastLength = repo.getPossibilitiesLength()
     await expect(repo.createPossibility(possibility)).rejects.toThrowError(
@@ -434,5 +483,272 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
     const newLength = repo.getPossibilitiesLength()
 
     expect(newLength).toEqual(lastLength)
+  })
+})
+
+// Availability methods
+describe('Assert Schedule Repository Mock is correct at all for Availability methods', () => {
+  it('Should get length correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const length = repo.getAvailabilitiesLength()
+
+    expect(length).toEqual(18)
+  })
+  it('Should get availability correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availability = await repo.getAvailability("0a8c5357-1f07-5b24-9845-9318c4000003")
+
+    expect(availability.availabilityId).toEqual("0a8c5357-1f07-5b24-9845-9318c4000003")
+  })
+  it('Should get availability wrongly: no availabilityId found', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getAvailability("0a8c5357-0007-5b24-9845-9318c4000003")).rejects.toThrowError(
+      'No items found for availabilityId',
+    )
+  })
+  it('Should get all availabilities correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilities = await repo.getAllAvailabilities()
+
+    expect(availabilities.length).toEqual(18)
+  })
+  it('Should create availability correctly', async () => {
+    const availability = new Availability({
+      id: '123e4567-0000-12d3-a456-426614174000',
+      userId: 5,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvailabilitiesLength()
+    await repo.createAvailability(availability)
+    const newLength = repo.getAvailabilitiesLength()
+
+    expect(newLength).toEqual(lastLength + 1)
+  })
+  it('Should not create availability: duplicated availabilityId', async () => {
+    const availability = new Availability({
+      id: '0a8c5357-1f07-5b24-9845-9318c4000011',
+      userId: 5,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvailabilitiesLength()
+    await expect(repo.createAvailability(availability)).rejects.toThrowError(
+      'availabilityId already exists',
+    )
+    const newLength = repo.getAvailabilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should not create availability: user does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availability = new Availability({
+      id: '123e4567-0000-12d3-a456-426614174000',
+      userId: repo.getUsersLength() + 1,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    })
+    const lastLength = repo.getAvailabilitiesLength()
+    await expect(repo.createAvailability(availability)).rejects.toThrowError(
+      'No items found for userId',
+    )
+    const newLength = repo.getAvailabilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should not create availability: user is not a professor', async () => {
+    const availability = new Availability({
+      id: '123e4567-0000-12d3-a456-426614174000',
+      userId: 1,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvailabilitiesLength()
+    await expect(repo.createAvailability(availability)).rejects.toThrowError(
+      'The data rule "user must be a professor" was violated',
+    )
+    const newLength = repo.getAvailabilitiesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+})
+
+// AvFullfilled methods
+describe('Assert Schedule Repository Mock is correct at all for AvFullfilled methods', () => {
+  it('Should get length correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const length = repo.getAvsFullfilledLength()
+
+    expect(length).toEqual(2)
+  })
+  it('Should get all AvFullfilled correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const avFullfilled = await repo.getAllAvsFullfilled()
+
+    expect(avFullfilled.length).toEqual(2)
+  })
+  it('Should create AvFullfilled correctly', async () => {
+    /*
+      userId = 3
+      startTime = MAUA_START_TIME.H09_30_11_10
+      weekDay = WEEK_DAY.FRI
+      className = Physics I
+      subjectCode = EFB207
+      scheduleId = 2S-4CM-D5@2024(SCS)
+    */    
+   const avFullfilled = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      possibilityId: '124e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+    const availabilityBefore = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityBefore.isTaken).toEqual(false)
+
+    await repo.createAvFullfilled(avFullfilled)
+
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength + 1)
+
+    const availabilityAfter = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityAfter.isTaken).toEqual(true)
+  })
+  it('Should not create AvFullfilled: availability does not exists', async () => {
+    const avFullfilled = new AvFullfilled({
+      availabilityId: '0a8c0000-1f07-5b24-9845-9318c4000008',
+      possibilityId: '124e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+    await expect(repo.createAvFullfilled(avFullfilled)).rejects.toThrowError(
+      'No items found for availabilityId',
+    )
+    const newLength = repo.getAvsFullfilledLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should not create AvFullfilled: possibility does not exists', async () => {
+    const avFullfilled = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      possibilityId: '124e4567-e89b-0000-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+    const availabilityBefore = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityBefore.isTaken).toEqual(false)
+    await expect(repo.createAvFullfilled(avFullfilled)).rejects.toThrowError(
+      'No items found for possibilityId',
+    )
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength)
+    const availabilityAfter = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityAfter.isTaken).toEqual(false)
+  })
+  it('Should not create AvFullfilled: class does not exists', async () => {
+    const avFullfilled = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      possibilityId: '124e4567-e89b-12d3-a456-426614174000',
+      classId: '12004567-e89b-12d3-a456-426614174000',
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+    const availabilityBefore = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityBefore.isTaken).toEqual(false)
+    await expect(repo.createAvFullfilled(avFullfilled)).rejects.toThrowError(
+      'No items found for classId',
+    )
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength)
+    const availabilityAfter = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityAfter.isTaken).toEqual(false)
+  })
+  it('Should not create AvFullfilled: Availability is already taken', async () => {  
+    const avFullfilled = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000009',
+      possibilityId: '124e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+    const availabilityBefore = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000009')
+    expect(availabilityBefore.isTaken).toEqual(true)
+    await expect(repo.createAvFullfilled(avFullfilled)).rejects.toThrowError(
+      'The data rule "Availability is already taken" was violated',
+    )
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength)
+    const availabilityAfter = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000009')
+    expect(availabilityAfter.isTaken).toEqual(true)
+  })
+  it('Should not create AvFullfilled: Possibility and Class must have the same scheduleId', async () => {  
+    const avFullfilled = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      possibilityId: '124e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac925',
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+    const availabilityBefore = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityBefore.isTaken).toEqual(false)
+    await expect(repo.createAvFullfilled(avFullfilled)).rejects.toThrowError(
+      'The data rule "Possibility and Class must have the same scheduleId" was violated',
+    )
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength)
+    const availabilityAfter = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityAfter.isTaken).toEqual(false)
+  })
+  it('Should not create AvFullfilled: Possibility and Availability must have the same startTime and endTime', async () => {  
+    const avFullfilled = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      possibilityId: '125e4567-e89b-12d3-a456-426614174001',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+    const availabilityBefore = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityBefore.isTaken).toEqual(false)
+    await expect(repo.createAvFullfilled(avFullfilled)).rejects.toThrowError(
+      'The data rule "Possibility and Availability must have the same startTime and endTime" was violated',
+    )
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength)
+    const availabilityAfter = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityAfter.isTaken).toEqual(false)
+  })
+  it('Should not create AvFullfilled: Possibility and Availability must have the same startTime and endTime', async () => {  
+    const avFullfilled = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      possibilityId: '103e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
+    })
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+    const availabilityBefore = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityBefore.isTaken).toEqual(false)
+    await expect(repo.createAvFullfilled(avFullfilled)).rejects.toThrowError(
+      'The data rule "Possibility and Availability must have the same weekDay" was violated',
+    )
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength)
+    const availabilityAfter = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000008')
+    expect(availabilityAfter.isTaken).toEqual(false)
   })
 })

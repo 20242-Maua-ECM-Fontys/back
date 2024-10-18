@@ -1,3 +1,5 @@
+import { Availability } from '../entities/availability'
+import { AvFullfilled } from '../entities/avFullfilled'
 import { Class } from '../entities/class'
 import { Possibility } from '../entities/possibility'
 import { Schedule } from '../entities/schedule'
@@ -34,7 +36,7 @@ export interface IScheduleRepository {
 
   // Schedule methods
   getSchedulesLength(): number
-  getSchedule(id: string): Promise<Schedule>
+  getSchedule(id: string, groupNumber: number): Promise<Schedule>
   getAllSchedules(): Promise<Schedule[]>
   createSchedule(schedule: Schedule): Promise<Schedule>
 
@@ -43,4 +45,15 @@ export interface IScheduleRepository {
   getPossibility(id: string): Promise<Possibility>
   getAllPossibilities(): Promise<Possibility[]>
   createPossibility(possibility: Possibility): Promise<Possibility>
+
+  // Availability methods
+  getAvailabilitiesLength(): number
+  getAvailability(id: string): Promise<Availability>
+  getAllAvailabilities(): Promise<Availability[]>
+  createAvailability(availability: Availability): Promise<Availability>
+
+  // AvFullfilled methods
+  getAvsFullfilledLength(): number
+  getAllAvsFullfilled(): Promise<AvFullfilled[]>
+  // createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled>
 }

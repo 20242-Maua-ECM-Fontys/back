@@ -26,6 +26,8 @@ describe('Possibility entity', () => {
         startTime: MAUA_START_TIME.H07_40_09_20,
         endTime: MAUA_END_TIME.H07_40_09_20,
         scheduleId: '2S-4CM-D5@2024(SCS)',
+
+
       })
     }).toThrowError(EntityError)
   })
@@ -38,6 +40,8 @@ describe('Possibility entity', () => {
         startTime: MAUA_START_TIME.H07_40_09_20,
         endTime: MAUA_END_TIME.H07_40_09_20,
         scheduleId: '2S-4CM-D5@2024(SCS)',
+
+
       })
     }).toThrowError(EntityError)
   })
@@ -50,6 +54,8 @@ describe('Possibility entity', () => {
         startTime: 1 as MAUA_START_TIME,
         endTime: MAUA_END_TIME.H07_40_09_20,
         scheduleId: '2S-4CM-D5@2024(SCS)',
+
+
       })
     }).toThrowError(EntityError)
   })
@@ -62,6 +68,7 @@ describe('Possibility entity', () => {
         startTime: MAUA_START_TIME.H07_40_09_20,
         endTime: 1 as MAUA_END_TIME,
         scheduleId: '2S-4CM-D5@2024(SCS)',
+
       })
     }).toThrowError(EntityError)
   })
@@ -74,6 +81,7 @@ describe('Possibility entity', () => {
         startTime: MAUA_START_TIME.H07_40_09_20,
         endTime: MAUA_END_TIME.H09_30_11_10,
         scheduleId: '2S-4CM-D5@2024(SCS)',
+
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -83,6 +91,7 @@ describe('Possibility entity', () => {
         startTime: MAUA_START_TIME.H09_30_11_10,
         endTime: MAUA_END_TIME.H07_40_09_20,
         scheduleId: '2S-4CM-D5@2024(SCS)',
+
       })
     }).toThrowError(EntityError)
   })
@@ -95,6 +104,7 @@ describe('Possibility entity', () => {
         startTime: 1 as MAUA_START_TIME,
         endTime: MAUA_END_TIME.H07_40_09_20,
         scheduleId: '2S-4CM-D5@2024(SCS)',
+
       })
     }).toThrowError(EntityError)
   })
