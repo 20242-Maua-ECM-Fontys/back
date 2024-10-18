@@ -62,6 +62,18 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
 
     expect(newLength).toEqual(lastLength + 1)
   })
+  it('Should not create user: user already exists', async () => {
+    const user = new User({
+      id: 1,
+      name: 'user1',
+      email: 'ini@vifod.nc',
+      role: ROLE.STAFF,
+      RA: '21.00000-1',
+      password: 'Password1@',
+    })
+    const repo = new ScheduleRepositoryMock()
+    expect(repo.createUser(user)).rejects.toThrowError('userId already exists')
+  })
 })
 
 // Subject methods

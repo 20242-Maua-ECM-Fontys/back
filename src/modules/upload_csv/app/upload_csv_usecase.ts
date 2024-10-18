@@ -43,6 +43,7 @@ export class UploadCSVUsecase {
     const userList: User[] = []
     const subjectList: Subject[] = []
     const classList: Class[] = []
+    let repo_len = this.repo.getUsersLength()
     let noProblems = ''
     let possibleRowTypeError = ''
     let rowNumber = 0
@@ -56,7 +57,8 @@ export class UploadCSVUsecase {
         .on('data', (row: ParsedData) => {
           try {
             if (row.type === 'professor') {
-              const newId = this.repo.getUsersLength() + 1
+              repo_len = repo_len + 1
+              const newId = repo_len
               const newName = row.name
               const newEmail = row.professorEmail
               const newRA = row.professorRa
