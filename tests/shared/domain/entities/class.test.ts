@@ -14,7 +14,7 @@ describe('Class Entity Tests', () => {
       subjectCode: 'ECM256',
       scheduleId: '2S-4CM-D5@2024(SCS)',
     })
-    
+
     expect(classEntity).toBeInstanceOf(Class)
     expect(classEntity.id).toBe('0a8c5357-1f07-5b24-9845-9318c47ab923')
     expect(classEntity.name).toBe('Programming Language II')
@@ -23,7 +23,7 @@ describe('Class Entity Tests', () => {
     expect(classEntity.subjectCode).toBe('ECM256')
     expect(classEntity.roomCode).toBeUndefined()
   })
-  
+
   it('Assert Class Entity is correct at all with roomCode', () => {
     const classEntity = new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ab923',
@@ -34,7 +34,7 @@ describe('Class Entity Tests', () => {
       roomCode: 'A01',
       scheduleId: '2S-4CM-D5@2024(SCS)',
     })
-    
+
     expect(classEntity).toBeInstanceOf(Class)
     expect(classEntity.id).toBe('0a8c5357-1f07-5b24-9845-9318c47ab923')
     expect(classEntity.name).toBe('Programming Language II')
