@@ -168,6 +168,25 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
 
     expect(newLength).toEqual(lastLength + 1)
   })
+  it('Should not create class: class already exists', async () => {
+    const classEntity = new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ac922',
+      name: 'Physics I',
+      modality: MODALITY.REMOTE,
+      classType: CLASSTYPE.THEORY,
+      subjectCode: 'EFB207',
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    })
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getClassesLength()
+    await expect(repo.createClass(classEntity)).rejects.toThrowError(
+      'Class already exists',
+    )
+    const newLength = repo.getClassesLength()
+
+    expect(newLength).toEqual(lastLength)
+  })
 })
 
 // Suitability methods

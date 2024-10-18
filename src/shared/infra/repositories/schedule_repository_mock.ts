@@ -356,6 +356,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   async createClass(newClass: Class): Promise<Class> {
+    const exists = this.classes.find((c) => c.id === newClass.id)
+    if (exists) {
+      throw new DuplicatedItem('Class')
+    }
     this.classes.push(newClass)
     return newClass
   }
