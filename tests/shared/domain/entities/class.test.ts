@@ -21,7 +21,6 @@ describe('Class Entity Tests', () => {
     expect(classEntity.modality).toBe(MODALITY.IN_PERSON)
     expect(classEntity.classType).toBe(CLASSTYPE.THEORY)
     expect(classEntity.subjectCode).toBe('ECM256')
-    expect(classEntity.roomCode).toBeUndefined()
   })
 
   it('Assert Class Entity is correct at all with roomCode', () => {
@@ -31,7 +30,6 @@ describe('Class Entity Tests', () => {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
-      roomCode: 'A01',
       scheduleId: '2S-4CM-D5@2024(SCS)',
     })
 
@@ -41,7 +39,6 @@ describe('Class Entity Tests', () => {
     expect(classEntity.modality).toBe(MODALITY.IN_PERSON)
     expect(classEntity.classType).toBe(CLASSTYPE.THEORY)
     expect(classEntity.subjectCode).toBe('ECM256')
-    expect(classEntity.roomCode).toBe('A01')
   })
 
   it('id must be UUID', () => {

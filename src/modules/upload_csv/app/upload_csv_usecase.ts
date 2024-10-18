@@ -103,7 +103,6 @@ export class UploadCSVUsecase {
               const newClassId = row.classId!
               const newSubjectCode = row.subjectCode!
               const newName = row.name!
-              const newRoomCode = row.roomCode || undefined
               if (
                 newClassId === '' ||
                 newSubjectCode === '' ||
@@ -118,7 +117,6 @@ export class UploadCSVUsecase {
                 modality: newModality,
                 classType: newType,
                 subjectCode: row.subjectCode!,
-                roomCode: newRoomCode,
                 scheduleId: row.scheduleId!,
               })
               classList.push(newClass)
