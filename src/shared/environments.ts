@@ -1,7 +1,8 @@
 import { STAGE } from './domain/enums/stage_enum'
-import { IUserRepository } from './domain/repositories/user_repository_interface'
+import { IScheduleRepository } from './domain/repositories/schedule_repository_interface'
 //import { UserRepositoryDynamo } from './infra/repositories/user_repository_dynamo'
-import { UserRepositoryMock } from './infra/repositories/user_repository_mock'
+import { ScheduleRepositoryMock } from './infra/repositories/schedule_repository_mock'
+
 import { config } from 'dotenv'
 config()
 
@@ -75,14 +76,14 @@ export class Environments {
     }
   }
 
-  static getUserRepo(): IUserRepository {
+  static getScheduleRepo(): IScheduleRepository {
     console.log(
       'Environments.getEnvs().stage - [ENVIRONMENTS - { GET USER REPO }] - ',
       Environments.getEnvs().stage,
     )
 
     if (Environments.getEnvs().stage === STAGE.TEST) {
-      return new UserRepositoryMock()
+      return new ScheduleRepositoryMock()
     }
     //else if (
     //   Environments.getEnvs().stage === STAGE.DEV ||

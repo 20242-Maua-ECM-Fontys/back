@@ -4,15 +4,15 @@ import {
 } from '../../../shared/helpers/external_interfaces/http_models.js'
 import { LoginUserController } from './login_user_controller'
 import { LoginUserUsecase } from './login_user_usecase'
-import { Environments } from '../../../shared/environments'
+import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface.js'
+import { IRequest } from '../../../shared/helpers/external_interfaces/external_interface.js'
 
-const repo = Environments.getUserRepo()
-const usecase = new LoginUserUsecase(repo)
-const controller = new LoginUserController(usecase)
 
 export async function loginUserPresenter(
-  httpRequest: HttpRequest,
+  httpRequest: IRequest, repo: IScheduleRepository
 ): Promise<HttpResponse> {
+  const usecase = new LoginUserUsecase(repo)
+  const controller = new LoginUserController(usecase)
   const response = await controller.handle(httpRequest)
   return new HttpResponse(
     response?.statusCode,
