@@ -48,7 +48,6 @@ export class Possibility {
       throw new EntityError('props.scheduleId')
     }
     this.props.scheduleId = props.scheduleId
-
   }
 
   static validateId(id: string): boolean {
@@ -128,7 +127,6 @@ export class Possibility {
     return this.props.scheduleId
   }
 
-
   set weekDay(weekDay: WEEK_DAY) {
     if (!Possibility.validateWeekDay(weekDay)) {
       throw new EntityError('weekDay')
@@ -156,5 +154,4 @@ export class Possibility {
     }
     this.props.scheduleId = scheduleId
   }
-
 }

@@ -11,7 +11,6 @@ export type UserProps = {
 }
 
 export type JsonProps = {
-
   id: number
   name: string
   email: string

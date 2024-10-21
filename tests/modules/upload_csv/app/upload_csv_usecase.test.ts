@@ -6,9 +6,7 @@ import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositorie
 describe('Assert Upload CSV usecase is correct at all', () => {
   it('Should activate usecase correctly', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new UploadCSVUsecase(
-      repo
-    )
+    const usecase = new UploadCSVUsecase(repo)
 
     const csvContent = `type,classId,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,professorPassword,roomCode,scheduleId
 professor,,Dr. John Doe,,,,,,john.doe@example.com,12345,S!q3T@pG9z,,
@@ -36,9 +34,7 @@ class,123e4567-e89b-12d3-a456-426614174007,Class 202,REMOTE,LAB,CSE204,,A02,,,,,
 
   it('Should raise error for invalid professor row', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new UploadCSVUsecase(
-      repo
-    )
+    const usecase = new UploadCSVUsecase(repo)
     const lenghtUserBefore = repo.getUsersLength()
     const lenghtClassBefore = repo.getClassesLength()
     const lenghtSubjectBefore = repo.getSubjectsLength()
@@ -67,9 +63,7 @@ class,123e4567-e89b-12d3-a456-426614174007,Class 202,REMOTE,LAB,CSE204,,A02,,,,,
 
   it('Should raise error for invalid class row', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new UploadCSVUsecase(
-      repo
-    )
+    const usecase = new UploadCSVUsecase(repo)
 
     const lenghtUserBefore = repo.getUsersLength()
     const lenghtClassBefore = repo.getClassesLength()
@@ -99,9 +93,7 @@ class,123e4567-e89b-12d3-a456-4266141740,Class 202,REMOTE,LAB,CSE204,,A02,,,,,2S
 
   it('Should raise error for invalid subject row', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new UploadCSVUsecase(
-      repo
-    )
+    const usecase = new UploadCSVUsecase(repo)
     const lenghtUserBefore = repo.getUsersLength()
     const lenghtClassBefore = repo.getClassesLength()
     const lenghtSubjectBefore = repo.getSubjectsLength()
@@ -130,9 +122,7 @@ class,123e4567-e89b-12d3-a456-426614174007,Class 202,REMOTE,LAB,CSE204,,A02,,,,,
 
   it('Should raise error for invalid row type', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new UploadCSVUsecase(
-      repo
-    )
+    const usecase = new UploadCSVUsecase(repo)
 
     const lenghtUserBefore = repo.getUsersLength()
     const lenghtClassBefore = repo.getClassesLength()

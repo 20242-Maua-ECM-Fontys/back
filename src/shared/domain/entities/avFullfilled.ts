@@ -7,12 +7,14 @@ export type AvFullfilledProps = {
   availabilityId: string
   possibilityId: string
   classId: string
+  roomCode?: string
 }
 
 export type JsonProps = {
   availabilityId: string
   possibilityId: string
   classId: string
+  roomCode?: string
 }
 
 export class AvFullfilled {
@@ -31,6 +33,11 @@ export class AvFullfilled {
       throw new EntityError('classId')
     }
     this.props.classId = props.classId
+
+    if (!AvFullfilled.validateRoomCode(props.roomCode)) {
+      throw new EntityError('roomCode')
+    }
+    this.props.roomCode = props.roomCode
   }
 
   static validateAvailabilityId(id: string): boolean {
@@ -53,11 +60,23 @@ export class AvFullfilled {
     })
   }
 
+  static validateRoomCode(roomCode: string | undefined): boolean {
+    if (roomCode === null || roomCode === undefined) {
+      return true
+    } else if (!roomCode.match(/^[A-Z]\d{2,3}$/)) {
+      return false
+    } else if (typeof roomCode != 'string') {
+      return false
+    }
+    return true
+  }
+
   toJSON() {
     return {
       availabilityId: this.props.availabilityId,
       possibilityId: this.props.possibilityId,
       classId: this.props.classId,
+      roomCode: this.props.roomCode,
     }
   }
 

@@ -37,14 +37,13 @@ function bufferToStream(buffer: Buffer): Readable {
 }
 
 export class UploadCSVUsecase {
-  constructor(
-    private repo: IScheduleRepository,
-  ) {}
+  constructor(private repo: IScheduleRepository) {}
 
   async execute(buffer: Buffer): Promise<string> {
     const userList: User[] = []
     const subjectList: Subject[] = []
     const classList: Class[] = []
+    let repo_len = this.repo.getUsersLength()
     let noProblems = ''
     let possibleRowTypeError = ''
     let rowNumber = 0
@@ -58,7 +57,8 @@ export class UploadCSVUsecase {
         .on('data', (row: ParsedData) => {
           try {
             if (row.type === 'professor') {
-              const newId = this.repo.getUsersLength() + 1
+              repo_len = repo_len + 1
+              const newId = repo_len
               const newName = row.name
               const newEmail = row.professorEmail
               const newRA = row.professorRa
@@ -103,7 +103,6 @@ export class UploadCSVUsecase {
               const newClassId = row.classId!
               const newSubjectCode = row.subjectCode!
               const newName = row.name!
-              const newRoomCode = row.roomCode || undefined
               if (
                 newClassId === '' ||
                 newSubjectCode === '' ||
@@ -118,7 +117,6 @@ export class UploadCSVUsecase {
                 modality: newModality,
                 classType: newType,
                 subjectCode: row.subjectCode!,
-                roomCode: newRoomCode,
                 scheduleId: row.scheduleId!,
               })
               classList.push(newClass)
@@ -156,8 +154,7 @@ export class UploadCSVUsecase {
               async (newUser) => await this.repo.createUser(newUser),
             )
             subjectList.forEach(
-              async (newSubject) =>
-                await this.repo.createSubject(newSubject),
+              async (newSubject) => await this.repo.createSubject(newSubject),
             )
             classList.forEach(
               async (newClass) => await this.repo.createClass(newClass),

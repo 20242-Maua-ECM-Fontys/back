@@ -85,7 +85,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
       scheduleId: '2S-4CM-D5@2024(SCS)',
-      
     }),
     new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ac925',
@@ -487,7 +486,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       isTaken: true,
       weekDay: WEEK_DAY.FRI,
     }),
-  
+
     // Professor com userId = 4, apenas segunda-feira, em todos os horários
     new Availability({
       id: '0a8c5357-1f07-5b24-9845-9318c400000a',
@@ -553,7 +552,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       isTaken: false,
       weekDay: WEEK_DAY.MON,
     }),
-  ];
+  ]
 
   private avsFullfilled: AvFullfilled[] = [
     /* 
@@ -562,7 +561,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       from 07:40 to 09:20 on Monday 
       for course 2S-4CM-D5@2024(SCS)
     */
-    new AvFullfilled({ 
+    new AvFullfilled({
       availabilityId: '0a8c5357-1f07-5b24-9845-9318c400000a',
       possibilityId: '113e4567-e89b-12d3-a456-426614174000',
       classId: '0a8c5357-1f07-5b24-9845-9318c47ac924',
@@ -598,6 +597,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   async createUser(user: User): Promise<User> {
+    const exists = this.users.find((u) => u.id === user.id)
+    if (exists) {
+      throw new DuplicatedItem('userId')
+    }
     this.users.push(user)
     return user
   }
@@ -650,6 +653,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   async createClass(newClass: Class): Promise<Class> {
+    const exists = this.classes.find((c) => c.id === newClass.id)
+    if (exists) {
+      throw new DuplicatedItem('Class')
+    }
     this.classes.push(newClass)
     return newClass
   }
@@ -672,6 +679,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   async createSubject(subject: Subject): Promise<Subject> {
+    const exists = this.subjects.find((s) => s.code === subject.code)
+    if (exists) {
+      throw new DuplicatedItem('Subject')
+    }
     this.subjects.push(subject)
     return subject
   }
@@ -801,7 +812,9 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   async createAvailability(availability: Availability): Promise<Availability> {
-    const exists = this.availabilities.find((a) => a.availabilityId === availability.availabilityId)
+    const exists = this.availabilities.find(
+      (a) => a.availabilityId === availability.availabilityId,
+    )
     if (exists) {
       throw new DuplicatedItem('availabilityId')
     }
@@ -829,26 +842,32 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     const availability = await this.getAvailability(avFullfilled.availabilityId) // availability exists?
     const possibility = await this.getPossibility(avFullfilled.possibilityId) // possibility exists?
     const selectedClass = await this.getClass(avFullfilled.classId) // class exists?
-    
+
     if (availability.isTaken) {
       throw new ViolateDataRule('Availability is already taken')
     }
     if (possibility.scheduleId !== selectedClass.scheduleId) {
-      throw new ViolateDataRule('Possibility and Class must have the same scheduleId')
+      throw new ViolateDataRule(
+        'Possibility and Class must have the same scheduleId',
+      )
     }
-    if (possibility.startTime !== availability.startTime || possibility.endTime !== availability.endTime) {
-      throw new ViolateDataRule('Possibility and Availability must have the same startTime and endTime')
+    if (
+      possibility.startTime !== availability.startTime ||
+      possibility.endTime !== availability.endTime
+    ) {
+      throw new ViolateDataRule(
+        'Possibility and Availability must have the same startTime and endTime',
+      )
     }
     if (possibility.weekDay !== availability.weekDay) {
-      throw new ViolateDataRule('Possibility and Availability must have the same weekDay')
+      throw new ViolateDataRule(
+        'Possibility and Availability must have the same weekDay',
+      )
     }
-    
 
     availability.isTaken = true
 
     this.avsFullfilled.push(avFullfilled)
     return avFullfilled
   }
-
-
 }

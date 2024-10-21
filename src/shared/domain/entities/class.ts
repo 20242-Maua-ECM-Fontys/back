@@ -8,7 +8,6 @@ export type ClassProps = {
   modality: MODALITY
   classType: CLASSTYPE
   subjectCode: string
-  roomCode?: string
   scheduleId: string
 }
 
@@ -18,7 +17,6 @@ export type JsonProps = {
   modality: string
   classType: string
   subjectCode: string
-  roomCode?: string
   scheduleId: string
 }
 const CLASS_ID_LENGTH = 36
@@ -50,11 +48,6 @@ export class Class {
       throw new EntityError('props.subjectCode')
     }
     this.props.subjectCode = props.subjectCode
-
-    if (!Class.validateRoomCode(props.roomCode)) {
-      throw new EntityError('props.roomCode')
-    }
-    this.props.roomCode = props.roomCode
 
     if (!Class.validateScheduleId(props.scheduleId)) {
       throw new EntityError('props.scheduleId')
@@ -110,17 +103,6 @@ export class Class {
     }
   }
 
-  static validateRoomCode(roomCode: string | undefined): boolean {
-    if (roomCode === null || roomCode === undefined) {
-      return true
-    } else if (!roomCode.match(/^[A-Z]\d{2,3}$/)) {
-      return false
-    } else if (typeof roomCode != 'string') {
-      return false
-    }
-    return true
-  }
-
   static validateScheduleId(scheduleId: string): boolean {
     if (scheduleId === undefined) {
       return false
@@ -145,7 +127,6 @@ export class Class {
       modality: ModalityToEnum(json.modality as string),
       classType: ClasstypeToEnum(json.classType as string),
       subjectCode: json.subjectCode,
-      roomCode: json.roomCode,
       scheduleId: json.scheduleId,
     })
   }
@@ -157,7 +138,6 @@ export class Class {
       modality: this.props.modality,
       classType: this.props.classType,
       subjectCode: this.props.subjectCode,
-      roomCode: this.props.roomCode,
       scheduleId: this.props.scheduleId,
     }
   }
@@ -180,10 +160,6 @@ export class Class {
 
   get subjectCode(): string {
     return this.props.subjectCode
-  }
-
-  get roomCode(): string | undefined {
-    return this.props.roomCode
   }
 
   get scheduleId(): string {
@@ -225,18 +201,10 @@ export class Class {
     this.props.subjectCode = subjectCode
   }
 
-  set roomCode(roomCode: string | undefined) {
-    if (!Class.validateRoomCode(roomCode)) {
-      throw new EntityError('roomCode')
-    }
-    this.props.roomCode = roomCode
-  }
-
   set scheduleId(scheduleId: string) {
     if (!Class.validateScheduleId(scheduleId)) {
       throw new EntityError('scheduleId')
     }
     this.props.scheduleId = scheduleId
   }
-
 }
