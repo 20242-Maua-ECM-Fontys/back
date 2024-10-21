@@ -19,6 +19,7 @@ import {
 import { Schedule } from '../../../shared/domain/entities/schedule'
 import { Availability } from '../../../shared/domain/entities/availability'
 import { AvFullfilled } from '../../../shared/domain/entities/avFullfilled'
+import { ACADEMIC_PERIOD } from '../../../shared/domain/enums/academic_period_enum'
 
 export class ScheduleRepositoryMock implements IScheduleRepository {
   // Mock Data
@@ -138,24 +139,32 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       courseName: 'Compute Engineering',
       groupNumber: 1,
       userId: 2,
+      academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+      courseGrade: 4,
     }),
     new Schedule({
-      scheduleId: '2S-4CM-D5@2024(SCS)',
+      scheduleId: '2S-2CM-D5@2024(SCS)',
       courseName: 'Compute Engineering',
-      groupNumber: 2,
+      groupNumber: 1,
       userId: 2,
+      academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+      courseGrade: 2,
     }),
     new Schedule({
       scheduleId: '2S-3CM-D5@2024(SCS)',
       courseName: 'Compute Engineering',
       groupNumber: 1,
       userId: 2,
+      academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+      courseGrade: 3,
     }),
     new Schedule({
       scheduleId: '1S-2CIC-D4@2024(SCS)',
       courseName: 'Cience Coputing',
       groupNumber: 1,
       userId: 2,
+      academicPeriod: ACADEMIC_PERIOD.FIRST_SEMESTER,
+      courseGrade: 2,
     }),
   ]
 

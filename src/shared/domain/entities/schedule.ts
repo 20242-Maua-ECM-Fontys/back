@@ -1,10 +1,13 @@
 import { EntityError } from '../../helpers/errors/domain_errors'
+import { ACADEMIC_PERIOD, toEnum } from '../enums/academic_period_enum'
 
 export type ScheduleProps = {
   scheduleId: string
   courseName: string
   groupNumber: number
   userId: number
+  academicPeriod: ACADEMIC_PERIOD
+  courseGrade: number
 }
 
 export type JsonProps = {
@@ -12,6 +15,8 @@ export type JsonProps = {
   courseName: string
   groupNumber: number
   userId: number
+  academicPeriod: string
+  courseGrade: number
 }
 
 export class Schedule {
@@ -35,6 +40,20 @@ export class Schedule {
       throw new EntityError('props.userId')
     }
     this.props.userId = props.userId
+
+    if (!Schedule.validateAcademicPeriod(props.academicPeriod)) {
+      throw new EntityError('props.academicPeriod')
+    }
+    this.props.academicPeriod = props.academicPeriod
+
+    if (!Schedule.validateCourseGrade(props.courseGrade)) {
+      throw new EntityError('props.courseGrade')
+    }
+    this.props.courseGrade = props.courseGrade
+
+    if (parseInt(Schedule.getCourseNameFromScheduleId(this.props.scheduleId)!) != this.props.courseGrade) { // scheduleId must contains the correct courseGrade
+      throw new EntityError('props.courseGrade must be equal to courseGrade in scheduleId')
+    }
   }
 
   static fromJSON(json: JsonProps) {
@@ -43,7 +62,13 @@ export class Schedule {
       courseName: json.courseName,
       groupNumber: json.groupNumber,
       userId: json.userId,
+      academicPeriod: toEnum(json.academicPeriod),
+      courseGrade: json.courseGrade,
     })
+  }
+
+  static getCourseNameFromScheduleId(scheduleId: string): string {
+    return scheduleId.charAt(3)
   }
 
   toJSON() {
@@ -52,6 +77,8 @@ export class Schedule {
       courseName: this.courseName,
       groupNumber: this.groupNumber,
       userId: this.userId,
+      academicPeriod: this.academicPeriod,
+      courseGrade: this.courseGrade,
     }
   }
 
@@ -69,6 +96,14 @@ export class Schedule {
 
   get userId() {
     return this.props.userId
+  }
+
+  get academicPeriod() {
+    return this.props.academicPeriod
+  }
+
+  get courseGrade() {
+    return this.props.courseGrade
   }
 
   set scheduleId(scheduleId: string) {
@@ -99,50 +134,42 @@ export class Schedule {
     this.props.userId = userId
   }
 
+  set academicPeriod(academicPeriod: ACADEMIC_PERIOD) {
+    if (!Schedule.validateAcademicPeriod(academicPeriod)) {
+      throw new EntityError('academicPeriod')
+    }
+    this.props.academicPeriod = academicPeriod
+  }
+
+  set courseGrade(courseGrade: number) {
+    if (!Schedule.validateCourseGrade(courseGrade)) {
+      throw new EntityError('courseGrade')
+    }
+    this.props.courseGrade = courseGrade
+  }
+
   static validateScheduleId(scheduleId: string): boolean {
-    if (scheduleId === undefined) {
-      return false
-    }
-    if (typeof scheduleId !== 'string') {
-      return false
-    }
-
     const scheduleIdRegex = /^[0-9]+S-.+-[DN][2-6]@[0-9]{4}\(SCS\)$/
-
-    if (!scheduleIdRegex.test(scheduleId)) {
-      return false
-    }
-
-    return true
+    return scheduleId !== undefined && typeof scheduleId === 'string' && scheduleIdRegex.test(scheduleId)
   }
 
-  static validateCourseName(courseName: string) {
-    if (courseName === undefined) {
-      return false
-    }
-    if (typeof courseName !== 'string') {
-      return false
-    }
-    if (courseName.length < 1) {
-      return false
-    }
-    return true
+  static validateCourseName(courseName: string): boolean {
+    return courseName !== undefined && typeof courseName === 'string' && courseName.length > 0
   }
 
-  static validateGroupNumber(groupNumber: number) {
-    if (groupNumber === undefined) {
-      return false
-    }
-    if (typeof groupNumber !== 'number') {
-      return false
-    }
-    if (groupNumber <= 0) {
-      return false
-    }
-    return true
+  static validateGroupNumber(groupNumber: number): boolean {
+    return groupNumber !== undefined && typeof groupNumber === 'number' && groupNumber > 0
   }
 
-  static validateUserId(userId: number) {
+  static validateUserId(userId: number): boolean {
     return userId != null && typeof userId === 'number' && userId >= 0
+  }
+
+  static validateAcademicPeriod(academicPeriod: ACADEMIC_PERIOD): boolean {
+    return Object.values(ACADEMIC_PERIOD).includes(academicPeriod)
+  }
+
+  static validateCourseGrade(courseGrade: number): boolean {
+    return courseGrade >= 1 && courseGrade <= 6
   }
 }

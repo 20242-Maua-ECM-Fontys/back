@@ -15,6 +15,7 @@ import { MAUA_START_TIME } from '../../../../src/shared/domain/enums/maua_start_
 import { MAUA_END_TIME } from '../../../../src/shared/domain/enums/maua_end_time_enum'
 import { Availability } from '../../../../src/shared/domain/entities/availability'
 import { AvFullfilled } from '../../../../src/shared/domain/entities/avFullfilled'
+import { ACADEMIC_PERIOD } from '../../../../src/shared/domain/enums/academic_period_enum'
 
 // User methods
 describe('Assert Schedule Repository Mock is correct at all for User methods', () => {
@@ -271,10 +272,10 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   })
   it('Should get schedule correctly with different groupNumber', async () => {
     const repo = new ScheduleRepositoryMock()
-    const schedule = await repo.getSchedule("2S-4CM-D5@2024(SCS)", 2)
+    const schedule = await repo.getSchedule("2S-4CM-D5@2024(SCS)", 1)
 
     expect(schedule.scheduleId).toEqual("2S-4CM-D5@2024(SCS)")
-    expect(schedule.groupNumber).toEqual(2)
+    expect(schedule.groupNumber).toEqual(1)
   })
   it('Should get schedule wrongly: no scheduleId found', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -291,10 +292,12 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   })
   it('Should create schedule correctly', async () => {
     const schedule = new Schedule({
-      scheduleId: '2S-2CM-D5@2024(SCS)',
+      scheduleId: '2S-1CM-D5@2024(SCS)',
       courseName: 'Compute Engineering',
       groupNumber: 1,
       userId: 2,
+      academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+      courseGrade: 1,
     })
 
     const repo = new ScheduleRepositoryMock()
@@ -304,12 +307,14 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
 
     expect(newLength).toEqual(lastLength + 1)
   })
-  it('Should create schedule wrongly: sxists', async () => {
+  it('Should create schedule wrongly: already exists', async () => {
     const schedule = new Schedule({
       scheduleId: '2S-4CM-D5@2024(SCS)',
       courseName: 'Compute Engineering',
       groupNumber: 1,
       userId: 2,
+      academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+      courseGrade: 4,
     })
 
     const repo = new ScheduleRepositoryMock()
@@ -324,10 +329,12 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   it('Should create schedule wrongly: user does not exists', async () => {
     const repo = new ScheduleRepositoryMock()
     const schedule = new Schedule({
-      scheduleId: '2S-2CM-D5@2024(SCS)',
+      scheduleId: '2S-1CM-D5@2024(SCS)',
       courseName: 'Compute Engineering',
       groupNumber: 1,
       userId: repo.getUsersLength() + 1,
+      academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+      courseGrade: 1,
     })
 
     const lastLength = repo.getSchedulesLength()
@@ -341,10 +348,12 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   it('Should create schedule wrongly: user is not a coordinator', async () => {
     const repo = new ScheduleRepositoryMock()
     const schedule = new Schedule({
-      scheduleId: '2S-2CM-D5@2024(SCS)',
+      scheduleId: '2S-1CM-D5@2024(SCS)',
       courseName: 'Compute Engineering',
       groupNumber: 1,
       userId: 1,
+      academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+      courseGrade: 1,
     })
 
     const lastLength = repo.getSchedulesLength()

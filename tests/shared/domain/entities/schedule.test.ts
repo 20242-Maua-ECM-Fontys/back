@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { Schedule } from '../../../../src/shared/domain/entities/schedule'
 import { EntityError } from '../../../../src/shared/helpers/errors/domain_errors'
+import { ACADEMIC_PERIOD } from '../../../../src/shared/domain/enums/academic_period_enum'
 
 describe('Schedule Entity Tests', () => {
   it('Assert Schedule Entity is correct at all', () => {
@@ -9,6 +10,8 @@ describe('Schedule Entity Tests', () => {
       courseName: 'Compute Engineering',
       groupNumber: 1,
       userId: 2,
+      academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+      courseGrade: 4,
     })
 
     expect(schedule).toBeInstanceOf(Schedule)
@@ -21,6 +24,8 @@ describe('Schedule Entity Tests', () => {
       courseName: 'Compute Engineering',
       groupNumber: 1,
       userId: 2,
+      academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+      courseGrade: 4,
     })
 
     expect(schedule).toBeInstanceOf(Schedule)
@@ -35,6 +40,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+      courseGrade: 4,
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -43,6 +50,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -51,6 +60,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -59,6 +70,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -67,6 +80,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -75,6 +90,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -83,6 +100,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -91,6 +110,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -99,6 +120,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
   })
@@ -110,6 +133,8 @@ describe('Schedule Entity Tests', () => {
         courseName: '',
         groupNumber: 1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
   })
@@ -121,6 +146,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: -1,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
     expect(() => {
@@ -129,6 +156,8 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 0,
         userId: 2,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
       })
     }).toThrowError(EntityError)
   })
@@ -140,6 +169,76 @@ describe('Schedule Entity Tests', () => {
         courseName: 'Compute Engineering',
         groupNumber: 1,
         userId: -1,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 4,
+      })
+    }).toThrowError(EntityError)
+  })
+
+  it('Assert Schedule Entity wrong with invalid academicPeriod', () => {
+    expect(() => {
+      new Schedule({
+        scheduleId: '2S-4CM-D5@2024(SCS)',
+        courseName: 'Compute Engineering',
+        groupNumber: 1,
+        userId: -1,
+        academicPeriod: 'FIRST SEMESTER' as ACADEMIC_PERIOD,
+        courseGrade: 4,
+      })
+    }).toThrowError(EntityError)
+  })
+
+  it('Assert Schedule Entity wrong with invalid userId', () => {
+    expect(() => {
+      new Schedule({
+        scheduleId: '2S-4CM-D5@2024(SCS)',
+        courseName: 'Compute Engineering',
+        groupNumber: 1,
+        userId: -1,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 0,
+      })
+    }).toThrowError(EntityError)
+    expect(() => {
+      new Schedule({
+        scheduleId: '2S-4CM-D5@2024(SCS)',
+        courseName: 'Compute Engineering',
+        groupNumber: 1,
+        userId: -1,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 7,
+      })
+    }).toThrowError(EntityError)
+  })
+  it('Assert Schedule Entity wrong with scheduleId refeering to different courseId', () => {
+    expect(() => {
+      new Schedule({
+        scheduleId: '2S-4CM-D5@2024(SCS)',
+        courseName: 'Compute Engineering',
+        groupNumber: 1,
+        userId: -1,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 1,
+      })
+    }).toThrowError(EntityError)
+    expect(() => {
+      new Schedule({
+        scheduleId: '2S-2CIC-D5@2024(SCS)',
+        courseName: 'Compute Engineering',
+        groupNumber: 1,
+        userId: -1,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 3,
+      })
+    }).toThrowError(EntityError)
+    expect(() => {
+      new Schedule({
+        scheduleId: '2S-6SI-D5@2024(SCS)',
+        courseName: 'Compute Engineering',
+        groupNumber: 1,
+        userId: -1,
+        academicPeriod: ACADEMIC_PERIOD.ANNUAL,
+        courseGrade: 2,
       })
     }).toThrowError(EntityError)
   })
