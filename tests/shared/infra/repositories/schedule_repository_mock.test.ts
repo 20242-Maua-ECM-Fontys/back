@@ -319,17 +319,10 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   })
   it('Should get schedule correctly with different groupNumber', async () => {
     const repo = new ScheduleRepositoryMock()
-<<<<<<< HEAD
     const schedule = await repo.getSchedule("2S-4CM-D5@2024(SCS)", 1)
 
     expect(schedule.scheduleId).toEqual("2S-4CM-D5@2024(SCS)")
     expect(schedule.groupNumber).toEqual(1)
-=======
-    const schedule = await repo.getSchedule('2S-4CM-D5@2024(SCS)', 2)
-
-    expect(schedule.scheduleId).toEqual('2S-4CM-D5@2024(SCS)')
-    expect(schedule.groupNumber).toEqual(2)
->>>>>>> ae72b8689816771736948e41c5f8fa6ecb7683fe
   })
   it('Should get schedule wrongly: no scheduleId found', async () => {
     const repo = new ScheduleRepositoryMock()
