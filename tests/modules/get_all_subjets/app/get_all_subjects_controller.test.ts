@@ -4,7 +4,7 @@ import { GetAllSubjectsUsecase } from '../../../../src/modules/get_all_subjects/
 import { HttpRequest } from '../../../../src/shared/helpers/external_interfaces/http_models'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 
-describe('Assert Upload CSV controller is correct at all', () => {
+describe('Assert GetAllSubjectsController is correct at all', () => {
   it('Should activate usecase correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetAllSubjectsUsecase(

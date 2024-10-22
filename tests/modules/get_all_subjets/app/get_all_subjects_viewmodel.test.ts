@@ -4,7 +4,7 @@ import { GetAllSubjectsViewmodel } from '../../../../src/modules/get_all_subject
 import { GetAllSubjectsUsecase } from '../../../../src/modules/get_all_subjects/app/get_all_subjects_usecase'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 
-describe('Assert Get All Subjects viewmodel is correct', () => {
+describe('Assert GetAllSubjectsViewmodel is correct', () => {
   it('Should correctly transform user data to viewmodel', async () => {
 
     const repo = new ScheduleRepositoryMock()
