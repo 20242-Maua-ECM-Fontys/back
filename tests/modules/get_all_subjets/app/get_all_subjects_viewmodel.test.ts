@@ -28,7 +28,7 @@ describe('Assert Get All Subjects viewmodel is correct', () => {
       ],
     })
   })
-    it('Should correctly transform user data to viewmodel if list is empty', async () => {
+  it('Should correctly transform user data to viewmodel if list is empty', async () => {
 
       const getAllSubjectsViewmodel = new GetAllSubjectsViewmodel([]).toJSON()
   
