@@ -119,14 +119,3 @@ class HttpResponse implements IResponse {
 }
 
 export { HttpRequest, HttpResponse }
-
-// Teste
-const body = { body: 'body' }
-const headers = { headers: 'headers', body: 'body' }
-const query_params = { query_params: 'query_params' }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const data = { data: 'data' }
-const request = new HttpRequest(body, headers, query_params)
-const response = new HttpResponse(200, body, headers)
-console.log(request.toString())
-console.log(response.toString())
