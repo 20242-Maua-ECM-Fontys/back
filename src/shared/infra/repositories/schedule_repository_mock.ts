@@ -635,6 +635,11 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return user || null
   }
 
+  async getUsersByRole(role: ROLE): Promise<User[]> {
+    const users = this.users.filter((user) => user.role === role)
+    return users
+  }
+
   // Class methods
   getClassesLength(): number {
     return this.classes.length

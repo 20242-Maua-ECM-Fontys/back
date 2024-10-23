@@ -77,6 +77,29 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     expect(repo.createUser(user)).rejects.toThrowError('userId already exists')
   })
+  it('Should get users by role correctyl', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const coordinators = await repo.getUsersByRole(ROLE.COORDINATOR)
+    const professors = await repo.getUsersByRole(ROLE.PROFESSOR)
+    const staff = await repo.getUsersByRole(ROLE.STAFF)
+
+    expect(coordinators.length).toEqual(1)
+    expect(professors.length).toEqual(3)
+    expect(staff.length).toEqual(1)
+
+    for (const user of coordinators) {
+      expect(user.role).toEqual(ROLE.COORDINATOR)
+    }
+
+    for (const user of professors) {
+      expect(user.role).toEqual(ROLE.PROFESSOR)
+    }
+
+    for (const user of staff) {
+      expect(user.role).toEqual(ROLE.STAFF)
+    }
+  })
+
 })
 
 // Subject methods
