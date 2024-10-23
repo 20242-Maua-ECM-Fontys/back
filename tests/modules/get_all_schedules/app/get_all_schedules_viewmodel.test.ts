@@ -19,24 +19,24 @@ describe('Assert GetAllSchedulesViewModel is correct', () => {
           {
             "scheduleId": "2S-4CM-D5@2024(SCS)",
             "courseGrade": 4,
-            "schedulePeriod": "ANUAL",
+            "schedulePeriod": "ANNUAL", 
           },
           {
             "scheduleId": "2S-2CM-D5@2024(SCS)",
             "courseGrade": 2,
-            "schedulePeriod": "ANUAL",
+            "schedulePeriod": "ANNUAL", 
           },
           {
             "scheduleId": "2S-3CM-D5@2024(SCS)",
             "courseGrade": 3,
-            "schedulePeriod": "ANUAL",
+            "schedulePeriod": "ANNUAL",  
           },
         ],
         "Cience Coputing": [
           {
             "scheduleId": "1S-2CIC-D4@2024(SCS)",
             "courseGrade": 2,
-            "schedulePeriod": "1SEM",
+            "schedulePeriod": "1SEM",  
           },
         ],
       },

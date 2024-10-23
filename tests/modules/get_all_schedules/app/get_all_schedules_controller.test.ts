@@ -6,16 +6,15 @@ import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositorie
 
 describe('Assert GetAllSchedulesController is correct', () => {
   it('Should activate usecase correctly and return schedules', async () => {
-    // Arrange
+
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetAllSchedulesUsecase(repo)
     const controller = new GetAllSchedulesController(usecase)
     const httpRequest = new HttpRequest(undefined, undefined, {}, undefined)
 
-    // Act
     const response = await controller.execute(httpRequest)
 
-    // Assert
+
     expect(response?.statusCode).toEqual(200)
     expect(response?.body.message).toEqual('schedules returned')
     expect(response?.body.courses).toEqual({
@@ -23,17 +22,17 @@ describe('Assert GetAllSchedulesController is correct', () => {
         {
           "scheduleId": "2S-4CM-D5@2024(SCS)",
           "courseGrade": 4,
-          "schedulePeriod": "ANUAL",
+          "schedulePeriod": "ANNUAL",
         },
         {
           "scheduleId": "2S-2CM-D5@2024(SCS)",
           "courseGrade": 2,
-          "schedulePeriod": "ANUAL",
+          "schedulePeriod": "ANNUAL",
         },
         {
           "scheduleId": "2S-3CM-D5@2024(SCS)",
           "courseGrade": 3,
-          "schedulePeriod": "ANUAL",
+          "schedulePeriod": "ANNUAL",
         },
       ],
       "Cience Coputing": [

@@ -8,7 +8,7 @@ export class GetAllSchedulesViewModel {
     this.message = 'schedules returned';
 
     this.courses = schedules.reduce((result, schedule) => {
-      const period = this.formatAcademicPeriod(schedule.academicPeriod);
+      const period = schedule.academicPeriod; 
       if (!result[schedule.courseName]) {
         result[schedule.courseName] = [];
       }
@@ -21,19 +21,6 @@ export class GetAllSchedulesViewModel {
 
       return result;
     }, {} as Record<string, { scheduleId: string; courseGrade: number; schedulePeriod: string }[]>);
-  }
-
-  private formatAcademicPeriod(period: string): string {
-    switch (period) {
-      case 'ANNUAL':
-        return 'ANUAL';
-      case 'FIRST_SEMESTER':
-        return '1SEM';
-      case 'SECOND_SEMESTER':
-        return '2SEM';
-      default:
-        return period;
-    }
   }
 
   toJSON() {
