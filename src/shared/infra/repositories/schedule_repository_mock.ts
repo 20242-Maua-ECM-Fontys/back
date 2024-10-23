@@ -635,6 +635,11 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return user || null
   }
 
+  async getUsersByRole(role: ROLE): Promise<User[]> {
+    const users = this.users.filter((user) => user.role === role)
+    return users
+  }
+
   // Class methods
   getClassesLength(): number {
     return this.classes.length
@@ -723,6 +728,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return Promise.resolve(suitability)
   }
 
+  async getSuitabilitiesByUserId(userId: number): Promise<Suitability[]> {
+    const suitabilities = this.suitabilities.filter(
+      (s) => s.userId === userId,
+    )
+    
+    return suitabilities
+  }
+
   // Schedule methods
   getSchedulesLength(): number {
     return this.schedules.length
@@ -761,7 +774,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   // Possibility methods
-
   getPossibilitiesLength(): number {
     return this.possibilities.length
   }
@@ -827,6 +839,13 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
     this.availabilities.push(availability)
     return availability
+  }
+
+  async getAvailabilitiesByUserId(userId: number): Promise<Availability[]> {
+    const availabilities = this.availabilities.filter(
+      (a) => a.userId === userId,
+    )
+    return availabilities
   }
 
   // AvFullfilled methods

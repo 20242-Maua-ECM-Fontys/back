@@ -77,6 +77,29 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     expect(repo.createUser(user)).rejects.toThrowError('userId already exists')
   })
+  it('Should get users by role correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const coordinators = await repo.getUsersByRole(ROLE.COORDINATOR)
+    const professors = await repo.getUsersByRole(ROLE.PROFESSOR)
+    const staff = await repo.getUsersByRole(ROLE.STAFF)
+
+    expect(coordinators.length).toEqual(1)
+    expect(professors.length).toEqual(3)
+    expect(staff.length).toEqual(1)
+
+    for (const user of coordinators) {
+      expect(user.role).toEqual(ROLE.COORDINATOR)
+    }
+
+    for (const user of professors) {
+      expect(user.role).toEqual(ROLE.PROFESSOR)
+    }
+
+    for (const user of staff) {
+      expect(user.role).toEqual(ROLE.STAFF)
+    }
+  })
+
 })
 
 // Subject methods
@@ -298,6 +321,18 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     const newLength = repo.getSuitabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
+  })
+  it('Should get suitabilities by userId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const suitabilities = await repo.getSuitabilitiesByUserId(4)
+
+    expect(suitabilities.length).toEqual(2)
+  })
+  it('Should get suitabilities by userId correctly: empty list', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const suitabilities = await repo.getSuitabilitiesByUserId(5)
+
+    expect(suitabilities.length).toEqual(0)
   })
 })
 
@@ -598,6 +633,18 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
     const newLength = repo.getAvailabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
+  })
+  it('Should get availabilities by userId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilities = await repo.getAvailabilitiesByUserId(4)
+
+    expect(availabilities.length).toEqual(8)
+  })
+  it('Should get availabilities by userId correctly: empty list', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilities = await repo.getAvailabilitiesByUserId(5)
+
+    expect(availabilities.length).toEqual(0)
   })
 })
 
