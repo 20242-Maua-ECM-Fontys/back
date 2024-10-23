@@ -77,7 +77,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     expect(repo.createUser(user)).rejects.toThrowError('userId already exists')
   })
-  it('Should get users by role correctyl', async () => {
+  it('Should get users by role correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const coordinators = await repo.getUsersByRole(ROLE.COORDINATOR)
     const professors = await repo.getUsersByRole(ROLE.PROFESSOR)
