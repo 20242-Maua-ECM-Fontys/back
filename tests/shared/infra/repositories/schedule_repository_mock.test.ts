@@ -299,6 +299,18 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     expect(newLength).toEqual(lastLength)
   })
+  it('Should get suitabilities by userId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const suitabilities = await repo.getSuitabilitiesByUserId(4)
+
+    expect(suitabilities.length).toEqual(2)
+  })
+  it('Should get suitabilities by userId correctly: empty list', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const suitabilities = await repo.getSuitabilitiesByUserId(5)
+
+    expect(suitabilities.length).toEqual(0)
+  })
 })
 
 // Schedule methods
@@ -598,6 +610,18 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
     const newLength = repo.getAvailabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
+  })
+  it('Should get availabilities by userId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilities = await repo.getAvailabilitiesByUserId(4)
+
+    expect(availabilities.length).toEqual(8)
+  })
+  it('Should get availabilities by userId correctly: empty list', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilities = await repo.getAvailabilitiesByUserId(5)
+
+    expect(availabilities.length).toEqual(0)
   })
 })
 

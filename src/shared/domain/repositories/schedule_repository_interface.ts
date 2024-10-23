@@ -33,6 +33,7 @@ export interface IScheduleRepository {
   getSuitabilitiesLength(): number
   getAllSuitabilities(): Promise<Suitability[]>
   createSuitability(suitability: Suitability): Promise<Suitability>
+  getSuitabilitiesByUserId(userId: number): Promise<Suitability[]>
 
   // Schedule methods
   getSchedulesLength(): number
@@ -51,6 +52,7 @@ export interface IScheduleRepository {
   getAvailability(id: string): Promise<Availability>
   getAllAvailabilities(): Promise<Availability[]>
   createAvailability(availability: Availability): Promise<Availability>
+  getAvailabilitiesByUserId(userId: number): Promise<Availability[]>
 
   // AvFullfilled methods
   getAvsFullfilledLength(): number
