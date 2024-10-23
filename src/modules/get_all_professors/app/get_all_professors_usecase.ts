@@ -4,7 +4,7 @@ import { User } from '../../../shared/domain/entities/user';
 import { ROLE } from '../../../shared/domain/enums/role_enum';
 import { Suitability } from '../../../shared/domain/entities/suitability';
 
-type ProfessorAvailability = {
+export type GetAllProfessorsUsecaseReturn = {
   professor: User;
   availabilities: Availability[];
   suitabilities: {
@@ -16,9 +16,9 @@ type ProfessorAvailability = {
 export class GetAllProfessorsUsecase {
   constructor(private repo: IScheduleRepository) {}
 
-  async execute(): Promise<ProfessorAvailability[]> {
+  async execute(): Promise<GetAllProfessorsUsecaseReturn[]> {
     const professors = await this.repo.getUsersByRole(ROLE.PROFESSOR);
-    const response: ProfessorAvailability[] = professors.map((professor) => {
+    const response: GetAllProfessorsUsecaseReturn[] = professors.map((professor) => {
       return {
         professor: professor,
         availabilities: [], 
