@@ -9,7 +9,7 @@ import { GetAllProfessorsUsecase } from './get_all_professors_usecase'
 import { GetAllProfessorsViewmodel } from './get_all_professors_viewmodel'
 import { NoItemsFound } from '../../../shared/helpers/errors/repo_error'
 
-export class UploadCSVController {
+export class GetAllProfessorsController {
   constructor(private usecase: GetAllProfessorsUsecase) {}
 
   async execute(request: IRequest) {
