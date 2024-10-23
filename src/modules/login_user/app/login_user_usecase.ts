@@ -1,10 +1,10 @@
-import { IUserRepository } from '../../../shared/domain/repositories/user_repository_interface'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
 import { NoItemsFound } from '../../../shared/helpers/errors/usecase_errors'
 import { User } from '../../../../src/shared/domain/entities/user'
+import { IScheduleRepository } from '@/shared/domain/repositories/schedule_repository_interface'
 
 export class LoginUserUsecase {
-  constructor(private repo: IUserRepository) {}
+  constructor(private repo: IScheduleRepository) {}
 
   async execute(email: string, password: string) {
     if (!User.validatePassword(password)) {

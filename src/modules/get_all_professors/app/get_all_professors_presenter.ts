@@ -1,15 +1,15 @@
-import { UploadCSVController } from './upload_csv_controller'
-import { UploadCSVUsecase } from './upload_csv_usecase'
+import { GetAllProfessorsController } from './get_all_professors_controller'
+import { GetAllProfessorsUsecase } from './get_all_professors_usecase'
 import { HttpResponse } from '../../../shared/helpers/external_interfaces/http_models'
 import { IRequest } from '../../../shared/helpers/external_interfaces/external_interface'
 import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
 
-export async function UploadCSVPresenter(
+export async function GetAllProfessorsPresenter(
   event: IRequest,
   repo: IScheduleRepository,
 ): Promise<HttpResponse> {
-  const usecase = new UploadCSVUsecase(repo)
-  const controller = new UploadCSVController(usecase)
+  const usecase = new GetAllProfessorsUsecase(repo)
+  const controller = new GetAllProfessorsController(usecase)
   const response = await controller.execute(event)
   const httpResponse = new HttpResponse(response?.statusCode, response?.body)
 
