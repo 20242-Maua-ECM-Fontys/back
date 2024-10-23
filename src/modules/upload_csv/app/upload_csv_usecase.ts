@@ -13,9 +13,10 @@ import {
   InvalidCSVRowType,
 } from '../../../shared/helpers/errors/usecase_errors'
 import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
+import { v4 as uuidv4 } from 'uuid'
 
 interface ParsedData {
-  type: 'professor' | 'subject' | 'class'
+  type: 'professor' | 'subject' | 'class' | 'schedule'
   classId: string
   name: string
   classModality: string
@@ -27,6 +28,9 @@ interface ParsedData {
   professorPassword: string
   roomCode: string
   scheduleId: string
+  courseName: string
+  coordEmail: string
+  academicPeriod: string
 }
 
 function bufferToStream(buffer: Buffer): Readable {
@@ -120,6 +124,21 @@ export class UploadCSVUsecase {
                 scheduleId: row.scheduleId!,
               })
               classList.push(newClass)
+            } else if (row.type === 'schedule') {
+              const newScheduleId = row.scheduleId!
+              const newCourseName = row.courseName!
+              const newCoordEmail = row.coordEmail!
+              const newAcademicPeriod = row.academicPeriod!
+              if (
+                newScheduleId === '' ||
+                newCourseName === '' ||
+                newCoordEmail === '' ||
+                newAcademicPeriod === ''
+              ) {
+                noProblems = 'invalidCSVFormat'
+                return
+              }
+              const courseGrade = newScheduleId.charAt(3)
             } else if (
               row.type === 'type' &&
               row.classId === 'classId' &&
