@@ -16,7 +16,6 @@ import {
 } from '../../../shared/helpers/errors/usecase_errors'
 import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
 import { v4 as uuidv4 } from 'uuid'
-import { as } from 'vitest/dist/chunks/reporters.DAfKSDh5'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
 
 interface ParsedData {
