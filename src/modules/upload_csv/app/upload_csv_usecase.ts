@@ -15,13 +15,12 @@ import {
   InvalidCSVRowType,
 } from '../../../shared/helpers/errors/usecase_errors'
 import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
-//import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import { as } from 'vitest/dist/chunks/reporters.DAfKSDh5'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
 
 interface ParsedData {
   type: 'professor' | 'subject' | 'class' | 'schedule'
-  classId: string
   name: string
   classModality: string
   classType: string
@@ -114,19 +113,15 @@ export class UploadCSVUsecase {
             } else if (row.type === 'class') {
               const newModality = modalityToEnum(row.classModality!)
               const newType = classTypeToEnum(row.classType!)
-              const newClassId = row.classId!
               const newSubjectCode = row.subjectCode!
               const newName = row.name!
-              if (
-                newClassId === '' ||
-                newSubjectCode === '' ||
-                newName === ''
-              ) {
+              if (newSubjectCode === '' || newName === '') {
                 noProblems = 'invalidCSVFormat'
                 return
               }
+              const classId = uuidv4()
               const newClass = new Class({
-                id: row.classId!,
+                id: classId,
                 name: row.name!,
                 modality: newModality,
                 classType: newType,
@@ -161,7 +156,6 @@ export class UploadCSVUsecase {
               scheduleList.push(schedulePromise)
             } else if (
               row.type === 'type' &&
-              row.classId === 'classId' &&
               row.name === 'name' &&
               row.classModality === 'classModality' &&
               row.classType === 'classType' &&
