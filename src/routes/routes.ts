@@ -6,7 +6,7 @@ import { Environments } from '../shared/environments'
 import { GetAllProfessorsPresenter } from '../modules/get_all_professors/app/get_all_professors_presenter'
 import { UploadCSVPresenter } from '../modules/upload_csv/app/upload_csv_presenter'
 import { GetAllSubjectsPresenter } from '../modules/get_all_subjects/app/get_all_subjects_presenter'
-
+import { GetAllSchedulesPresenter } from '../modules/get_all_schedules/app/get_all_schedules_presenter'
 
 const upload = multer()
 const routes = express.Router()
@@ -56,6 +56,19 @@ routes.get(
   },
 )
 
+routes.get(
+  '/get_all_schedules',
+  async (req: Request, res: Response) => {
+    const httpRequest: HttpRequest = new HttpRequest(
+      req.body,
+      {},
+      {},
+      req.file
+    )
+    const response = await GetAllSchedulesPresenter(httpRequest, repo)
+    res.status(response.statusCode).json(response.body)
+  },
+)
 
 
 export default routes
