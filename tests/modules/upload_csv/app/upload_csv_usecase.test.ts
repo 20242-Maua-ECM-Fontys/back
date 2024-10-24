@@ -154,7 +154,7 @@ room,Class 202,REMOTE,LAB,CSE204,,A02,,,,,2S-4CM-D5@2024(SCS)`
     expect(lenghtSubjectAfter).toEqual(lenghtSubjectBefore)
   })
 
-  it('Should raise error for invalid role type', async () => {
+  it('Should raise error for invalid user role on schedule', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new UploadCSVUsecase(repo)
 
