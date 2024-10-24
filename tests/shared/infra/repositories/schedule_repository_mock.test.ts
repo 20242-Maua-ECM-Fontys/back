@@ -100,6 +100,20 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     }
   })
 
+  it('Should get users by email correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const user = await repo.getUserByEmail('user1@gmail.com')
+
+    expect(user?.id).toEqual(1)
+  })
+
+  it('Should get users by email wrongly: email does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getUserByEmail('cic@cupsaw.in')).rejects.toThrowError(
+      'No items found for email',
+    )
+  })
 })
 
 // Subject methods
@@ -354,9 +368,9 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   })
   it('Should get schedule correctly with different groupNumber', async () => {
     const repo = new ScheduleRepositoryMock()
-    const schedule = await repo.getSchedule("2S-4CM-D5@2024(SCS)", 1)
+    const schedule = await repo.getSchedule('2S-4CM-D5@2024(SCS)', 1)
 
-    expect(schedule.scheduleId).toEqual("2S-4CM-D5@2024(SCS)")
+    expect(schedule.scheduleId).toEqual('2S-4CM-D5@2024(SCS)')
     expect(schedule.groupNumber).toEqual(1)
   })
   it('Should get schedule wrongly: no scheduleId found', async () => {

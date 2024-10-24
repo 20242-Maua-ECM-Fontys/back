@@ -592,6 +592,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return user
   }
 
+  async getUserByEmail(email: string): Promise<User> {
+    const user = this.users.find((user) => user.email === email)
+    if (!user) {
+      throw new NoItemsFound('email')
+    }
+    return user
+  }
+
   async getAllUsers(): Promise<User[]> {
     return this.users
   }
@@ -729,10 +737,8 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   async getSuitabilitiesByUserId(userId: number): Promise<Suitability[]> {
-    const suitabilities = this.suitabilities.filter(
-      (s) => s.userId === userId,
-    )
-    
+    const suitabilities = this.suitabilities.filter((s) => s.userId === userId)
+
     return suitabilities
   }
 
