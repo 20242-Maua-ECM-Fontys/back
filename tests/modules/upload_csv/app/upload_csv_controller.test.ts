@@ -7,11 +7,10 @@ import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositorie
 describe('Assert Upload CSV controller is correct at all', () => {
   it('Should activate usecase correctly', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new UploadCSVUsecase(
-      repo
-    )
+    const usecase = new UploadCSVUsecase(repo)
 
-    const csvContent = `type,classId,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,professorPassword,roomCode,scheduleId
+    const csvContent = `type,classId,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,professorPassword,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,user2@gmail.com,ANNUAL
 professor,,Dr. John Doe,,,,,,john.doe@example.com,12345,S!q3T@pG9z,,
 subject,,Data Structures,,,CSE103,EVENING,,,,,,
 class,123e4567-e89b-12d3-a456-426614174003,Class 101,HYBRID,THEORY,CSE104,,A01,,,,,2S-4CM-D5@2024(SCS)
