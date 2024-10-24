@@ -173,7 +173,7 @@ class,Class 202,REMOTE,LAB,CSE204,,A02,,,,,2S-4CM-D5@2024(SCS)`
     )
   })
 
-  it('Should raise error for invalid schedulaId', async () => {
+  it('Should raise error for invalid scheduleId', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new UploadCSVUsecase(repo)
 
