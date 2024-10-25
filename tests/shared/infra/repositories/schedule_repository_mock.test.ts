@@ -528,6 +528,33 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
 
     expect(availabilities.length).toEqual(18)
   })
+  it('Should get availabilities by userId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilities = await repo.getAvailabilitiesByUserId(3)
+
+    expect(availabilities.length).toEqual(10)
+  })
+  it('Should get availabilities by userId correctly: user does not have availabilities', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilities = await repo.getAvailabilitiesByUserId(5)
+
+    expect(availabilities.length).toEqual(0)
+  })
+  it('Should delete availability correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilityId = '0a8c5357-1f07-5b24-9845-9318c4000007'
+    const availabilityPop = await repo.deleteAvailability(availabilityId)
+
+    expect(availabilityPop.availabilityId).toEqual(availabilityId)
+  })
+  it('Should not delete availability: availabilityId not found', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilityId = 'wrong_uuid'
+    await expect(repo.deleteAvailability(availabilityId)).rejects.toThrowError(
+      'No items found for availabilityId',
+    )
+
+  })
   it('Should create availability correctly', async () => {
     const availability = new Availability({
       id: '123e4567-0000-12d3-a456-426614174000',

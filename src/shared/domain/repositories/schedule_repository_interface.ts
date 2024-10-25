@@ -50,6 +50,8 @@ export interface IScheduleRepository {
   getAvailabilitiesLength(): number
   getAvailability(id: string): Promise<Availability>
   getAllAvailabilities(): Promise<Availability[]>
+  getAvailabilitiesByUserId(userId: number): Promise<Availability[]>
+  deleteAvailability(id: string): Promise<Availability>
   createAvailability(availability: Availability): Promise<Availability>
 
   // AvFullfilled methods

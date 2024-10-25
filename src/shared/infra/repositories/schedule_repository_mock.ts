@@ -761,7 +761,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   // Possibility methods
-
   getPossibilitiesLength(): number {
     return this.possibilities.length
   }
@@ -809,6 +808,23 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
   async getAllAvailabilities(): Promise<Availability[]> {
     return this.availabilities
+  }
+
+  async getAvailabilitiesByUserId(userId: number): Promise<Availability[]> {
+    return this.availabilities.filter((a) => a.userId === userId)
+  }
+
+  async deleteAvailability(id: string): Promise<Availability> {
+    const availability = this.availabilities.find(
+      (availability) => availability.availabilityId === id,
+    )
+    if (!availability) {
+      throw new NoItemsFound('availabilityId')
+    }
+    this.availabilities = this.availabilities.filter(
+      (availability) => availability.availabilityId !== id,
+    )
+    return availability
   }
 
   async createAvailability(availability: Availability): Promise<Availability> {
