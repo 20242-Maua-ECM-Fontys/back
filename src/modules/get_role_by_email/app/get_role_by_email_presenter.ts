@@ -7,7 +7,7 @@ import { GetRoleByEmailUsecase } from './get_role_by_email_usecase';
 import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
 import { IRequest } from '../../../shared/helpers/external_interfaces/external_interface';
 
-export async function getRoleByEmailPresenter(
+export async function GetRoleByEmailPresenter(
   httpRequest: IRequest, repo: IScheduleRepository
 ): Promise<HttpResponse> {
   const usecase = new GetRoleByEmailUsecase(repo);

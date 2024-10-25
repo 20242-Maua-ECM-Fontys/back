@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getRoleByEmailPresenter } from '../../../../src/modules/get_role_by_email/app/get_role_by_email_presenter';
+import { GetRoleByEmailPresenter } from '../../../../src/modules/get_role_by_email/app/get_role_by_email_presenter';
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock';
 import { IRequest } from '../../../../src/shared/helpers/external_interfaces/external_interface';
 import { HttpResponse } from '../../../../src/shared/helpers/external_interfaces/http_models';
@@ -12,7 +12,7 @@ describe('getRoleByEmailPresenter', () => {
       data: { email: 'user1@gmail.com' },
     };
 
-    const response: HttpResponse = await getRoleByEmailPresenter(httpRequest, repo);
+    const response: HttpResponse = await GetRoleByEmailPresenter(httpRequest, repo);
 
     expect(response?.statusCode).toBe(200);
     expect(response?.body).toEqual({
@@ -25,7 +25,7 @@ describe('getRoleByEmailPresenter', () => {
 
     const httpRequest: IRequest = { data: {} };
 
-    const response: HttpResponse = await getRoleByEmailPresenter(httpRequest, repo);
+    const response: HttpResponse = await GetRoleByEmailPresenter(httpRequest, repo);
 
     expect(response?.statusCode).toBe(400);
     expect(response?.body.message).toBe('Missing email parameter');
@@ -38,7 +38,7 @@ describe('getRoleByEmailPresenter', () => {
       data: { email: 'invalid-email' },
     };
 
-    const response: HttpResponse = await getRoleByEmailPresenter(httpRequest, repo);
+    const response: HttpResponse = await GetRoleByEmailPresenter(httpRequest, repo);
 
     expect(response?.statusCode).toBe(400);
     expect(response?.body.message).toBe('Invalid email format');
@@ -51,7 +51,7 @@ describe('getRoleByEmailPresenter', () => {
       data: { email: 'nonexistent@gmail.com' },
     };
 
-    const response: HttpResponse = await getRoleByEmailPresenter(httpRequest, repo);
+    const response: HttpResponse = await GetRoleByEmailPresenter(httpRequest, repo);
 
     expect(response?.statusCode).toBe(404);
     expect(response?.body.message).toBe('No items found for email');
