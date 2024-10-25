@@ -1,18 +1,13 @@
-import { UserProps } from '../../../shared/domain/entities/user'
-
-export class LoginUserViewmodel {
+export class UpdateAvailabilitiesViewmodel {
   private message: string
-  private type: string
 
-  constructor(props: UserProps) {
-    this.message = 'the login was successful'
-    this.type = props.role
+  constructor() {
+    this.message = 'availabilities updated'
   }
 
   toJSON() {
     return {
       message: this.message,
-      type: this.type,
     }
   }
 }
