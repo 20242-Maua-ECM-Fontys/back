@@ -6,16 +6,19 @@ import { Schedule } from '../entities/schedule'
 import { Subject } from '../entities/subject'
 import { Suitability } from '../entities/suitability'
 import { User } from '../entities/user'
+import { ROLE } from '../enums/role_enum'
 
 export interface IScheduleRepository {
   // User methods
   getUsersLength(): number
   getUser(id: number): Promise<User>
   getAllUsers(): Promise<User[]>
+  getUsersByRole(role: ROLE): Promise<User[]>
   createUser(user: User): Promise<User>
   updateUser(id: number, newName: string, newEmail: string): Promise<User>
   deleteUser(id: number): Promise<User>
   loginUser(email: string, password: string): Promise<User | null>
+  getUserByEmail(email: string): Promise<User>
 
   // Class methods
   getClassesLength(): number
@@ -33,6 +36,7 @@ export interface IScheduleRepository {
   getSuitabilitiesLength(): number
   getAllSuitabilities(): Promise<Suitability[]>
   createSuitability(suitability: Suitability): Promise<Suitability>
+  getSuitabilitiesByUserId(userId: number): Promise<Suitability[]>
 
   // Schedule methods
   getSchedulesLength(): number
@@ -53,6 +57,7 @@ export interface IScheduleRepository {
   getAvailabilitiesByUserId(userId: number): Promise<Availability[]>
   deleteAvailability(id: string): Promise<Availability>
   createAvailability(availability: Availability): Promise<Availability>
+  getAvailabilitiesByUserId(userId: number): Promise<Availability[]>
 
   // AvFullfilled methods
   getAvsFullfilledLength(): number

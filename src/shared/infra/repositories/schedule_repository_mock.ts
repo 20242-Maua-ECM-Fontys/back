@@ -592,6 +592,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return user
   }
 
+  async getUserByEmail(email: string): Promise<User> {
+    const user = this.users.find((user) => user.email === email)
+    if (!user) {
+      throw new NoItemsFound('email')
+    }
+    return user
+  }
+
   async getAllUsers(): Promise<User[]> {
     return this.users
   }
@@ -633,6 +641,11 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       (user) => user.email === email && user.password === password,
     )
     return user || null
+  }
+
+  async getUsersByRole(role: ROLE): Promise<User[]> {
+    const users = this.users.filter((user) => user.role === role)
+    return users
   }
 
   // Class methods
@@ -721,6 +734,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     this.suitabilities.push(suitability)
 
     return Promise.resolve(suitability)
+  }
+
+  async getSuitabilitiesByUserId(userId: number): Promise<Suitability[]> {
+    const suitabilities = this.suitabilities.filter((s) => s.userId === userId)
+
+    return suitabilities
   }
 
   // Schedule methods
@@ -843,6 +862,13 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
     this.availabilities.push(availability)
     return availability
+  }
+
+  async getAvailabilitiesByUserId(userId: number): Promise<Availability[]> {
+    const availabilities = this.availabilities.filter(
+      (a) => a.userId === userId,
+    )
+    return availabilities
   }
 
   // AvFullfilled methods

@@ -77,6 +77,43 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     expect(repo.createUser(user)).rejects.toThrowError('userId already exists')
   })
+  it('Should get users by role correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const coordinators = await repo.getUsersByRole(ROLE.COORDINATOR)
+    const professors = await repo.getUsersByRole(ROLE.PROFESSOR)
+    const staff = await repo.getUsersByRole(ROLE.STAFF)
+
+    expect(coordinators.length).toEqual(1)
+    expect(professors.length).toEqual(3)
+    expect(staff.length).toEqual(1)
+
+    for (const user of coordinators) {
+      expect(user.role).toEqual(ROLE.COORDINATOR)
+    }
+
+    for (const user of professors) {
+      expect(user.role).toEqual(ROLE.PROFESSOR)
+    }
+
+    for (const user of staff) {
+      expect(user.role).toEqual(ROLE.STAFF)
+    }
+  })
+
+  it('Should get users by email correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const user = await repo.getUserByEmail('user1@gmail.com')
+
+    expect(user?.id).toEqual(1)
+  })
+
+  it('Should get users by email wrongly: email does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getUserByEmail('cic@cupsaw.in')).rejects.toThrowError(
+      'No items found for email',
+    )
+  })
 })
 
 // Subject methods
@@ -299,6 +336,18 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     expect(newLength).toEqual(lastLength)
   })
+  it('Should get suitabilities by userId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const suitabilities = await repo.getSuitabilitiesByUserId(4)
+
+    expect(suitabilities.length).toEqual(2)
+  })
+  it('Should get suitabilities by userId correctly: empty list', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const suitabilities = await repo.getSuitabilitiesByUserId(5)
+
+    expect(suitabilities.length).toEqual(0)
+  })
 })
 
 // Schedule methods
@@ -319,9 +368,9 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   })
   it('Should get schedule correctly with different groupNumber', async () => {
     const repo = new ScheduleRepositoryMock()
-    const schedule = await repo.getSchedule("2S-4CM-D5@2024(SCS)", 1)
+    const schedule = await repo.getSchedule('2S-4CM-D5@2024(SCS)', 1)
 
-    expect(schedule.scheduleId).toEqual("2S-4CM-D5@2024(SCS)")
+    expect(schedule.scheduleId).toEqual('2S-4CM-D5@2024(SCS)')
     expect(schedule.groupNumber).toEqual(1)
   })
   it('Should get schedule wrongly: no scheduleId found', async () => {
@@ -625,6 +674,18 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
     const newLength = repo.getAvailabilitiesLength()
 
     expect(newLength).toEqual(lastLength)
+  })
+  it('Should get availabilities by userId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilities = await repo.getAvailabilitiesByUserId(4)
+
+    expect(availabilities.length).toEqual(8)
+  })
+  it('Should get availabilities by userId correctly: empty list', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const availabilities = await repo.getAvailabilitiesByUserId(5)
+
+    expect(availabilities.length).toEqual(0)
   })
 })
 

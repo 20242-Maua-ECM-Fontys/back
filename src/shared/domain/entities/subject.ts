@@ -112,8 +112,8 @@ export class Subject {
 
   toJSON() {
     return {
-      code: this.props.code,
-      name: this.props.name,
+      codeSubject: this.props.code,
+      subjectName: this.props.name,
       period: this.props.period,
     }
   }
