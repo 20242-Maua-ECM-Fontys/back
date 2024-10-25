@@ -53,6 +53,9 @@ routes.put(
       undefined
     )
     const response = await UpdateAvailabilitiesPresenter(httpRequest, repo)
+    res.status(response.statusCode).json(response.body)
+  },
+)
 
 routes.get(
   '/get_all_professors',

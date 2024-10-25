@@ -864,13 +864,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return availability
   }
 
-  async getAvailabilitiesByUserId(userId: number): Promise<Availability[]> {
-    const availabilities = this.availabilities.filter(
-      (a) => a.userId === userId,
-    )
-    return availabilities
-  }
-
   // AvFullfilled methods
   getAvsFullfilledLength(): number {
     return this.avsFullfilled.length
