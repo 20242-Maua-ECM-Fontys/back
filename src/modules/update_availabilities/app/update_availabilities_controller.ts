@@ -3,36 +3,93 @@ import {
   WrongTypeParameters,
 } from '../../../shared/helpers/errors/controller_errors'
 import { IRequest } from '../../../shared/helpers/external_interfaces/external_interface'
-import { UploadCSVUsecase } from './update_availabilities_usecase'
+import { UpdateAvailabilitiesUsecase } from './update_availabilities_usecase'
 import {
   BadRequest,
   OK,
   InternalServerError,
+  NotFound,
+  Forbidden,
 } from '../../../shared/helpers/external_interfaces/http_codes'
-import { EntityError } from '../../../shared/helpers/errors/domain_errors'
-import { Express } from 'express'
 import {
-  InvalidCSVRowType,
-  InvalidCSVFormat,
-} from '../../../shared/helpers/errors/usecase_errors'
+  NoItemsFound as NoItemsFoundRepo,
+} from '../../../shared/helpers/errors/repo_error'
+import { EntityError } from '../../../shared/helpers/errors/domain_errors'
+import { InvalidRole } from '../../../shared/helpers/errors/usecase_errors'
+import { toEnum as startTimeToEnum } from '../../../shared/domain/enums/maua_start_time_enum'
+import { toEnum as endTimeToEnum } from '../../../shared/domain/enums/maua_end_time_enum'
+import { toEnum as weekDayToEnum } from '../../../shared/domain/enums/week_day_enum'
+import { UpdateAvailabilitiesViewmodel } from './update_availabilities_viewmodel'
 
-export class UploadCSVController {
-  constructor(private usecase: UploadCSVUsecase) {}
+export class UpdateAvailabilitiesController {
+  constructor(private usecase: UpdateAvailabilitiesUsecase) {}
 
   async execute(request: IRequest) {
     try {
-      if (request.data.file === undefined) {
-        throw new MissingParameters('data')
+      // check userId
+      if (request.data.userId === undefined) {
+        throw new MissingParameters('userId')
       }
-      let csvBuffer: Buffer | undefined
-      try {
-        csvBuffer = (request.data.file as Express.Multer.File).buffer
-      } catch (error: unknown) {
-        throw new WrongTypeParameters('data', 'csv', typeof request.data.file)
+      if (typeof request.data.userId !== 'number') {
+        throw new WrongTypeParameters('userId', 'number', request.data.userId)
       }
-      await this.usecase.execute(csvBuffer)
+      const userId = request.data.userId
 
-      const viewmodel = { message: 'the csv was uploaded successfully' }
+      // check availabilities
+      const availabilities = [];
+      if (request.data.availabilities === undefined) {
+        throw new MissingParameters('availabilities')
+      }
+      if (!Array.isArray(request.data.availabilities)) {
+        throw new WrongTypeParameters('availabilities', 'array', request.data.availabilities)
+      }
+      for (const availability of request.data.availabilities) {
+        // check startTime
+        if (availability.startTime === undefined) {
+          throw new MissingParameters('startTime')
+        }
+        let startTime;
+        try{
+          startTime = startTimeToEnum(availability.startTime)
+        }
+        catch (error: unknown) {
+          throw new WrongTypeParameters('startTime', 'string as MAUA_START_TIME', availability.startTime)
+        }
+
+        // check endTime
+        if (availability.endTime === undefined) {
+          throw new MissingParameters('endTime')
+        }
+        let endTime;
+        try{
+          endTime = endTimeToEnum(availability.endTime)
+        }
+        catch (error: unknown) {
+          throw new WrongTypeParameters('endTime', 'string as MAUA_END_TIME', availability.endTime)
+        }
+
+        // check weekDay
+        if (availability.weekDay === undefined) {
+          throw new MissingParameters('weekDay')
+        }
+        let weekDay;
+        try{
+          weekDay = weekDayToEnum(availability.weekDay)
+        }
+        catch (error: unknown) {
+          throw new WrongTypeParameters('weekDay', 'string as WEEK_DAY', availability.weekDay)
+        }
+
+        availabilities.push({
+          startTime,
+          endTime,
+          weekDay
+        })
+      }
+
+      await this.usecase.execute(userId, availabilities)
+
+      const viewmodel = new UpdateAvailabilitiesViewmodel().toJSON()
 
       const response = new OK(viewmodel)
 
@@ -44,14 +101,14 @@ export class UploadCSVController {
       if (error instanceof WrongTypeParameters) {
         return new BadRequest(error.message)
       }
+      if (error instanceof NoItemsFoundRepo) {
+        return new NotFound(error.message)
+      }
       if (error instanceof EntityError) {
         return new BadRequest(error.message)
       }
-      if (error instanceof InvalidCSVRowType) {
-        return new BadRequest(error.message)
-      }
-      if (error instanceof InvalidCSVFormat) {
-        return new BadRequest(error.message)
+      if (error instanceof InvalidRole) {
+        return new Forbidden(error.message)
       }
       if (error instanceof Error) {
         return new InternalServerError(error.message)
