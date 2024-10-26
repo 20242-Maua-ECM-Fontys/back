@@ -12,7 +12,7 @@ export const GetRoleByEmailPresenter = async (request: IRequest, repo: ISchedule
   const response = await controller.handle(httpRequest);
 
   return new HttpResponse(
-    response.statusCode,
-    response.data 
+    response?.statusCode,
+    response?.data 
   );
 }

@@ -6,10 +6,9 @@ import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositorie
 describe('Tests for GetRoleByEmailPresenter', () => {
   it('Should call presenter and return status 200', async () => {
     const repo = new ScheduleRepositoryMock();
-    
-    // Dados de requisição, com um email válido que está no mock
+  
     const event = new HttpRequest(
-      { email: 'user1@gmail.com' }, // corpo da requisição
+      { email: 'user1@gmail.com' }, 
       undefined,
       {},
       undefined,
@@ -19,7 +18,7 @@ describe('Tests for GetRoleByEmailPresenter', () => {
 
     expect(response?.statusCode).toEqual(200);
     expect(response?.data).toEqual({
-      role: 'STAFF', // Espera o papel mockado para user1@gmail.com
+      role: 'STAFF', 
     });
   });
 });

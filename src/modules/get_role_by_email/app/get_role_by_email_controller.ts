@@ -42,7 +42,6 @@ export class GetRoleByEmailController {
         return new InternalServerError(error.message);
       }
     }
-    // Retorno adicional para cobrir todos os fluxos
     return new InternalServerError('Unhandled error occurred');
   }
 }

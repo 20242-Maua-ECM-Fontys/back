@@ -7,7 +7,7 @@ export class GetRoleByEmailUsecase {
   async execute(email: string): Promise<string> {
     const user = await this.repo.getUserByEmail(email); 
     if (!user) {
-      throw new Error('No items found'); 
+      throw new NoItemsFound('email'); 
     }
     return user.role; 
   }
