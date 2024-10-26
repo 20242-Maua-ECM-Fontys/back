@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { GetRoleByEmailController } from '../../../../src/modules/get_role_by_email/app/get_role_by_email_controller';
 import { GetRoleByEmailUsecase } from '../../../../src/modules/get_role_by_email/app/get_role_by_email_usecase';
 import { IRequest } from '../../../../src/shared/helpers/external_interfaces/external_interface';
@@ -11,6 +11,11 @@ describe('GetRoleByEmailController', () => {
     execute: vi.fn(),
   };
   const controller = new GetRoleByEmailController(mockUsecase as unknown as GetRoleByEmailUsecase);
+
+  afterEach(() => {
+    vi.clearAllMocks();
+    vi.restoreAllMocks();
+  });
 
   it('should return BadRequest if email is missing', async () => {
     const request: IRequest = { data: {} };
@@ -34,7 +39,9 @@ describe('GetRoleByEmailController', () => {
   it('should return NotFound if no user role is found for email', async () => {
     const request: IRequest = { data: { email: 'user@example.com' } };
 
-    mockUsecase.execute.mockRejectedValue(new NoItemsFound('No items found for email'));
+    // Garantir que a validação do email passe neste teste
+    vi.spyOn(User, 'validateEmail').mockReturnValue(true);
+    mockUsecase.execute.mockRejectedValue(new NoItemsFound('email'));
     const response = await controller.handle(request);
 
     expect(response).toEqual(new NotFound('No items found for email'));
