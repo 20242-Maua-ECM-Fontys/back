@@ -1,72 +1,66 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { GetRoleByEmailController } from '../../../../src/modules/get_role_by_email/app/get_role_by_email_controller';
 import { GetRoleByEmailUsecase } from '../../../../src/modules/get_role_by_email/app/get_role_by_email_usecase';
-import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock';
-import { BadRequest, NotFound, OK } from '../../../../src/shared/helpers/external_interfaces/http_codes';
 import { IRequest } from '../../../../src/shared/helpers/external_interfaces/external_interface';
+import { BadRequest, NotFound, OK, InternalServerError } from '../../../../src/shared/helpers/external_interfaces/http_codes';
+import { NoItemsFound } from '../../../../src/shared/helpers/errors/usecase_errors';
+import { User } from '../../../../src/shared/domain/entities/user';
 
 describe('GetRoleByEmailController', () => {
-  it('should return 200 OK with the correct role', async () => {
-    const repo = new ScheduleRepositoryMock();
-    const usecase = new GetRoleByEmailUsecase(repo);
-    const controller = new GetRoleByEmailController(usecase);
+  const mockUsecase = {
+    execute: vi.fn(),
+  };
+  const controller = new GetRoleByEmailController(mockUsecase as unknown as GetRoleByEmailUsecase);
 
-    const request: IRequest = {
-      data: { email: 'user1@gmail.com' },
-    };
-
-    const response = await controller.handle(request);
-
-    expect(response).toBeInstanceOf(OK);
-    expect(response?.statusCode).toBe(200);
-    expect(response?.body).toEqual({
-      role: 'STAFF',
-    });
-  });
-
-  it('should return 400 BadRequest if email is missing', async () => {
-    const repo = new ScheduleRepositoryMock();
-    const usecase = new GetRoleByEmailUsecase(repo);
-    const controller = new GetRoleByEmailController(usecase);
-
+  it('should return BadRequest if email is missing', async () => {
     const request: IRequest = { data: {} };
-
     const response = await controller.handle(request);
 
     expect(response).toBeInstanceOf(BadRequest);
-    expect(response?.statusCode).toBe(400);
-    expect(response?.body.message).toBe('Missing email parameter');
+    expect(response).toEqual(new BadRequest('Missing email parameter'));
   });
 
-  it('should return 400 BadRequest for invalid email format', async () => {
-    const repo = new ScheduleRepositoryMock();
-    const usecase = new GetRoleByEmailUsecase(repo);
-    const controller = new GetRoleByEmailController(usecase);
+  it('should return BadRequest if email format is invalid', async () => {
+    const request: IRequest = { data: { email: 'invalid-email-format' } };
 
-    const request: IRequest = {
-      data: { email: 'invalid-email' },
-    };
-
+    vi.spyOn(User, 'validateEmail').mockReturnValue(false);
     const response = await controller.handle(request);
 
+    expect(User.validateEmail).toHaveBeenCalledWith('invalid-email-format');
     expect(response).toBeInstanceOf(BadRequest);
-    expect(response?.statusCode).toBe(400);
-    expect(response?.body.message).toBe('Invalid email format');
+    expect(response).toEqual(new BadRequest('Invalid email format'));
   });
 
-  it('should return 404 NotFound if user is not found', async () => {
-    const repo = new ScheduleRepositoryMock();
-    const usecase = new GetRoleByEmailUsecase(repo);
-    const controller = new GetRoleByEmailController(usecase);
+  it('should return NotFound if no user role is found for email', async () => {
+    const request: IRequest = { data: { email: 'user@example.com' } };
 
-    const request: IRequest = {
-      data: { email: 'nonexistent@gmail.com' },
-    };
+    mockUsecase.execute.mockRejectedValue(new NoItemsFound('No items found for email'));
+    const response = await controller.handle(request);
+
+    expect(response).toEqual(new NotFound('No items found for email'));
+  });
+
+  it('should return OK with the role if email is valid and role is found', async () => {
+    const request: IRequest = { data: { email: 'user@example.com' } };
+    const role = 'admin';
+
+    mockUsecase.execute.mockResolvedValue(role);
+    vi.spyOn(User, 'validateEmail').mockReturnValue(true);
 
     const response = await controller.handle(request);
 
-    expect(response).toBeInstanceOf(NotFound);
-    expect(response?.statusCode).toBe(404);
-    expect(response?.body.message).toBe('No items found for email');
+    expect(User.validateEmail).toHaveBeenCalledWith('user@example.com');
+    expect(response).toBeInstanceOf(OK);
+    expect(response).toEqual(new OK({ role }));
+  });
+
+  it('should return InternalServerError for unexpected errors', async () => {
+    const request: IRequest = { data: { email: 'user@example.com' } };
+
+    mockUsecase.execute.mockRejectedValue(new Error('Unexpected error'));
+    const response = await controller.handle(request);
+
+    expect(response).toBeInstanceOf(InternalServerError);
+    expect(response).toEqual(new InternalServerError('Unexpected error'));
   });
 });

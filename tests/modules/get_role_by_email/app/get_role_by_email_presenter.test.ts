@@ -14,8 +14,8 @@ describe('getRoleByEmailPresenter', () => {
 
     const response: HttpResponse = await GetRoleByEmailPresenter(httpRequest, repo);
 
-    expect(response?.statusCode).toBe(200);
-    expect(response?.body).toEqual({
+    expect(response.statusCode).toBe(200);
+    expect(response.data).toEqual({
       role: 'STAFF',
     });
   });
@@ -27,8 +27,8 @@ describe('getRoleByEmailPresenter', () => {
 
     const response: HttpResponse = await GetRoleByEmailPresenter(httpRequest, repo);
 
-    expect(response?.statusCode).toBe(400);
-    expect(response?.body.message).toBe('Missing email parameter');
+    expect(response.statusCode).toBe(400);
+    expect(response.data.message).toBe('Missing email parameter');
   });
 
   it('should return 400 BadRequest for invalid email format', async () => {
@@ -40,8 +40,8 @@ describe('getRoleByEmailPresenter', () => {
 
     const response: HttpResponse = await GetRoleByEmailPresenter(httpRequest, repo);
 
-    expect(response?.statusCode).toBe(400);
-    expect(response?.body.message).toBe('Invalid email format');
+    expect(response.statusCode).toBe(400);
+    expect(response.data.message).toBe('Invalid email format');
   });
 
   it('should return 404 NotFound if user is not found', async () => {
@@ -53,7 +53,7 @@ describe('getRoleByEmailPresenter', () => {
 
     const response: HttpResponse = await GetRoleByEmailPresenter(httpRequest, repo);
 
-    expect(response?.statusCode).toBe(404);
-    expect(response?.body.message).toBe('No items found for email');
+    expect(response.statusCode).toBe(404);
+    expect(response.data.message).toBe('No items found for email');
   });
 });
