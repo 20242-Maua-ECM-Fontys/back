@@ -592,10 +592,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return user
   }
 
-  async getUserByEmail(email: string): Promise<User> {
+  async getUserByEmail(email: string): Promise<User | null> {
     const user = this.users.find((user) => user.email === email)
     if (!user) {
-      throw new NoItemsFound('email')
+    return null
     }
     return user
   }
