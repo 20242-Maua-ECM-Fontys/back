@@ -45,5 +45,8 @@
   "directories": {
     "test": "tests"
   },
-  "keywords": []
+  "keywords": [],
+  "resolutions": {
+    "@rollup/rollup-freebsd-arm64": "4.24.1"
+  }
 }
