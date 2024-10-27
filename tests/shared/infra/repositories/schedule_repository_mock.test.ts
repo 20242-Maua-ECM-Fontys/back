@@ -107,13 +107,27 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     expect(user?.id).toEqual(1)
   })
 
-  it('Should get users by email wrongly: email does not exist', async () => {
-    const repo = new ScheduleRepositoryMock();
-  
-    const user = await repo.getUserByEmail('cic@cupsaw.in');
+  it('Should get users by email wrongly: email does not exists', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getUserByEmail('cic@cupsaw.in')).rejects.toThrowError(
+      'No items found for email',
+    )
+  })
+
+  it('should get users by email correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    const role = await repo.getRoleByEmail('user1@gmail.com');
     
-    expect(user).toBeNull();
-  });  
+    expect(role).toEqual(ROLE.STAFF);
+  });
+
+  it('should get users by email wrongly: email does not exist', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getRoleByEmail('nonexistent@gmail.com')).resolves.toBeNull();
+  });
 })
 
 // Subject methods

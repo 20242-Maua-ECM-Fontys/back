@@ -18,7 +18,8 @@ export interface IScheduleRepository {
   updateUser(id: number, newName: string, newEmail: string): Promise<User>
   deleteUser(id: number): Promise<User>
   loginUser(email: string, password: string): Promise<User | null>
-  getUserByEmail(email: string): Promise<User | null>
+  getUserByEmail(email: string): Promise<User>
+  getRoleByEmail(email: string): Promise<ROLE | null>
 
   // Class methods
   getClassesLength(): number

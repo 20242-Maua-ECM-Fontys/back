@@ -28,7 +28,7 @@ describe('Tests for GetRoleByEmailPresenter', () => {
 
   it('Should return 400 BadRequest when email is missing', async () => {
     const event = new HttpRequest(
-      {}, // No email provided
+      {}, 
       undefined,
       {},
       undefined,
@@ -44,7 +44,7 @@ describe('Tests for GetRoleByEmailPresenter', () => {
 
   it('Should return 400 BadRequest when email format is invalid', async () => {
     const event = new HttpRequest(
-      { email: 'invalid-email' }, // Invalid email format
+      { email: 'invalid-email' }, 
       undefined,
       {},
       undefined,
@@ -60,7 +60,7 @@ describe('Tests for GetRoleByEmailPresenter', () => {
 
   it('Should return 404 NotFound when email does not exist', async () => {
     const event = new HttpRequest(
-      { email: 'nonexistent@gmail.com' }, // Email that does not exist in the mock
+      { email: 'nonexistent@gmail.com' }, 
       undefined,
       {},
       undefined,

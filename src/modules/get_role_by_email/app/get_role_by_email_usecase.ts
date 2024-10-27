@@ -5,11 +5,11 @@ export class GetRoleByEmailUsecase {
   constructor(private repo: IScheduleRepository) {}
 
   async execute(email: string): Promise<string> {
-    const user = await this.repo.getUserByEmail(email); 
-    if (!user) {
+    const role = await this.repo.getRoleByEmail(email); 
+    if (!role) {
       throw new NoItemsFound('email'); 
     }
-    return user.role; 
+    return role.toString(); 
   }
 }
 
