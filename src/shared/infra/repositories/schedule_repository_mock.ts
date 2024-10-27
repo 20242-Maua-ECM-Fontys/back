@@ -856,7 +856,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
     const user = await this.getUser(availability.userId)
 
-    if (user.role !== ROLE.PROFESSOR) {
+    if (user.role !== ROLE.PROFESSOR && user.role !== ROLE.COORDINATOR) {
       throw new ViolateDataRule('user must be a professor')
     }
 
