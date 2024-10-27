@@ -13,11 +13,6 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.461.0",
-    "@aws-sdk/lib-dynamodb": "^3.461.0",
-    "@aws-sdk/util-dynamodb": "^3.461.0",
-    "aws-sdk": "^2.1506.0",
-    "aws-sdk-js-codemod": "^0.28.2",
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.3.1",
