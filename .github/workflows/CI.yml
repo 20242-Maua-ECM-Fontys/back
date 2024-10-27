@@ -19,6 +19,10 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
+
+      - name: Install typescript directly
+        run: |
+          npm install typescript        
       
       - name: Build
         run: |
