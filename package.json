@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "server": "ts-node src/routes/app.ts",
-    "build": "tsc",
+    "build": "npx tsc",
     "build:watch": "tsc -w",
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --fix --ext .ts src",
