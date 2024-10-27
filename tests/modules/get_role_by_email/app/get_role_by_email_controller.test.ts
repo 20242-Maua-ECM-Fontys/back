@@ -39,7 +39,6 @@ describe('GetRoleByEmailController', () => {
   it('should return NotFound if no user role is found for email', async () => {
     const request: IRequest = { data: { email: 'user@example.com' } };
 
-    // Garantir que a validação do email passe neste teste
     vi.spyOn(User, 'validateEmail').mockReturnValue(true);
     mockUsecase.execute.mockRejectedValue(new NoItemsFound('email'));
     const response = await controller.handle(request);
