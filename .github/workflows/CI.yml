@@ -15,9 +15,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: yarn
+
+      - name: Install dependencies (Yarn or NPM)
+        run: |
+          npm install
+      
       - name: Build
-        run: yarn build
+        run: |
+          npm run build
+      
       - name: Test (Vitest)
-        run: yarn test --no-watch
+        run: |
+          npm run test -- --no-watch
