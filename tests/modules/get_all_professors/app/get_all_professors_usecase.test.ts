@@ -97,7 +97,7 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
 
     // Validate the availabilities of the fourth professor
     const fourthProfessorAvailabilities = fourthProfessor.availabilities
-    expect(fourthProfessorAvailabilities.length).toEqual(0)
+    expect(fourthProfessorAvailabilities.length).toEqual(0) 
 
     // Validate the suitabilities of the fourth professor
     const fourthProfessorSuitabilities = fourthProfessor.suitabilities
