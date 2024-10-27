@@ -520,7 +520,7 @@ describe('Assert UpdateAvailabilitiesController is correct at all', () => {
 
     const response = await controller.execute(httpRequest)
     expect(response?.statusCode).toEqual(403)
-    expect(response?.body).toEqual('Invalid role. Expected PROFESSOR but received STAFF')
+    expect(response?.body).toEqual('Invalid role. Expected PROFESSOR or COORDINATOR but received STAFF')
   })
   it('Should return BadRequest: invalid availability on param', async () => {
     const repo = new ScheduleRepositoryMock()

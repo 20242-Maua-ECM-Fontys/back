@@ -73,7 +73,7 @@ describe('Tests for UpdateAvailabilitiesPresenter', () => {
   })
   it('Should call presenter and return status 403', async () => {
     const repo = new ScheduleRepositoryMock()
-    const userId = 2
+    const userId = 1
     const availabilities = [
       {
         startTime: 460,
@@ -103,7 +103,7 @@ describe('Tests for UpdateAvailabilitiesPresenter', () => {
     const response = await UpdateAvailabilitiesPresenter(httpRequest, repo)
 
     expect(response?.statusCode).toEqual(403)
-    expect(response?.body).toEqual('Invalid role. Expected PROFESSOR but received COORDINATOR')
+    expect(response?.body).toEqual('Invalid role. Expected PROFESSOR or COORDINATOR but received STAFF')
   })
   it('Should call presenter and return status 404', async () => {
     const repo = new ScheduleRepositoryMock()

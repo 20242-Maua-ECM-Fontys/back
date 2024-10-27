@@ -20,7 +20,7 @@ export class InvalidCSVFormat extends BaseError {
 }
 
 export class InvalidRole extends BaseError {
-  constructor(roleExpected: ROLE, roleReceived: ROLE) {
+  constructor(roleExpected: string, roleReceived: ROLE) {
     super(`Invalid role. Expected ${roleExpected} but received ${roleReceived}`)
   }
 }

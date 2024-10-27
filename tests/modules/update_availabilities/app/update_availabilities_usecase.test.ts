@@ -147,19 +147,11 @@ describe('Assert UpdateAvailabilityUsecase is correct at all', () => {
     const lengthUserAvailabilitiesBefore = await repo.getAvailabilitiesLength() 
 
     await expect(usecase.execute(userIdStaff, availabilities)).rejects.toThrowError(
-      'Invalid role. Expected PROFESSOR but received STAFF',
+      'Invalid role. Expected PROFESSOR or COORDINATOR but received STAFF',
     )
     
     const lengthUserAvailabilitiesAfterStaff = await repo.getAvailabilitiesLength()
     expect(lengthUserAvailabilitiesBefore).toEqual(lengthUserAvailabilitiesAfterStaff)
-
-    await expect(usecase.execute(userIdCoord, availabilities)).rejects.toThrowError(
-      'Invalid role. Expected PROFESSOR but received COORDINATOR',
-    )
-
-    const lengthUserAvailabilitiesAfterCoord = await repo.getAvailabilitiesLength()
-    expect(lengthUserAvailabilitiesBefore).toEqual(lengthUserAvailabilitiesAfterCoord)
-
 
   })
 
