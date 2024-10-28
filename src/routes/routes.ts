@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express'
 import { HttpRequest } from '../shared/helpers/external_interfaces/http_models'
 import multer from 'multer'
 import { Environments } from '../shared/environments'
-
+import { GetRoleByEmailPresenter } from '../modules/get_role_by_email/app/get_role_by_email_presenter'
 import { GetAllProfessorsPresenter } from '../modules/get_all_professors/app/get_all_professors_presenter'
 import { UploadCSVPresenter } from '../modules/upload_csv/app/upload_csv_presenter'
 import { GetAllSubjectsPresenter } from '../modules/get_all_subjects/app/get_all_subjects_presenter'
@@ -70,5 +70,15 @@ routes.get(
   },
 )
 
+routes.get(
+  '/get_role_by_email',
+  async (req: Request, res: Response) => {
+    const { email } = req.query; 
+
+    const httpRequest: HttpRequest = new HttpRequest({ email }, {}, {}, req.file);
+    const response = await GetRoleByEmailPresenter(httpRequest, repo);
+    res.status(response.statusCode).json(response.body);
+  }
+);
 
 export default routes
