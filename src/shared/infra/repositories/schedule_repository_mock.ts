@@ -595,11 +595,17 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   async getUserByEmail(email: string): Promise<User> {
     const user = this.users.find((user) => user.email === email)
     if (!user) {
-      throw new NoItemsFound('email')
+    throw new NoItemsFound('email')
     }
     return user
   }
-
+  async getRoleByEmail(email: string): Promise<ROLE | null> {
+    const user = this.users.find((user) => user.email === email)
+    if (!user) {
+    return null
+    }
+    return user.role
+  }
   async getAllUsers(): Promise<User[]> {
     return this.users
   }

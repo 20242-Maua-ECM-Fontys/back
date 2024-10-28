@@ -114,6 +114,20 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
       'No items found for email',
     )
   })
+
+  it('should get users by email correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    const role = await repo.getRoleByEmail('user1@gmail.com');
+    
+    expect(role).toEqual(ROLE.STAFF);
+  });
+
+  it('should get users by email wrongly: email does not exist', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    await expect(repo.getRoleByEmail('nonexistent@gmail.com')).resolves.toBeNull();
+  });
 })
 
 // Subject methods
