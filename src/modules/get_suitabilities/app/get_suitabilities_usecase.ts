@@ -4,7 +4,7 @@ import { NoItemsFound } from '../../../shared/helpers/errors/usecase_errors'
 import { User } from '../../../shared/domain/entities/user'
 import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
 
-export class GetSuitabilities {
+export class GetSuitabilitiesUsecase {
   constructor(private repo: IScheduleRepository) {}
 
   async execute(userId: number): Promise<Suitability[]> {
