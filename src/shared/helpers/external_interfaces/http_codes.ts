@@ -55,7 +55,7 @@ class RedirectResponse extends HttpResponse {
 }
 
 class Forbidden extends HttpResponse {
-  constructor(body: object) {
+  constructor(body: any) {
     super(HttpStatusCodeEnum.FORBIDDEN, body)
   }
 }

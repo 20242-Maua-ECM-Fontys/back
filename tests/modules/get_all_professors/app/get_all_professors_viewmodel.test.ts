@@ -14,6 +14,12 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
     const expectedProfessors = {
       "message": "professors with his availabilities and suitabilities returned",
       "professors": {
+        "2": {
+          "availabilities": [],
+          "email": "user2@gmail.com",
+          "name": "user2",
+          "suitabilities": [],
+        },
         "3": {
           "availabilities": [
            {

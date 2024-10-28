@@ -835,6 +835,23 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.availabilities
   }
 
+  async getAvailabilitiesByUserId(userId: number): Promise<Availability[]> {
+    return this.availabilities.filter((a) => a.userId === userId)
+  }
+
+  async deleteAvailability(id: string): Promise<Availability> {
+    const availability = this.availabilities.find(
+      (availability) => availability.availabilityId === id,
+    )
+    if (!availability) {
+      throw new NoItemsFound('availabilityId')
+    }
+    this.availabilities = this.availabilities.filter(
+      (availability) => availability.availabilityId !== id,
+    )
+    return availability
+  }
+
   async createAvailability(availability: Availability): Promise<Availability> {
     const exists = this.availabilities.find(
       (a) => a.availabilityId === availability.availabilityId,
@@ -845,19 +862,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
     const user = await this.getUser(availability.userId)
 
-    if (user.role !== ROLE.PROFESSOR) {
+    if (user.role !== ROLE.PROFESSOR && user.role !== ROLE.COORDINATOR) {
       throw new ViolateDataRule('user must be a professor')
     }
 
     this.availabilities.push(availability)
     return availability
-  }
-
-  async getAvailabilitiesByUserId(userId: number): Promise<Availability[]> {
-    const availabilities = this.availabilities.filter(
-      (a) => a.userId === userId,
-    )
-    return availabilities
   }
 
   // AvFullfilled methods

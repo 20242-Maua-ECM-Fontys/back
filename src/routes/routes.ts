@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import { HttpRequest } from '../shared/helpers/external_interfaces/http_models'
 import multer from 'multer'
 import { Environments } from '../shared/environments'
+import { UpdateAvailabilitiesPresenter } from '../modules/update_availabilities/app/update_availabilities_presenter'
 import { GetRoleByEmailPresenter } from '../modules/get_role_by_email/app/get_role_by_email_presenter'
 import { GetAllProfessorsPresenter } from '../modules/get_all_professors/app/get_all_professors_presenter'
 import { UploadCSVPresenter } from '../modules/upload_csv/app/upload_csv_presenter'
@@ -38,6 +39,20 @@ routes.get(
       req.file
     )
     const response = await GetAllSubjectsPresenter(httpRequest, repo)
+    res.status(response.statusCode).json(response.body)
+  },
+)
+
+routes.put(
+  '/update_availabilities',
+  async (req: Request, res: Response) => {
+    const httpRequest: HttpRequest = new HttpRequest(
+      req.body,
+      {},
+      {},
+      undefined
+    )
+    const response = await UpdateAvailabilitiesPresenter(httpRequest, repo)
     res.status(response.statusCode).json(response.body)
   },
 )

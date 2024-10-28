@@ -1,3 +1,4 @@
+import { ROLE } from '../../../shared/domain/enums/role_enum'
 import { BaseError } from './base_error'
 
 export class NoItemsFound extends BaseError {
@@ -15,6 +16,12 @@ export class DuplicatedItem extends BaseError {
 export class InvalidCSVFormat extends BaseError {
   constructor() {
     super('CSV file with invalid format')
+  }
+}
+
+export class InvalidRole extends BaseError {
+  constructor(roleExpected: string, roleReceived: ROLE) {
+    super(`Invalid role. Expected ${roleExpected} but received ${roleReceived}`)
   }
 }
 

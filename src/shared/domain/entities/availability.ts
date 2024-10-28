@@ -42,8 +42,9 @@ export class Availability {
     }
     this.props.userId = props.userId
 
-    if (!Availability.validateStartEndTime(props.startTime, props.endTime)) {
-      throw new EntityError('startTime')
+    const startEndTimeError = Availability.validateStartEndTime(props.startTime, props.endTime)
+    if (startEndTimeError != '') {
+      throw new EntityError(startEndTimeError)
     }
     this.props.startTime = props.startTime
     this.props.endTime = props.endTime
@@ -80,20 +81,20 @@ export class Availability {
   private static validateStartEndTime(
     startTime: MAUA_START_TIME,
     endTime: MAUA_END_TIME,
-  ): boolean {
+  ): string {
     if (!Object.values(MAUA_START_TIME).includes(startTime)) {
-      return false
+      return 'startTime'
     }
     if (!Object.values(MAUA_END_TIME).includes(endTime)) {
-      return false
+      return 'endTime'
     }
     if (startTime >= endTime) {
-      return false
+      return 'startTime and endTime'
     }
     if (!(MAUA_START_TIME[startTime] === MAUA_END_TIME[endTime])) {
-      return false
+      return 'startTime and endTime'
     }
-    return true
+    return ''
   }
 
   private static validateIsTaken(isTaken: boolean): boolean {

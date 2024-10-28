@@ -7,7 +7,7 @@ export class MissingParameters extends BaseError {
 }
 
 export class WrongTypeParameters extends BaseError {
-  constructor(fieldName: string, fieldTypeExpected: string, fieldTypeReceived: string) {
-    super(`Field ${fieldName} isn't in the right type.\n Received: ${fieldTypeReceived}.\n Expected: ${fieldTypeExpected}.`)
+  constructor(fieldName: string, fieldTypeExpected: string, fieldDataReceived: any) {
+    super(`Field ${fieldName} isn't in the right type.\n Received: ${fieldDataReceived}.\n Expected to be a ${fieldTypeExpected}.`)
   }
 }
