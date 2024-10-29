@@ -15,9 +15,7 @@ export class GetSuitabilitiesByProfessorUsecase {
     await this.repo.getUser(userId)
 
     const suitabilities = await this.repo.getSuitabilitiesByUserId(userId)
-    if (suitabilities.length === 0) {
-      throw new NoItemsFound('suitabilities')
-    }
+
     return suitabilities
   }
 }

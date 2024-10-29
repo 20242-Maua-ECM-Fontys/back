@@ -17,10 +17,12 @@ describe('GetSuitabilitiesByProfessorUsecase tests', () => {
     await expect(usecase.execute(-1)).rejects.toThrow(EntityError)
   })
 
-  it('Should throw an error if no suitabilities are found', async () => {
+  it('Should return an empty suitabilities list', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
-    await expect(usecase.execute(1)).rejects.toThrow(NoItemsFound)
+    const response = await usecase.execute(5)
+
+    expect(response.length).toEqual(0)
   })
 
   it('Should throw an error if user does not exist', async () => {

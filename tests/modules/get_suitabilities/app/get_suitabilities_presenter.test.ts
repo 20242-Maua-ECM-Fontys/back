@@ -17,6 +17,8 @@ describe('Tests for GetSuitabilitiesByProfessorPresenter', () => {
     const response = await GetSuitabilitiesByProfessorPresenter(event, repo)
 
     expect(response?.statusCode).toEqual(200)
-    expect(response?.body.message).toEqual('suitabilities found')
+    expect(response?.body.message).toEqual(
+      'suitabilities by professor returned',
+    )
   })
 })
