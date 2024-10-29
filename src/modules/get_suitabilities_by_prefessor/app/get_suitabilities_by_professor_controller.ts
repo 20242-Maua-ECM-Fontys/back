@@ -3,7 +3,7 @@ import {
   WrongTypeParameters,
 } from '../../../shared/helpers/errors/controller_errors'
 import { IRequest } from '../../../shared/helpers/external_interfaces/external_interface'
-import { GetSuitabilitiesUsecase } from './get_suitabilities_usecase'
+import { GetSuitabilitiesByProfessorUsecase } from './get_suitabilities_by_professor_usecase'
 import {
   BadRequest,
   OK,
@@ -12,10 +12,10 @@ import {
 } from '../../../shared/helpers/external_interfaces/http_codes'
 import { NoItemsFound } from '../../../shared/helpers/errors/repo_error'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
-import { GetSuitabilitiesViewmodel } from './get_suitabilities_viewmodel'
+import { GetSuitabilitiesByProfessorViewmodel } from './get_suitabilities_by_professor_viewmodel'
 
-export class GetSuitabilitiesController {
-  constructor(private usecase: GetSuitabilitiesUsecase) {}
+export class GetSuitabilitiesByProfessorController {
+  constructor(private usecase: GetSuitabilitiesByProfessorUsecase) {}
 
   async execute(request: IRequest) {
     try {
@@ -30,7 +30,7 @@ export class GetSuitabilitiesController {
 
       const suitabilities = await this.usecase.execute(userId)
 
-      const viewmodel = new GetSuitabilitiesViewmodel(suitabilities)
+      const viewmodel = new GetSuitabilitiesByProfessorViewmodel(suitabilities)
 
       return new OK(viewmodel)
     } catch (error: unknown) {

@@ -1,6 +1,6 @@
 import { Suitability } from '../../../shared/domain/entities/suitability'
 
-export class GetSuitabilitiesViewmodel {
+export class GetSuitabilitiesByProfessorViewmodel {
   private message: string
   private suitabilities: Suitability[]
 

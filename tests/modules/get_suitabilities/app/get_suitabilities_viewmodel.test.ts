@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { GetSuitabilitiesViewmodel } from '../../../../src/modules/get_suitabilities/app/get_suitabilities_viewmodel'
+import { GetSuitabilitiesByProfessorViewmodel } from '../../../../src/modules/get_suitabilities_by_prefessor/app/get_suitabilities_by_professor_viewmodel'
 import { Suitability } from '../../../../src/shared/domain/entities/suitability'
 
 describe('GetSuitabilitiesViewModel', () => {
@@ -14,7 +14,7 @@ describe('GetSuitabilitiesViewModel', () => {
         codeSubject: 'ECM256',
       }),
     ]
-    const viewModel = new GetSuitabilitiesViewmodel(suitabilities)
+    const viewModel = new GetSuitabilitiesByProfessorViewmodel(suitabilities)
     expect(viewModel.toJSON()).toEqual({
       message: 'suitabilities found',
       suitabilities: [

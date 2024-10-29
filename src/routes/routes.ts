@@ -8,7 +8,7 @@ import { GetAllProfessorsPresenter } from '../modules/get_all_professors/app/get
 import { UploadCSVPresenter } from '../modules/upload_csv/app/upload_csv_presenter'
 import { GetAllSubjectsPresenter } from '../modules/get_all_subjects/app/get_all_subjects_presenter'
 import { GetAllSchedulesPresenter } from '../modules/get_all_schedules/app/get_all_schedules_presenter'
-import { GetSuitabilitiesPresenter } from '../modules/get_suitabilities/app/get_suitabilities_presenter'
+import { GetSuitabilitiesByProfessorPresenter } from '../modules/get_suitabilities_by_prefessor/app/get_suitabilities_by_professor_presenter'
 
 const upload = multer()
 const routes = express.Router()
@@ -57,10 +57,16 @@ routes.get('/get_role_by_email', async (req: Request, res: Response) => {
   res.status(response.statusCode).json(response.body)
 })
 
-routes.get('/get_suitabilities', async (req: Request, res: Response) => {
-  const httpRequest: HttpRequest = new HttpRequest(req.body, {}, {}, req.file)
-  const response = await GetSuitabilitiesPresenter(httpRequest, repo)
-  res.status(response.statusCode).json(response.body)
-})
+routes.get(
+  '/get_suitabilities_by_professor',
+  async (req: Request, res: Response) => {
+    const httpRequest: HttpRequest = new HttpRequest(req.body, {}, {}, req.file)
+    const response = await GetSuitabilitiesByProfessorPresenter(
+      httpRequest,
+      repo,
+    )
+    res.status(response.statusCode).json(response.body)
+  },
+)
 
 export default routes
