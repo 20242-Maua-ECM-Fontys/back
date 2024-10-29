@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { GetSuitabilitiesByProfessorPresenter } from '../../../../src/modules/get_suitabilities_by_prefessor/app/get_suitabilities_by_professor_presenter'
+import { GetSuitabilitiesByProfessorPresenter } from '../../../../src/modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_presenter'
 import { HttpRequest } from '../../../../src/shared/helpers/external_interfaces/http_models'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 

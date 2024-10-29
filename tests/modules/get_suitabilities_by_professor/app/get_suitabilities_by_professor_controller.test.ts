@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { GetSuitabilitiesByProfessorController } from '../../../../src/modules/get_suitabilities_by_prefessor/app/get_suitabilities_by_professor_controller'
-import { GetSuitabilitiesByProfessorUsecase } from '../../../../src/modules/get_suitabilities_by_prefessor/app/get_suitabilities_by_professor_usecase'
+import { GetSuitabilitiesByProfessorController } from '../../../../src/modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_controller'
+import { GetSuitabilitiesByProfessorUsecase } from '../../../../src/modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_usecase'
 import { HttpRequest } from '../../../../src/shared/helpers/external_interfaces/http_models'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 

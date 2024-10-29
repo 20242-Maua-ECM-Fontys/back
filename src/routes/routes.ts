@@ -8,7 +8,7 @@ import { GetAllProfessorsPresenter } from '../modules/get_all_professors/app/get
 import { UploadCSVPresenter } from '../modules/upload_csv/app/upload_csv_presenter'
 import { GetAllSubjectsPresenter } from '../modules/get_all_subjects/app/get_all_subjects_presenter'
 import { GetAllSchedulesPresenter } from '../modules/get_all_schedules/app/get_all_schedules_presenter'
-import { GetSuitabilitiesByProfessorPresenter } from '../modules/get_suitabilities_by_prefessor/app/get_suitabilities_by_professor_presenter'
+import { GetSuitabilitiesByProfessorPresenter } from '../modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_presenter'
 
 const upload = multer()
 const routes = express.Router()

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { GetSuitabilitiesByProfessorViewmodel } from '../../../../src/modules/get_suitabilities_by_prefessor/app/get_suitabilities_by_professor_viewmodel'
+import { GetSuitabilitiesByProfessorViewmodel } from '../../../../src/modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_viewmodel'
 import { Suitability } from '../../../../src/shared/domain/entities/suitability'
 
 describe('GetSuitabilitiesViewmodel', () => {

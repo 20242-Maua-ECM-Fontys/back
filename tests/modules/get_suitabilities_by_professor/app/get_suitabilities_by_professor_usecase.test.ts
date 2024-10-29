@@ -1,4 +1,4 @@
-import { GetSuitabilitiesByProfessorUsecase } from '../../../../src/modules/get_suitabilities_by_prefessor/app/get_suitabilities_by_professor_usecase'
+import { GetSuitabilitiesByProfessorUsecase } from '../../../../src/modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_usecase'
 import { EntityError } from '../../../../src/shared/helpers/errors/domain_errors'
 import { NoItemsFound } from '../../../../src/shared/helpers/errors/usecase_errors'
 import { describe, it, expect } from 'vitest'
