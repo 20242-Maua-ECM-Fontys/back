@@ -49,7 +49,7 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
     )
   })
 
-  it('should return 404 if no suitabilities are found', async () => {
+  it('should return 404 if no users are found', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
     const controller = new GetSuitabilitiesByProfessorController(usecase)
@@ -60,5 +60,18 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
 
     expect(response?.statusCode).toBe(404)
     expect(response?.body).toEqual('No items found for userId')
+  })
+
+  it('should return 400 if userId is not valid', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
+    const controller = new GetSuitabilitiesByProfessorController(usecase)
+    const request = new HttpRequest({
+      userId: -1,
+    })
+    const response = await controller.execute(request)
+
+    expect(response?.statusCode).toBe(400)
+    expect(response?.body).toEqual('Field userId is not valid')
   })
 })
