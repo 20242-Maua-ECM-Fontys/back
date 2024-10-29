@@ -15,7 +15,9 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
     const response = await controller.execute(request)
 
     expect(response?.statusCode).toBe(200)
-    expect(response?.body.message).toEqual('suitabilities found')
+    expect(response?.body.message).toEqual(
+      'suitabilities by professor returned',
+    )
   })
 
   it('should return 400 if userId is missing', async () => {
