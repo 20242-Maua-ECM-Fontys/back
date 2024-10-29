@@ -16,7 +16,7 @@ describe('GetSuitabilitiesViewModel', () => {
     ]
     const viewModel = new GetSuitabilitiesByProfessorViewmodel(suitabilities)
     expect(viewModel.toJSON()).toEqual({
-      message: 'suitabilities found',
+      message: 'suitabilities by professor returned',
       suitabilities: [
         { userId: 4, codeSubject: 'ECM256' },
         { userId: 4, codeSubject: 'ECM256' },
