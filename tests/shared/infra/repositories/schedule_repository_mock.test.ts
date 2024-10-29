@@ -17,7 +17,7 @@ import { Availability } from '../../../../src/shared/domain/entities/availabilit
 import { AvFullfilled } from '../../../../src/shared/domain/entities/avFullfilled'
 import { ACADEMIC_PERIOD } from '../../../../src/shared/domain/enums/academic_period_enum'
 
-// User methods
+// #region User methods
 describe('Assert Schedule Repository Mock is correct at all for User methods', () => {
   it('Should get length correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -118,19 +118,21 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
   it('should get users by email correctly', async () => {
     const repo = new ScheduleRepositoryMock()
 
-    const role = await repo.getRoleByEmail('user1@gmail.com');
-    
-    expect(role).toEqual(ROLE.STAFF);
-  });
+    const role = await repo.getRoleByEmail('user1@gmail.com')
+
+    expect(role).toEqual(ROLE.STAFF)
+  })
 
   it('should get users by email wrongly: email does not exist', async () => {
     const repo = new ScheduleRepositoryMock()
 
-    await expect(repo.getRoleByEmail('nonexistent@gmail.com')).resolves.toBeNull();
-  });
+    await expect(
+      repo.getRoleByEmail('nonexistent@gmail.com'),
+    ).resolves.toBeNull()
+  })
 })
 
-// Subject methods
+// #region Subject methods
 describe('Assert Schedule Repository Mock is correct at all for Subject methods', () => {
   it('Should get length correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -191,7 +193,7 @@ describe('Assert Schedule Repository Mock is correct at all for Subject methods'
   })
 })
 
-// Class methods
+// #region Class methods
 describe('Assert Schedule Repository Mock is correct at all for Class methods', () => {
   it('Should get length correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -264,7 +266,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
   })
 })
 
-// Suitability methods
+// #region Suitability methods
 describe('Assert Schedule Repository Mock is correct at all for Suitability methods', () => {
   it('Should get length correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -364,7 +366,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
   })
 })
 
-// Schedule methods
+// #region Schedule methods
 describe('Assert Schedule Repository Mock is correct at all for Schedule methods', () => {
   it('Should get length correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -476,7 +478,7 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   })
 })
 
-// Possibility methods
+// #region Possibility methods
 describe('Assert Schedule Repository Mock is correct at all for Possibility methods', () => {
   it('Should get length correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -560,7 +562,7 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
   })
 })
 
-// Availability methods
+// #region Availability methods
 describe('Assert Schedule Repository Mock is correct at all for Availability methods', () => {
   it('Should get length correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -616,7 +618,6 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
     await expect(repo.deleteAvailability(availabilityId)).rejects.toThrowError(
       'No items found for availabilityId',
     )
-
   })
   it('Should create availability correctly', async () => {
     const availability = new Availability({
@@ -703,7 +704,7 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
   })
 })
 
-// AvFullfilled methods
+// #region AvFullfilled methods
 describe('Assert Schedule Repository Mock is correct at all for AvFullfilled methods', () => {
   it('Should get length correctly', async () => {
     const repo = new ScheduleRepositoryMock()

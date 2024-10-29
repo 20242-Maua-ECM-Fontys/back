@@ -23,6 +23,7 @@ import { ACADEMIC_PERIOD } from '../../../shared/domain/enums/academic_period_en
 
 export class ScheduleRepositoryMock implements IScheduleRepository {
   // Mock Data
+  // #region Users
   private users: User[] = [
     new User({
       id: 1,
@@ -68,7 +69,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       password: 'Password5@',
     }),
   ]
-
+  // #region classes
   private classes: Class[] = [
     new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ab923',
@@ -103,7 +104,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
   ]
-
+  // #region subjects
   private subjects: Subject[] = [
     new Subject({
       code: 'ECM256',
@@ -116,7 +117,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       period: PERIOD.AFTERNOON,
     }),
   ]
-
+  // #region suitabilities
   private suitabilities: Suitability[] = [
     new Suitability({
       userId: 4,
@@ -131,7 +132,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       codeSubject: 'ECM256',
     }),
   ]
-
+  // #region schedules
   private schedules: Schedule[] = [
     new Schedule({
       scheduleId: '2S-4CM-D5@2024(SCS)',
@@ -166,7 +167,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       courseGrade: 2,
     }),
   ]
-
+  // #region possibilities
   private possibilities: Possibility[] = [
     // MON - SAT | 07:40 - 13:00 | 2S-4CM-D5@2024(SCS)
     new Possibility({
@@ -403,7 +404,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       scheduleId: '2S-3CM-D5@2024(SCS)',
     }),
   ]
-
+  // #region availabilities
   private availabilities: Availability[] = [
     // Professor com userId = 3, todos os dias com H07_40_09_20 e H09_30_11_10
     new Availability({
@@ -553,7 +554,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       weekDay: WEEK_DAY.MON,
     }),
   ]
-
+  // #region avFullfilled
   private avsFullfilled: AvFullfilled[] = [
     /* 
       professor with userId=4 
@@ -579,7 +580,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
   ]
 
-  // User methods
+  // #region User methods
   getUsersLength(): number {
     return this.users.length
   }
@@ -595,14 +596,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   async getUserByEmail(email: string): Promise<User> {
     const user = this.users.find((user) => user.email === email)
     if (!user) {
-    throw new NoItemsFound('email')
+      throw new NoItemsFound('email')
     }
     return user
   }
   async getRoleByEmail(email: string): Promise<ROLE | null> {
     const user = this.users.find((user) => user.email === email)
     if (!user) {
-    return null
+      return null
     }
     return user.role
   }
@@ -654,7 +655,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return users
   }
 
-  // Class methods
+  // #region Class methods
   getClassesLength(): number {
     return this.classes.length
   }
@@ -680,7 +681,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return newClass
   }
 
-  // Subject methods
+  // #region Subject methods
   getSubjectsLength(): number {
     return this.subjects.length
   }
@@ -705,8 +706,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     this.subjects.push(subject)
     return subject
   }
-
-  // Suitability methods
+  // #region Suitability methods
   getSuitabilitiesLength(): number {
     return this.suitabilities.length
   }
@@ -748,7 +748,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return suitabilities
   }
 
-  // Schedule methods
+  // #region Schedule methods
   getSchedulesLength(): number {
     return this.schedules.length
   }
@@ -785,7 +785,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return schedule
   }
 
-  // Possibility methods
+  // #region Possibility methods
   getPossibilitiesLength(): number {
     return this.possibilities.length
   }
@@ -816,7 +816,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return possibility
   }
 
-  // Availability methods
+  // #region Availability methods
   getAvailabilitiesLength(): number {
     return this.availabilities.length
   }
@@ -870,7 +870,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return availability
   }
 
-  // AvFullfilled methods
+  // #region AvFullfilled methods
   getAvsFullfilledLength(): number {
     return this.avsFullfilled.length
   }
