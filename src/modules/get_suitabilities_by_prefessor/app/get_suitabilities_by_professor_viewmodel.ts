@@ -5,7 +5,7 @@ export class GetSuitabilitiesByProfessorViewmodel {
   private suitabilities: Suitability[]
 
   constructor(suitabilities: Suitability[]) {
-    this.message = 'suitabilities found'
+    this.message = 'suitabilities by professor returned'
     this.suitabilities = suitabilities
   }
 
