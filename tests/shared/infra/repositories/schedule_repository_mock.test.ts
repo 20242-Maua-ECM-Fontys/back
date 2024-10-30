@@ -331,7 +331,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     await expect(
       repo.createSuitability(new Suitability({ userId, codeSubject })),
     ).rejects.toThrowError(
-      'The data rule "user must be a professor" was violated',
+      'The data rule "user must be a professor or coordinator" was violated',
     )
     const newLength = repo.getSuitabilitiesLength()
 
