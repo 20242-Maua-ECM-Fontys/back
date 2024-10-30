@@ -1,4 +1,4 @@
-// get_professors_by_class_controller.ts
+
 import { MissingParameters } from '../../../shared/helpers/errors/controller_errors';
 import { IRequest, IResponse } from '../../../shared/helpers/external_interfaces/external_interface';
 import { GetProfessorsByClassUsecase } from './get_professors_by_class_usecase';
