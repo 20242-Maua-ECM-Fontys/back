@@ -80,6 +80,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       scheduleId: '1S-2CIC-D4@2024(SCS)',
     }),
     new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ab9aa',
+      name: 'Linguagens de Programacao III',
+      modality: MODALITY.IN_PERSON,
+      classType: CLASSTYPE.THEORY,
+      subjectCode: 'ECM111',
+      scheduleId: '1S-2CIC-D4@2024(SCS)',
+    }),
+    new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ac924',
       name: 'Linguagens de Programacao II',
       modality: MODALITY.IN_PERSON,
@@ -696,6 +704,24 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
   async getAllSubjects(): Promise<Subject[]> {
     return this.subjects
+  }
+  public getProfessorsByClass(classId: string): User[] {
+
+    const foundClass = this.classes.find(cls => cls.id === classId);
+
+    if (!foundClass) {
+      return [];
+    }
+  
+    const subjectCode = foundClass.subjectCode;
+
+
+    const suitableUsers = this.suitabilities
+      .filter(suitability => suitability.codeSubject === subjectCode)
+      .map(suitability => this.users.find(user => user.id === suitability.userId))
+      .filter((user): user is User => user !== undefined); 
+
+    return suitableUsers;
   }
 
   async createSubject(subject: Subject): Promise<Subject> {

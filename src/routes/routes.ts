@@ -9,6 +9,7 @@ import { UploadCSVPresenter } from '../modules/upload_csv/app/upload_csv_present
 import { GetAllSubjectsPresenter } from '../modules/get_all_subjects/app/get_all_subjects_presenter'
 import { GetAllSchedulesPresenter } from '../modules/get_all_schedules/app/get_all_schedules_presenter'
 import { GetSuitabilitiesByProfessorPresenter } from '../modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_presenter'
+import { GetProfessorsByClassPresenter } from '../modules/get_professors_by_class/app/get_professors_by_class_presenter' // Import adicionado
 
 const upload = multer()
 const routes = express.Router()
@@ -68,5 +69,11 @@ routes.get(
     res.status(response.statusCode).json(response.body)
   },
 )
+routes.get('/get_professors_by_class', async (req: Request, res: Response) => {
+  const { classId } = req.query
 
+  const httpRequest: HttpRequest = new HttpRequest({ classId }, {}, {}, req.file)
+  const response = await GetProfessorsByClassPresenter(httpRequest, repo)
+  res.status(response.statusCode).json(response.body)
+})
 export default routes
