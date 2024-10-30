@@ -12,7 +12,7 @@ describe('GetProfessorsByClassUsecase', () => {
   });
 
   it('should return a list of professors for a valid classId', async () => {
-    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab923'; // Class ID presente no mock
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab923'; 
     const result = await usecase.execute(classId);
 
     expect(result).toBeInstanceOf(Array);
@@ -26,8 +26,7 @@ describe('GetProfessorsByClassUsecase', () => {
   });
 
   it('should throw NoItemsFound if no professors are suitable for the class', async () => {
-    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab9aa'; // Class ID sem professores adequados
-
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab9aa'; 
     await expect(usecase.execute(classId)).rejects.toThrow(NoItemsFound);
   });
 

@@ -11,7 +11,7 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
     const controller = new GetProfessorsByClassController(usecase);
 
     const request = new HttpRequest(undefined, undefined, {
-      classId: '0a8c5357-1f07-5b24-9845-9318c47ab923', // ID de classe válido
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ab923', 
     });
 
     const response = await controller.execute(request);
@@ -32,7 +32,7 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
     const controller = new GetProfessorsByClassController(usecase);
 
     const request = new HttpRequest(undefined, undefined, {
-      classId: 'invalidClassId', // ID de classe inválido
+      classId: 'invalidClassId', 
     });
 
     const response = await controller.execute(request);
@@ -48,7 +48,7 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
     const controller = new GetProfessorsByClassController(usecase);
 
     const request = new HttpRequest(undefined, undefined, {
-      classId: undefined, // Parâmetro ausente
+      classId: undefined, 
     });
 
     const response = await controller.execute(request);

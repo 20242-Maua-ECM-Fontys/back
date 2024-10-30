@@ -1,4 +1,4 @@
-// get_professors_by_class_viewmodel.test.ts
+
 import { GetProfessorsByClassViewModel } from '../../../../src/modules/get_professors_by_class/app/get_professors_by_class_viewmodel';
 import { User } from '../../../../src/shared/domain/entities/user';
 import { ROLE } from '../../../../src/shared/domain/enums/role_enum';
@@ -28,14 +28,13 @@ describe('GetProfessorsByClassViewModel', () => {
   });
 
   it('should return an empty array if no professors are provided', () => {
-    // Empty input data
+
     const professors: User[] = [];
 
-    // Execute ViewModel transformation
     const viewModel = new GetProfessorsByClassViewModel(professors);
     const result = viewModel.toJSON();
 
-    // Expect result to be an empty array
+
     expect(result).toEqual({});
   });
 });
