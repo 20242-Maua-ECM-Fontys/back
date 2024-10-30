@@ -52,7 +52,7 @@ describe('Tests for UpdateSuitabilitiesUsecase', () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new UpdateSuitabilitiesUsecase(repo)
     const userId = 1
-    const subjects = ['MC102', 'MC202']
+    const subjects = ['EMC102', 'EMC202']
 
     try {
       await usecase.execute(userId, subjects)
