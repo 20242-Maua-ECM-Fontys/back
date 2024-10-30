@@ -364,6 +364,15 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     expect(suitabilities.length).toEqual(0)
   })
+  it('Should delete suitabilities by userId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const userId = 4
+    const lastLength = repo.getSuitabilitiesLength()
+    await repo.deleteSuitabilityByUserId(userId)
+    const newLength = repo.getSuitabilitiesLength()
+
+    expect(newLength).toEqual(lastLength - 2)
+  })
 })
 
 // #region Schedule methods
