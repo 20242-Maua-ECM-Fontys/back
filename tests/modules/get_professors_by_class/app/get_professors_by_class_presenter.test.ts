@@ -22,11 +22,12 @@ describe('Tests for GetProfessorsByClassPresenter', () => {
 
     expect(response?.statusCode).toEqual(200);
     expect(response?.data).toEqual({
-      "4": {
+      "data":  {  "4": {
         "RA": "44.00000-4",
         "email": "user4@gmail.com",
         "name": "user4",
-      },
+      }, },
+         "message": "professors by class returned",
     });
   });
 

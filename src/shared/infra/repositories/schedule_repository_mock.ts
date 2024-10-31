@@ -705,15 +705,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   async getAllSubjects(): Promise<Subject[]> {
     return this.subjects
   }
-  public getProfessorsByClass(classId: string): User[] {
+  async getProfessorsByClass(classId: string): Promise<User[]> {
 
-    const foundClass = this.classes.find(cls => cls.id === classId);
+    const foundClass = this.getClass(classId);
 
-    if (!foundClass) {
-      return [];
-    }
   
-    const subjectCode = foundClass.subjectCode;
+    const subjectCode = (await foundClass).subjectCode;
 
 
     const suitableUsers = this.suitabilities

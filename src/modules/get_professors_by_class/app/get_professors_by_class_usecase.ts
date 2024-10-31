@@ -7,9 +7,7 @@ export class GetProfessorsByClassUsecase {
 
   async execute(classId: string) {
     const professors = await this.repo.getProfessorsByClass(classId);
-    if (!professors.length) {
-      throw new NoItemsFound('classId');
-    }
+
     return professors;
   }
 }

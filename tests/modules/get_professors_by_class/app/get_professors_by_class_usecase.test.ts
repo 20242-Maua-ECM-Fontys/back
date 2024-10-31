@@ -1,7 +1,7 @@
 import { describe, it, expect,beforeEach } from 'vitest';
 import { GetProfessorsByClassUsecase} from '../../../../src/modules/get_professors_by_class/app/get_professors_by_class_usecase';
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock';
-import { NoItemsFound } from '../../../../src/shared/helpers/errors/usecase_errors';
+import { NoItemsFound } from '../../../../src/shared/helpers/errors/repo_error';
 describe('GetProfessorsByClassUsecase', () => {
   let usecase: GetProfessorsByClassUsecase;
   let scheduleRepository: ScheduleRepositoryMock;
@@ -25,9 +25,12 @@ describe('GetProfessorsByClassUsecase', () => {
     });
   });
 
-  it('should throw NoItemsFound if no professors are suitable for the class', async () => {
+  it('should be empty array if no professors are suitable for the class', async () => {
     const classId = '0a8c5357-1f07-5b24-9845-9318c47ab9aa'; 
-    await expect(usecase.execute(classId)).rejects.toThrow(NoItemsFound);
+    const result = await usecase.execute(classId);
+    expect(result).toBeInstanceOf(Array);
+    expect(result.length).toBe(0);
+
   });
 
   it('should throw an error if classId is invalid', async () => {

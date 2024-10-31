@@ -1,9 +1,13 @@
-
 import { User } from '../../../shared/domain/entities/user';
 
+interface ProfessorInfo {
+  name: string;
+  email: string;
+  RA: string;
+}
 
 export class GetProfessorsByClassViewModel {
-  private professors: { [key: string]: { name: string, email: string, RA: string } } = {};
+  private professors: { [key: string]: ProfessorInfo } = {};
 
   constructor(users: User[]) {
     users.forEach(user => {
@@ -15,7 +19,10 @@ export class GetProfessorsByClassViewModel {
     });
   }
 
-  toJSON() {
-    return this.professors;
+  toJSON(): { message: string, data: { [key: string]: ProfessorInfo } } {
+    return {
+      message: "professors by class returned",
+      data: this.professors,
+    };
   }
 }

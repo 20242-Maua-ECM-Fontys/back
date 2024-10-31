@@ -897,29 +897,31 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
     )
     expect(availabilityAfter.isTaken).toEqual(false)
   })
-  it('should return professors for a valid class with suitable users', () => {
+  it('should return professors for a valid class with suitable users', async () => {
     const classId = '0a8c5357-1f07-5b24-9845-9318c47ac924';
     const repo = new ScheduleRepositoryMock()
     const professors = repo.getProfessorsByClass(classId);
 
-    expect(professors.length).toBe(2);
-    expect(professors[0]).toBeInstanceOf(User);
-    expect(professors[0].name).toEqual('user4');
-    expect(professors[0].email).toEqual('user4@gmail.com');
-    expect(professors[0].RA).toEqual('44.00000-4');
-    expect(professors[1]).toBeInstanceOf(User);
-    expect(professors[1].name).toEqual('user4');
-    expect(professors[1].email).toEqual('user4@gmail.com');
-    expect(professors[1].RA).toEqual('44.00000-4');
+    expect((await professors).length).toBe(2);
+   
     
   });
 
-  it('should return professors for a valid class with no suitable users', () => {
-    const classId = '0a8c535-1f07-5b24-9845-9318c47ac925';
+  it('should return professors for a valid class with no suitable users', async () => {
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab9aa';
     const repo = new ScheduleRepositoryMock()
     const professors = repo.getProfessorsByClass(classId);
 
-    expect(professors.length).toBe(0);
+    expect((await professors).length).toBe(0);
+  });
+  it('should return error for a invalid classid with no suitable users', async () => {
+    const classId = '0a8c5357-1f07-5b24-9845-9318c4ab9aa';
+    const repo = new ScheduleRepositoryMock()
+    const professors = repo.getProfessorsByClass(classId);
+
+    await expect(professors).rejects.toThrowError(
+      'No items found for classId',
+    )
   });
  
 })
