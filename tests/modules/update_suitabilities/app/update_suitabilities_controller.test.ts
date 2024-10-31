@@ -135,7 +135,7 @@ describe('Tests for UpdateSuitabilitiesController', () => {
     const controller = new UpdateSuitabilitiesController(
       new UpdateSuitabilitiesUsecase(repo),
     )
-    const userId = 20
+    const userId = repo.getUsersLength() + 1
     const subjects = ['ECM256', 'EFB207']
 
     const request = new HttpRequest({
