@@ -26,7 +26,22 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
         "message": "professors by class returned",
     });
   });
+  it('should return a empty list', async () => {
+    const repo = new ScheduleRepositoryMock();
+    const usecase = new GetProfessorsByClassUsecase(repo);
+    const controller = new GetProfessorsByClassController(usecase);
 
+    const request = new HttpRequest(undefined, undefined, {
+      classId:  '0a8c5357-1f07-5b24-9845-9318c47ab9aa',
+    });
+
+    const response = await controller.execute(request);
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.data).toEqual({ "data": { },
+        "message": "professors by class returned",
+    });
+  });
   it('should return a 404 error for an invalid classId', async () => {
     const repo = new ScheduleRepositoryMock();
     const usecase = new GetProfessorsByClassUsecase(repo);
