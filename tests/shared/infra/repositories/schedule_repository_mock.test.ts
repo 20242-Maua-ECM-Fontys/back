@@ -331,7 +331,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     await expect(
       repo.createSuitability(new Suitability({ userId, codeSubject })),
     ).rejects.toThrowError(
-      'The data rule "user must be a professor" was violated',
+      'The data rule "user must be a professor or coordinator" was violated',
     )
     const newLength = repo.getSuitabilitiesLength()
 
@@ -363,6 +363,15 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     const suitabilities = await repo.getSuitabilitiesByUserId(5)
 
     expect(suitabilities.length).toEqual(0)
+  })
+  it('Should delete suitabilities by userId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const userId = 4
+    const lastLength = repo.getSuitabilitiesLength()
+    await repo.deleteSuitabilityByUserId(userId)
+    const newLength = repo.getSuitabilitiesLength()
+
+    expect(newLength).toEqual(lastLength - 2)
   })
 })
 

@@ -730,8 +730,8 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     const user = await this.getUser(suitability.userId)
 
     // Check if the user is a professor
-    if (user.role !== ROLE.PROFESSOR) {
-      throw new ViolateDataRule('user must be a professor')
+    if (user.role === ROLE.STAFF) {
+      throw new ViolateDataRule('user must be a professor or coordinator')
     }
 
     // Check if the subject exists
@@ -740,6 +740,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     this.suitabilities.push(suitability)
 
     return Promise.resolve(suitability)
+  }
+
+  async deleteSuitabilityByUserId(userId: number): Promise<Suitability[]> {
+    const suitabilities = this.suitabilities.filter((s) => s.userId !== userId)
+    this.suitabilities = suitabilities
+    return suitabilities
   }
 
   async getSuitabilitiesByUserId(userId: number): Promise<Suitability[]> {
