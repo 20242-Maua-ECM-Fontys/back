@@ -7,6 +7,7 @@
     "server": "ts-node src/routes/app.ts",
     "build": "tsc",
     "build:watch": "tsc -w",
+    "heroku-postbuild": "npm run build",
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --fix --ext .ts src",
     "test": "vitest --no-watch",
