@@ -91,7 +91,7 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
   it('should return a 400 error if classId is not a valid UUID', async () => {
 
     const request = new HttpRequest(undefined, undefined, {
-      classId: '11111111-1111-1111-1111-111111111111', 
+      classId: '11111111-1111-1111-1111-111111111@@1', 
     });
     const repo = new ScheduleRepositoryMock();
     const usecase = new GetProfessorsByClassUsecase(repo);
