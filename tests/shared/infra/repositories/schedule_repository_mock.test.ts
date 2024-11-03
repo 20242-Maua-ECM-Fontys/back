@@ -199,7 +199,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     const repo = new ScheduleRepositoryMock()
     const length = repo.getClassesLength()
 
-    expect(length).toEqual(4)
+    expect(length).toEqual(5)
   })
   it('Should get class correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -224,7 +224,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     const repo = new ScheduleRepositoryMock()
     const classes = await repo.getAllClasss()
 
-    expect(classes.length).toEqual(4)
+    expect(classes.length).toEqual(5)
   })
 
   it('Should create class correctly', async () => {
@@ -906,4 +906,31 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
     )
     expect(availabilityAfter.isTaken).toEqual(false)
   })
+  it('should return professors for a valid class with suitable users', async () => {
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ac924';
+    const repo = new ScheduleRepositoryMock()
+    const professors = repo.getProfessorsByClass(classId);
+
+    expect((await professors).length).toBe(2);
+   
+    
+  });
+
+  it('should return professors for a valid class with no suitable users', async () => {
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab9aa';
+    const repo = new ScheduleRepositoryMock()
+    const professors = repo.getProfessorsByClass(classId);
+
+    expect((await professors).length).toBe(0);
+  });
+  it('should return error for a invalid classid with no suitable users', async () => {
+    const classId = '0a8c5357-1f07-5b24-9845-9318c4ab9aa';
+    const repo = new ScheduleRepositoryMock()
+    const professors = repo.getProfessorsByClass(classId);
+
+    await expect(professors).rejects.toThrowError(
+      'No items found for classId',
+    )
+  });
+ 
 })
