@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "server": "ts-node src/routes/app.ts",
-    "app": "",
+    "app": "dist/src/routes/app.js",
     "build": "tsc",
     "build:watch": "tsc -w",
     "heroku-postbuild": "npm run build",
