@@ -6,7 +6,7 @@ interface ProfessorInfo {
   RA: string;
 }
 
-export class GetProfessorsByClassViewModel {
+export class GetProfessorsByClassViewmodel {
   private professors: { [key: string]: ProfessorInfo } = {};
 
   constructor(users: User[]) {

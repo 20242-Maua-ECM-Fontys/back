@@ -3,7 +3,7 @@ import { GetProfessorsByClassUsecase } from '../../../../src/modules/get_profess
 import { GetProfessorsByClassController } from '../../../../src/modules/get_professors_by_class/app/get_professors_by_class_controller';
 import { HttpRequest } from '../../../../src/shared/helpers/external_interfaces/http_models';
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock';
-
+import { EntityError} from '../../../../src/shared/helpers/errors/domain_errors'
 describe('Assert GetProfessorsByClassController is correct at all', () => {
   it('should return a list of professors for a valid classId', async () => {
     const repo = new ScheduleRepositoryMock();
@@ -42,7 +42,7 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
         "message": "professors by class returned",
     });
   });
-  it('should return a 404 error for an invalid classId', async () => {
+  it('should return a 400 error for an invalid classId', async () => {
     const repo = new ScheduleRepositoryMock();
     const usecase = new GetProfessorsByClassUsecase(repo);
     const controller = new GetProfessorsByClassController(usecase);
@@ -54,8 +54,8 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
     const response = await controller.execute(request);
 
 
-    expect(response.data.body).toBe("No items found for classId");
-    expect(response.statusCode).toEqual(404);
+    expect(response.data.body).toBe("Field classId is not valid");
+    expect(response.statusCode).toEqual(400);
   });
 
   it('should return a 400 error if classId is missing', async () => {
@@ -73,17 +73,33 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
     expect(response.data.body).toBe('Field classId is missing');
   });
 
-  it('should return a 400 error if classId is not string', async () => {
+  it('should return a 400 error if classId is not a string', async () => {
+    const request = new HttpRequest(undefined, undefined, {
+      classId: 2, 
+    });
     const repo = new ScheduleRepositoryMock();
     const usecase = new GetProfessorsByClassUsecase(repo);
     const controller = new GetProfessorsByClassController(usecase);
 
+    const response = await controller.execute(request);
+
+  
+    expect(response.statusCode).toEqual(400);
+    expect(response.data.body).toBe("Field classId is not valid");
+
+  });
+  it('should return a 400 error if classId is not a valid UUID', async () => {
+
     const request = new HttpRequest(undefined, undefined, {
-      classId: 2, 
+      classId: '11111111-1111-1111-1111-111111111111', 
     });
+    const repo = new ScheduleRepositoryMock();
+    const usecase = new GetProfessorsByClassUsecase(repo);
+    const controller = new GetProfessorsByClassController(usecase);
 
     const response = await controller.execute(request);
-    expect(response.data.body).toBe("Field classId isn't in the right type.\n Received: 2.\n Expected to be a string.");
+
     expect(response.statusCode).toEqual(400);
+    expect(response.data.body).toBe('Field classId is not valid');
   });
 });

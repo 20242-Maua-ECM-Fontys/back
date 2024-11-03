@@ -57,9 +57,9 @@ describe('Tests for GetProfessorsByClassPresenter', () => {
 
     const response = await GetProfessorsByClassPresenter(event, repo);
 
-    expect(response?.statusCode).toEqual(404);
+    expect(response?.statusCode).toEqual(400);
     expect(response?.data).toEqual({
-      "body":  "No items found for classId",
+      "body":  "Field classId is not valid",
     });
   });
 
