@@ -10,7 +10,9 @@ export class GetProfessorAvailabilityController {
 
     async execute(request: IRequest) {
         try {
-            const professorId = parseInt((request as any).params.professorId, 10);
+            const professorIdParam = (request as any)?.params?.professorId;
+
+            const professorId = parseInt(professorIdParam);
             const availabilityData = await this.usecase.execute(professorId);
 
             const viewmodel = new GetProfessorAvailabilitiesViewmodel(availabilityData);
