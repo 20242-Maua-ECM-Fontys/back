@@ -22,12 +22,25 @@ describe('Tests for GetProfessorsByClassPresenter', () => {
 
     expect(response?.statusCode).toEqual(200);
     expect(response?.data).toEqual({
-      "data":  {  "4": {
-        "RA": "44.00000-4",
-        "email": "user4@gmail.com",
-        "name": "user4",
-      }, },
-         "message": "professors by class returned",
+      message: "professors by class returned",
+      data: {
+        "4":  {
+          
+          name: "user4",
+          email: "user4@gmail.com",
+          RA: "44.00000-4",
+        availabilities: [
+          { endTime: 560, isTaken: true, startTime: 460, weekDay: "MON" },
+          { endTime: 670, isTaken: false, startTime: 570, weekDay: "MON" },
+          { endTime: 780, isTaken: false, startTime: 680, weekDay: "MON" },
+          { endTime: 890, isTaken: false, startTime: 790, weekDay: "MON" },
+          { endTime: 1000, isTaken: false, startTime: 900, weekDay: "MON" },
+          { endTime: 1110, isTaken: false, startTime: 1010, weekDay: "MON" },
+          { endTime: 1240, isTaken: false, startTime: 1140, weekDay: "MON" },
+          { endTime: 1350, isTaken: false, startTime: 1250, weekDay: "MON" },
+        ]
+        }
+      }
     });
   });
 

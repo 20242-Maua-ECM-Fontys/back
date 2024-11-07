@@ -1,25 +1,47 @@
-import { User } from '../../../shared/domain/entities/user';
+import { MAUA_START_TIME } from '../../../shared/domain/enums/maua_start_time_enum';
+import { MAUA_END_TIME } from '../../../shared/domain/enums/maua_end_time_enum';
+import { WEEK_DAY } from '../../../shared/domain/enums/week_day_enum';
+
+interface AvailabilityInfo {
+
+  weekDay: WEEK_DAY;
+  startTime: MAUA_START_TIME;
+  endTime: MAUA_END_TIME;
+  isTaken: boolean;
+}
 
 interface ProfessorInfo {
+  id: string;
   name: string;
   email: string;
   RA: string;
+  availabilities: AvailabilityInfo[]; // Mantém como array de AvailabilityInfo
 }
 
 export class GetProfessorsByClassViewmodel {
-  private professors: { [key: string]: ProfessorInfo } = {};
+  private professors: { [userId: string]: Omit<ProfessorInfo, 'id' | 'availabilities'> & { availabilities: AvailabilityInfo[] } };
 
-  constructor(users: User[]) {
-    users.forEach(user => {
-      this.professors[user.id] = {
-        name: user.name,
-        email: user.email,
-        RA: user.RA,
+  constructor(professorsData: ProfessorInfo[]) {
+    this.professors = {};
+
+    professorsData.forEach(professor => {
+      // Adiciona cada professor e suas disponibilidades diretamente como um array
+      this.professors[professor.id] = {
+        name: professor.name,
+        email: professor.email,
+        RA: professor.RA,
+        availabilities: professor.availabilities.map((availability: AvailabilityInfo) => ({
+         
+          weekDay: availability.weekDay,
+          startTime: availability.startTime,
+          endTime: availability.endTime,
+          isTaken: availability.isTaken,
+        })),
       };
     });
   }
 
-  toJSON(): { message: string, data: { [key: string]: ProfessorInfo } } {
+  toJSON(): { message: string; data: { [userId: string]: Omit<ProfessorInfo, 'id'> & { availabilities: AvailabilityInfo[] } } } {
     return {
       message: "professors by class returned",
       data: this.professors,
