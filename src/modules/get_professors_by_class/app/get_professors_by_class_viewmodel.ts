@@ -1,50 +1,32 @@
-import { MAUA_START_TIME } from '../../../shared/domain/enums/maua_start_time_enum';
-import { MAUA_END_TIME } from '../../../shared/domain/enums/maua_end_time_enum';
-import { WEEK_DAY } from '../../../shared/domain/enums/week_day_enum';
-
-interface AvailabilityInfo {
-
-  weekDay: WEEK_DAY;
-  startTime: MAUA_START_TIME;
-  endTime: MAUA_END_TIME;
-  isTaken: boolean;
-}
-
-interface ProfessorInfo {
-  id: string;
-  name: string;
-  email: string;
-  RA: string;
-  availabilities: AvailabilityInfo[]; 
-}
+import { GetProfessorByClassUsecaseResponse } from './get_professors_by_class_usecase';
 
 export class GetProfessorsByClassViewmodel {
-  private professors: { [userId: string]: Omit<ProfessorInfo, 'id' | 'availabilities'> & { availabilities: AvailabilityInfo[] } };
+  private professors: GetProfessorByClassUsecaseResponse[];
 
-  constructor(professorsData: ProfessorInfo[]) {
-    this.professors = {};
-
-    professorsData.forEach(professor => {
-   
-      this.professors[professor.id] = {
-        name: professor.name,
-        email: professor.email,
-        RA: professor.RA,
-        availabilities: professor.availabilities.map((availability: AvailabilityInfo) => ({
-         
-          weekDay: availability.weekDay,
-          startTime: availability.startTime,
-          endTime: availability.endTime,
-          isTaken: availability.isTaken,
-        })),
-      };
-    });
+  constructor(professorsData: GetProfessorByClassUsecaseResponse[]) {
+    this.professors = professorsData;
   }
 
-  toJSON(): { message: string; data: { [userId: string]: Omit<ProfessorInfo, 'id'> & { availabilities: AvailabilityInfo[] } } } {
+  toJSON() {
     return {
       message: "professors by class returned",
-      data: this.professors,
+      professors: this.professors.reduce((result, professor) => {
+        result[professor.id] = {
+          name: professor.name,
+          email: professor.email,
+          RA: professor.RA,
+          availabilities: professor.availabilities.reduce((availabilitiesMap, availability) => {
+            availabilitiesMap[availability.availabilityId] = {
+              weekDay: availability.weekDay,
+              startTime: availability.startTime,
+              endTime: availability.endTime,
+              isTaken: availability.isTaken,
+            };
+            return availabilitiesMap;
+          }, {} as { [availabilityId: string]: { weekDay: string; startTime: number; endTime: number; isTaken: boolean } }),
+        };
+        return result;
+      }, {} as { [userId: string]: { name: string; email: string; RA: string; availabilities: { [availabilityId: string]: { weekDay: string; startTime: number; endTime: number; isTaken: boolean } } } }),
     };
   }
 }

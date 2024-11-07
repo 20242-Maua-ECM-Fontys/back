@@ -20,10 +20,9 @@ describe('GetProfessorsByClassUsecase', () => {
     expect(result.length).toBeGreaterThan(0);
 
     result.forEach(professor => {
-      expect(professor.props.role).toBe('PROFESSOR');
-      expect(professor.props).toHaveProperty('name');
-      expect(professor.props).toHaveProperty('email');
-      expect(professor.props).toHaveProperty('RA');
+      expect(professor).toHaveProperty('name');
+      expect(professor).toHaveProperty('email');
+      expect(professor).toHaveProperty('RA');
 
       expect(professor).toHaveProperty('availabilities');
       expect(professor.availabilities).toBeInstanceOf(Array);

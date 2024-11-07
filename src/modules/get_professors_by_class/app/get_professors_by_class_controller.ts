@@ -11,45 +11,32 @@ export class GetProfessorsByClassController {
   constructor(private usecase: GetProfessorsByClassUsecase) {}
 
   async execute(request: IRequest): Promise<IResponse> {
-    try {
- 
-      const classId = request.data.classId as string;
-      if (!classId) {
-        throw new MissingParameters('classId');
-      }
+  try {
+  const classId1 = request.data.classId;
+  const classId = classId1 as string;
 
- 
-      if (!Class.validateId(classId)) {
-        throw new EntityError('classId');
-      }
 
-  
-      const professors = await this.usecase.execute(classId);
-      const formattedProfessors = professors.map(professor => ({
-        id: professor.props.id.toString(),
-        name: professor.props.name,
-        email: professor.props.email,
-        RA: professor.props.RA,
-        availabilities: professor.availabilities.map(availability => ({
-          weekDay: availability.weekDay,
-          startTime: availability.startTime,
-          endTime: availability.endTime,
-          isTaken: availability.isTaken,
-        }))
-      }));
-
-      return new OK(new GetProfessorsByClassViewmodel(formattedProfessors).toJSON());
-
-    } catch (error: unknown) {
-  
-      if (error instanceof NoItemsFound) {
-        return new NotFound(error.message);
-      }
-      if (error instanceof MissingParameters || error instanceof WrongTypeParameters || error instanceof EntityError) {
-        return new BadRequest(error.message);
-      }
-
-      return new InternalServerError('Unexpected error');
+    if (!classId) {
+      throw new MissingParameters('classId');
     }
+
+    if (!Class.validateId(classId)) {
+      throw new EntityError('classId');
+    }
+
+    const professors = await this.usecase.execute(classId);
+    return new OK(new GetProfessorsByClassViewmodel(professors).toJSON());
+
+  } catch (error: unknown) {
+    if (error instanceof NoItemsFound) {
+      return new NotFound(error.message);
+    }
+    if (error instanceof MissingParameters || error instanceof WrongTypeParameters || error instanceof EntityError) {
+      return new BadRequest(error.message);
+    }
+
+    return new InternalServerError('Unexpected error');
   }
+}
+
 }
