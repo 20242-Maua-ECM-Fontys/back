@@ -15,7 +15,7 @@ interface ProfessorInfo {
   name: string;
   email: string;
   RA: string;
-  availabilities: AvailabilityInfo[]; // Mantém como array de AvailabilityInfo
+  availabilities: AvailabilityInfo[]; 
 }
 
 export class GetProfessorsByClassViewmodel {
@@ -25,7 +25,7 @@ export class GetProfessorsByClassViewmodel {
     this.professors = {};
 
     professorsData.forEach(professor => {
-      // Adiciona cada professor e suas disponibilidades diretamente como um array
+   
       this.professors[professor.id] = {
         name: professor.name,
         email: professor.email,

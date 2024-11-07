@@ -20,13 +20,11 @@ describe('GetProfessorsByClassUsecase', () => {
     expect(result.length).toBeGreaterThan(0);
 
     result.forEach(professor => {
-      // Verifica a role do professor dentro de props
       expect(professor.props.role).toBe('PROFESSOR');
       expect(professor.props).toHaveProperty('name');
       expect(professor.props).toHaveProperty('email');
       expect(professor.props).toHaveProperty('RA');
 
-      // Verifica se cada professor possui availabilities
       expect(professor).toHaveProperty('availabilities');
       expect(professor.availabilities).toBeInstanceOf(Array);
 

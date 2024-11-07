@@ -12,18 +12,18 @@ export class GetProfessorsByClassController {
 
   async execute(request: IRequest): Promise<IResponse> {
     try {
-      // Extrair classId do request e verificar se está presente
+ 
       const classId = request.data.classId as string;
       if (!classId) {
         throw new MissingParameters('classId');
       }
 
-      // Validar o classId utilizando a classe `Class`
+ 
       if (!Class.validateId(classId)) {
         throw new EntityError('classId');
       }
 
-      // Executar o caso de uso e desestruturar os dados retornados em users e availabilities
+  
       const professors = await this.usecase.execute(classId);
       const formattedProfessors = professors.map(professor => ({
         id: professor.props.id.toString(),
@@ -37,18 +37,18 @@ export class GetProfessorsByClassController {
           isTaken: availability.isTaken,
         }))
       }));
-      // Criar a resposta utilizando o viewmodel, passando users e availabilities
+
       return new OK(new GetProfessorsByClassViewmodel(formattedProfessors).toJSON());
 
     } catch (error: unknown) {
-      // Tratamento de erros específicos e retorno de respostas apropriadas
+  
       if (error instanceof NoItemsFound) {
         return new NotFound(error.message);
       }
       if (error instanceof MissingParameters || error instanceof WrongTypeParameters || error instanceof EntityError) {
         return new BadRequest(error.message);
       }
-      // Tratamento de erros inesperados
+
       return new InternalServerError('Unexpected error');
     }
   }
