@@ -51,7 +51,7 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
     const response = await controller.execute(request);
 
     expect(response.statusCode).toEqual(200);
-    expect(response.data).toEqual({ "data": { },
+    expect(response.data).toEqual({ "professors": { },
         "message": "professors by class returned",
     });
   });
