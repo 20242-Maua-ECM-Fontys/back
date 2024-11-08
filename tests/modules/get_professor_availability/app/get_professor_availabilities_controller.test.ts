@@ -40,6 +40,7 @@ describe('Tests for GetProfessorAvailabilityController', () => {
         const usecase = new GetProfessorAvailabilityUsecase(repo);
         const controller = new GetProfessorAvailabilityController(usecase);
         const request = new HttpRequest({});
+        
         const response = await controller.execute(request);
 
         expect(response?.statusCode).toBe(400);
@@ -53,6 +54,7 @@ describe('Tests for GetProfessorAvailabilityController', () => {
         const request = new HttpRequest({
             params: { professorId: 'invalid' },
         });
+       
         const response = await controller.execute(request);
 
         expect(response?.statusCode).toBe(400);
@@ -70,6 +72,7 @@ describe('Tests for GetProfessorAvailabilityController', () => {
         const request = new HttpRequest({
             params: { professorId: -1 },
         });
+        
         const response = await controller.execute(request);
 
         expect(response?.statusCode).toBe(400);
