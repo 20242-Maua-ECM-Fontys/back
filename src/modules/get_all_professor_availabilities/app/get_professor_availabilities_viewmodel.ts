@@ -1,4 +1,4 @@
-import { GetProfessorAvailabilityUsecaseReturn } from './get_professor_availabilities_usecase';
+import { Availability } from '../../../shared/domain/entities/availability';
 
 export class GetProfessorAvailabilitiesViewmodel {
     private message: string;
@@ -11,13 +11,13 @@ export class GetProfessorAvailabilitiesViewmodel {
         weekDay: string;
     }[];
 
-    constructor(professorData: GetProfessorAvailabilityUsecaseReturn) {
+    constructor(availabilities: Availability[]) {
         this.message = 'availabilities by professor returned';
 
         // Map the professor's availabilities to the desired format
-        this.availabilities = professorData.availabilities.map(avail => ({
-            id: avail.id,
-            userId: professorData.professor.id,
+        this.availabilities = availabilities.map(avail => ({
+            id: avail.availabilityId,
+            userId: avail.userId,
             isTaken: avail.isTaken,
             startTime: avail.startTime,
             endTime: avail.endTime,
