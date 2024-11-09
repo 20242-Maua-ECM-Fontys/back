@@ -30,7 +30,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       name: 'user1',
       email: 'user1@gmail.com',
       role: ROLE.STAFF,
-      RA: '11.00000-1',
+      RA: '21.00000-1',
       password: 'Password1@',
     }),
     new User({
