@@ -264,6 +264,13 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
 
     expect(newLength).toEqual(lastLength)
   })
+
+  it('Should get classes by scheduleId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const classes = await repo.getClassesByScheduleId('2S-4CM-D5@2024(SCS)')
+
+    expect(classes.length).toEqual(2)
+  })
 })
 
 // #region Suitability methods
@@ -485,6 +492,13 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
 
     expect(newLength).toEqual(lastLength)
   })
+
+  it('Should get schedules by coordinator correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const schedules = await repo.getScheduleByCoordinator(2)
+
+    expect(schedules.length).toEqual(4)
+  })
 })
 
 // #region Possibility methods
@@ -568,6 +582,15 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
     const newLength = repo.getPossibilitiesLength()
 
     expect(newLength).toEqual(lastLength)
+  })
+
+  it('Should get possibilities by scheduleId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const possibilities = await repo.getPossibilitiesByScheduleId(
+      '2S-4CM-D5@2024(SCS)',
+    )
+
+    expect(possibilities.length).toEqual(18)
   })
 })
 
@@ -907,30 +930,25 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
     expect(availabilityAfter.isTaken).toEqual(false)
   })
   it('should return professors for a valid class with suitable users', async () => {
-    const classId = '0a8c5357-1f07-5b24-9845-9318c47ac924';
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ac924'
     const repo = new ScheduleRepositoryMock()
-    const professors = repo.getProfessorsByClass(classId);
+    const professors = repo.getProfessorsByClass(classId)
 
-    expect((await professors).length).toBe(2);
-   
-    
-  });
+    expect((await professors).length).toBe(2)
+  })
 
   it('should return professors for a valid class with no suitable users', async () => {
-    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab9aa';
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab9aa'
     const repo = new ScheduleRepositoryMock()
-    const professors = repo.getProfessorsByClass(classId);
+    const professors = repo.getProfessorsByClass(classId)
 
-    expect((await professors).length).toBe(0);
-  });
+    expect((await professors).length).toBe(0)
+  })
   it('should return error for a invalid classid with no suitable users', async () => {
-    const classId = '0a8c5357-1f07-5b24-9845-9318c4ab9aa';
+    const classId = '0a8c5357-1f07-5b24-9845-9318c4ab9aa'
     const repo = new ScheduleRepositoryMock()
-    const professors = repo.getProfessorsByClass(classId);
+    const professors = repo.getProfessorsByClass(classId)
 
-    await expect(professors).rejects.toThrowError(
-      'No items found for classId',
-    )
-  });
- 
+    await expect(professors).rejects.toThrowError('No items found for classId')
+  })
 })

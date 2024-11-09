@@ -680,6 +680,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.classes
   }
 
+  async getClassesByScheduleId(scheduleId: string): Promise<Class[]> {
+    return this.classes.filter((c) => c.scheduleId === scheduleId)
+  }
+
   async createClass(newClass: Class): Promise<Class> {
     const exists = this.classes.find((c) => c.id === newClass.id)
     if (exists) {
@@ -706,19 +710,18 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.subjects
   }
   async getProfessorsByClass(classId: string): Promise<User[]> {
+    const foundClass = this.getClass(classId)
 
-    const foundClass = this.getClass(classId);
-
-  
-    const subjectCode = (await foundClass).subjectCode;
-
+    const subjectCode = (await foundClass).subjectCode
 
     const suitableUsers = this.suitabilities
-      .filter(suitability => suitability.codeSubject === subjectCode)
-      .map(suitability => this.users.find(user => user.id === suitability.userId))
-      .filter((user): user is User => user !== undefined); 
+      .filter((suitability) => suitability.codeSubject === subjectCode)
+      .map((suitability) =>
+        this.users.find((user) => user.id === suitability.userId),
+      )
+      .filter((user): user is User => user !== undefined)
 
-    return suitableUsers;
+    return suitableUsers
   }
 
   async createSubject(subject: Subject): Promise<Subject> {
@@ -814,6 +817,11 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return schedule
   }
 
+  async getScheduleByCoordinator(userId: number): Promise<Schedule[]> {
+    const schedules = this.schedules.filter((s) => s.userId === userId)
+    return schedules
+  }
+
   // #region Possibility methods
   getPossibilitiesLength(): number {
     return this.possibilities.length
@@ -831,6 +839,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
   async getAllPossibilities(): Promise<Possibility[]> {
     return this.possibilities
+  }
+
+  async getPossibilitiesByScheduleId(
+    scheduleId: string,
+  ): Promise<Possibility[]> {
+    return this.possibilities.filter((p) => p.scheduleId === scheduleId)
   }
 
   async createPossibility(possibility: Possibility): Promise<Possibility> {
