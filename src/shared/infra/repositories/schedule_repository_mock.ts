@@ -30,15 +30,15 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       name: 'user1',
       email: 'user1@gmail.com',
       role: ROLE.STAFF,
-      RA: '21.00000-1',
+      RA: '11.00000-1',
       password: 'Password1@',
     }),
     new User({
       id: 2,
-      name: 'user2',
-      email: 'user2@gmail.com',
+      name: 'Pedro Henrique de Sousa Matumoto',
+      email: 'pedromatumoto@gmail.com',
       role: ROLE.COORDINATOR,
-      RA: '22.00000-2',
+      RA: '21.00784-5',
       password: 'Password2@',
     }),
     new User({
@@ -68,6 +68,22 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       RA: '55.00000-5',
       password: 'Password5@',
     }),
+    new User({
+      id: 6,
+      name: 'PEDRO HENRIQUE DE SOUSA MATUMOTO',
+      email: '21.00784-5@maua.br',
+      role: ROLE.STAFF,
+      RA: '21.00784-5',
+      password: 'Password6@',
+    }),
+    new User({
+      id: 7,
+      name: 'JOAO VITOR CHOUERI BRANCO',
+      email: '21.01075-7@maua.br',
+      role: ROLE.PROFESSOR,
+      RA: '21.01075-7',
+      password: 'Password7@',
+    })
   ]
   // #region classes
   private classes: Class[] = [
