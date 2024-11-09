@@ -18,7 +18,7 @@ export class GetProfessorsByClassUsecase {
     const professors = await this.repo.getProfessorsByClass(classId);
 
     if (!professors) {
-      throw new NoItemsFound(`No professors found for classId: ${classId}`);
+      throw new NoItemsFound(`classId`);
     }
 
 
