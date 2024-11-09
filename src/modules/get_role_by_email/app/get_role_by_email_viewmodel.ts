@@ -1,13 +1,19 @@
-export class GetRoleByEmailViewModel {
-  private role: string;
+import { GetRoleByEmailUsecaseResponse } from "./get_role_by_email_usecase";
 
-  constructor(role: string) {
-    this.role = role;
+export class GetRoleByEmailViewModel {
+  private userData: GetRoleByEmailUsecaseResponse;
+  private message: string;
+
+  constructor(userData: GetRoleByEmailUsecaseResponse) {
+    this.message = "role and userId by email returned"
+    this.userData = userData;
   }
 
   toJSON() {
     return {
-      role: this.role,
+      userId: this.userData.userId,
+      role: this.userData.role,
+      message: this.message
     };
   }
 }
