@@ -22,8 +22,9 @@ describe('Tests for GetRoleByEmailPresenter', () => {
 
     expect(response?.statusCode).toEqual(200);
     expect(response?.data).toEqual({
-      role: 'STAFF', 
-    });
+      "message": "role and userId by email returned",
+    "role": "STAFF",
+    "userId": 1});
   });
 
   it('Should return 400 BadRequest when email is missing', async () => {
