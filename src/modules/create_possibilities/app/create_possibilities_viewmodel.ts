@@ -1,8 +1,8 @@
-export class createPossibilitiesViewmodel {
+export class CreatePossibilitiesViewmodel {
     private message: string
 
     constructor() {
-        this.message = "Possibilities created"
+        this.message = "possibilities created"
     } 
 
     toJSON() {
@@ -10,5 +10,4 @@ export class createPossibilitiesViewmodel {
           message: this.message,
         }
       }
-      
 }

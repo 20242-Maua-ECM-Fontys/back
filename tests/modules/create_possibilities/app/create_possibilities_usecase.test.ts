@@ -3,7 +3,6 @@ import { describe, it, expect } from 'vitest'
 import { CreatePossibilitiesUsecase } from '../../../../src/modules/create_possibilities/app/create_possibilities_usecase'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 import { MAUA_START_TIME } from '../../../../src/shared/domain/enums/maua_start_time_enum'
-import { WEEK_DAY } from '../../../../src/shared/domain/enums/week_day_enum'
 import { MAUA_END_TIME } from '../../../../src/shared/domain/enums/maua_end_time_enum'
 
 describe('Assert CreatePossibilities is correct at all', () => {
@@ -151,6 +150,4 @@ describe('Assert CreatePossibilities is correct at all', () => {
 
     expect(possibilitiesLengthAfter).toEqual(possibilitiesLengthBefore)
   })
-  
-  
 })
