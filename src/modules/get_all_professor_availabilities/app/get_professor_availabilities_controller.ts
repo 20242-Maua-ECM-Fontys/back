@@ -15,11 +15,14 @@ export class GetProfessorAvailabilityController {
             if(request.data.userId === undefined){
                 throw new MissingParameters('userId')
             }
-            else if(typeof request.data.userId !== 'number'){
-                throw new WrongTypeParameters('userId', 'number', request.data.userId)
+            if(typeof request.data.userId !== 'string'){
+                throw new WrongTypeParameters('userId', 'string', request.data.userId)
+            }
+            if(!Number.isInteger(request.data.userId)){
+                throw new WrongTypeParameters('userId', 'numeric string', request.data.userId)
             }
 
-            const userId = request.data.userId;
+            const userId = parseInt(request.data.userId);
 
             const availabilityData = await this.usecase.execute(userId);
 

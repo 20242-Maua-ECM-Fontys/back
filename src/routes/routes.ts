@@ -8,6 +8,7 @@ import { GetAllProfessorsPresenter } from '../modules/get_all_professors/app/get
 import { UploadCSVPresenter } from '../modules/upload_csv/app/upload_csv_presenter'
 import { GetAllSubjectsPresenter } from '../modules/get_all_subjects/app/get_all_subjects_presenter'
 import { GetAllSchedulesPresenter } from '../modules/get_all_schedules/app/get_all_schedules_presenter'
+import { GetProfessorAvailabilityPresenter } from '../modules/get_all_professor_availabilities/app/get_professor_availabilities_presenter'
 
 const upload = multer()
 const routes = express.Router()
@@ -94,6 +95,16 @@ routes.get(
     const response = await GetRoleByEmailPresenter(httpRequest, repo);
     res.status(response.statusCode).json(response.body);
   }
-);
+)
+
+routes.get(
+  '/get_availabilities_by_professor',
+  async (req: Request, res: Response) => {
+    const { userId } = req.query; 
+    const httpRequest: HttpRequest = new HttpRequest({ userId }, {}, {}, req.file);
+    const response = await GetProfessorAvailabilityPresenter(httpRequest, repo);
+    res.status(response.statusCode).json(response.body);
+  }
+)
 
 export default routes
