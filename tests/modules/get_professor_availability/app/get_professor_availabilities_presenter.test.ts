@@ -10,7 +10,7 @@ describe('Tests for GetProfessorAvailabilityPresenter', () => {
     const event = new HttpRequest(
       undefined,
       undefined,
-      { userId: 4 },
+      { userId: '4' },
       undefined,
     )
 
@@ -27,7 +27,7 @@ describe('Tests for GetProfessorAvailabilityPresenter', () => {
     const event = new HttpRequest(
       undefined,
       undefined,
-      { userId: -1 },
+      { userId: '-1' },
       undefined,
     )
 

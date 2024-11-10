@@ -10,7 +10,7 @@ describe('Tests for GetProfessorAvailabilityController', () => {
         const usecase = new GetProfessorAvailabilityUsecase(repo);
         const controller = new GetProfessorAvailabilityController(usecase);
         const request = new HttpRequest({
-            userId: 4
+            userId: '4'
         });
         const response = await controller.execute(request);
 
@@ -29,7 +29,7 @@ describe('Tests for GetProfessorAvailabilityController', () => {
         const id = repo.getUsersLength() + 1;
 
         const request = new HttpRequest({
-            userId: id
+            userId: `${id}`
         });
         const response = await controller.execute(request);
 
@@ -63,7 +63,7 @@ describe('Tests for GetProfessorAvailabilityController', () => {
         expect(response?.body).toEqual(
             "Field userId isn't in the right type.\n" +
             ' Received: invalid.\n' +
-            ' Expected to be a number.',
+            ' Expected to be a numeric string.',
         );
     });
 
@@ -72,7 +72,7 @@ describe('Tests for GetProfessorAvailabilityController', () => {
         const usecase = new GetProfessorAvailabilityUsecase(repo);
         const controller = new GetProfessorAvailabilityController(usecase);
         const request = new HttpRequest({
-            userId: -1
+            userId: '-1'
         });
         
         const response = await controller.execute(request);
