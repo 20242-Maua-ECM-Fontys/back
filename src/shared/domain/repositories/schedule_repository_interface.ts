@@ -50,8 +50,6 @@ export interface IScheduleRepository {
   getPossibility(id: string): Promise<Possibility>
   getAllPossibilities(): Promise<Possibility[]>
   createPossibility(possibility: Possibility): Promise<Possibility>
-  deletePossibility(id: string): Promise<Possibility>
-  getPossibilitiesByUserId(userId: number): Promise<Possibility[]>
 
   // Availability methods
   getAvailabilitiesLength(): number
