@@ -10,14 +10,7 @@ export type DateUsecaseParam = {
   notEarlier: MAUA_START_TIME
   notLater: MAUA_END_TIME
 }
-export type DatesUsecaseParam = {
-    "MON"?: DateUsecaseParam
-    "TUE"?: DateUsecaseParam
-    "WED"?: DateUsecaseParam
-    "THU"?: DateUsecaseParam
-    "FRI"?: DateUsecaseParam
-    "SAT"?: DateUsecaseParam
-}
+export type DatesUsecaseParam = Record<string, DateUsecaseParam>
 
 export class CreatePossibilitiesUsecase {
     constructor(private repo: IScheduleRepository) {}
