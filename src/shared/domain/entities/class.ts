@@ -56,13 +56,12 @@ export class Class {
   }
 
   static validateId(id: string): boolean {
-    if (id === null) {
-      return false
+    if (id === null || typeof id !== "string" || id.length !== CLASS_ID_LENGTH) {
+      return false;
     }
-    if (id.length !== CLASS_ID_LENGTH) {
-      return false
-    }
-    return true
+
+    const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    return uuidRegex.test(id);
   }
 
   static validateName(name: string): boolean {

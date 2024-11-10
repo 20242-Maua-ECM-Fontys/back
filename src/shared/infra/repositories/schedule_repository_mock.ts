@@ -23,6 +23,7 @@ import { ACADEMIC_PERIOD } from '../../../shared/domain/enums/academic_period_en
 
 export class ScheduleRepositoryMock implements IScheduleRepository {
   // Mock Data
+  // #region Users
   private users: User[] = [
     new User({
       id: 1,
@@ -34,10 +35,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
     new User({
       id: 2,
-      name: 'user2',
-      email: 'user2@gmail.com',
+      name: 'Pedro Henrique de Sousa Matumoto',
+      email: 'pedromatumoto@gmail.com',
       role: ROLE.COORDINATOR,
-      RA: '22.00000-2',
+      RA: '21.00784-5',
       password: 'Password2@',
     }),
     new User({
@@ -67,8 +68,24 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       RA: '55.00000-5',
       password: 'Password5@',
     }),
+    new User({
+      id: 6,
+      name: 'PEDRO HENRIQUE DE SOUSA MATUMOTO',
+      email: '21.00784-5@maua.br',
+      role: ROLE.STAFF,
+      RA: '21.00784-5',
+      password: 'Password6@',
+    }),
+    new User({
+      id: 7,
+      name: 'JOAO VITOR CHOUERI BRANCO',
+      email: '21.01075-7@maua.br',
+      role: ROLE.PROFESSOR,
+      RA: '21.01075-7',
+      password: 'Password7@',
+    })
   ]
-
+  // #region classes
   private classes: Class[] = [
     new Class({
       id: '0a8c5357-1f07-5b24-9845-9318c47ab923',
@@ -76,6 +93,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
+      scheduleId: '1S-2CIC-D4@2024(SCS)',
+    }),
+    new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ab9aa',
+      name: 'Linguagens de Programacao III',
+      modality: MODALITY.IN_PERSON,
+      classType: CLASSTYPE.THEORY,
+      subjectCode: 'ECM111',
       scheduleId: '1S-2CIC-D4@2024(SCS)',
     }),
     new Class({
@@ -103,7 +128,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
   ]
-
+  // #region subjects
   private subjects: Subject[] = [
     new Subject({
       code: 'ECM256',
@@ -116,7 +141,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       period: PERIOD.AFTERNOON,
     }),
   ]
-
+  // #region suitabilities
   private suitabilities: Suitability[] = [
     new Suitability({
       userId: 4,
@@ -131,7 +156,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       codeSubject: 'ECM256',
     }),
   ]
-
+  // #region schedules
   private schedules: Schedule[] = [
     new Schedule({
       scheduleId: '2S-4CM-D5@2024(SCS)',
@@ -166,7 +191,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       courseGrade: 2,
     }),
   ]
-
+  // #region possibilities
   private possibilities: Possibility[] = [
     // MON - SAT | 07:40 - 13:00 | 2S-4CM-D5@2024(SCS)
     new Possibility({
@@ -403,7 +428,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       scheduleId: '2S-3CM-D5@2024(SCS)',
     }),
   ]
-
+  // #region availabilities
   private availabilities: Availability[] = [
     // Professor com userId = 3, todos os dias com H07_40_09_20 e H09_30_11_10
     new Availability({
@@ -553,7 +578,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       weekDay: WEEK_DAY.MON,
     }),
   ]
-
+  // #region avFullfilled
   private avsFullfilled: AvFullfilled[] = [
     /* 
       professor with userId=4 
@@ -579,7 +604,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
   ]
 
-  // User methods
+  // #region User methods
   getUsersLength(): number {
     return this.users.length
   }
@@ -595,14 +620,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   async getUserByEmail(email: string): Promise<User> {
     const user = this.users.find((user) => user.email === email)
     if (!user) {
-    throw new NoItemsFound('email')
+      throw new NoItemsFound('email')
     }
     return user
   }
   async getRoleByEmail(email: string): Promise<ROLE | null> {
     const user = this.users.find((user) => user.email === email)
     if (!user) {
-    return null
+      return null
     }
     return user.role
   }
@@ -654,7 +679,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return users
   }
 
-  // Class methods
+  // #region Class methods
   getClassesLength(): number {
     return this.classes.length
   }
@@ -680,7 +705,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return newClass
   }
 
-  // Subject methods
+  // #region Subject methods
   getSubjectsLength(): number {
     return this.subjects.length
   }
@@ -696,6 +721,21 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   async getAllSubjects(): Promise<Subject[]> {
     return this.subjects
   }
+  async getProfessorsByClass(classId: string): Promise<User[]> {
+
+    const foundClass = this.getClass(classId);
+
+  
+    const subjectCode = (await foundClass).subjectCode;
+
+
+    const suitableUsers = this.suitabilities
+      .filter(suitability => suitability.codeSubject === subjectCode)
+      .map(suitability => this.users.find(user => user.id === suitability.userId))
+      .filter((user): user is User => user !== undefined); 
+
+    return suitableUsers;
+  }
 
   async createSubject(subject: Subject): Promise<Subject> {
     const exists = this.subjects.find((s) => s.code === subject.code)
@@ -705,8 +745,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     this.subjects.push(subject)
     return subject
   }
-
-  // Suitability methods
+  // #region Suitability methods
   getSuitabilitiesLength(): number {
     return this.suitabilities.length
   }
@@ -730,8 +769,8 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     const user = await this.getUser(suitability.userId)
 
     // Check if the user is a professor
-    if (user.role !== ROLE.PROFESSOR) {
-      throw new ViolateDataRule('user must be a professor')
+    if (user.role === ROLE.STAFF) {
+      throw new ViolateDataRule('user must be a professor or coordinator')
     }
 
     // Check if the subject exists
@@ -742,13 +781,19 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return Promise.resolve(suitability)
   }
 
+  async deleteSuitabilityByUserId(userId: number): Promise<Suitability[]> {
+    const suitabilities = this.suitabilities.filter((s) => s.userId !== userId)
+    this.suitabilities = suitabilities
+    return suitabilities
+  }
+
   async getSuitabilitiesByUserId(userId: number): Promise<Suitability[]> {
     const suitabilities = this.suitabilities.filter((s) => s.userId === userId)
 
     return suitabilities
   }
 
-  // Schedule methods
+  // #region Schedule methods
   getSchedulesLength(): number {
     return this.schedules.length
   }
@@ -785,7 +830,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return schedule
   }
 
-  // Possibility methods
+  // #region Possibility methods
   getPossibilitiesLength(): number {
     return this.possibilities.length
   }
@@ -816,7 +861,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return possibility
   }
 
-  // Availability methods
+  // #region Availability methods
   getAvailabilitiesLength(): number {
     return this.availabilities.length
   }
@@ -870,7 +915,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return availability
   }
 
-  // AvFullfilled methods
+  // #region AvFullfilled methods
   getAvsFullfilledLength(): number {
     return this.avsFullfilled.length
   }

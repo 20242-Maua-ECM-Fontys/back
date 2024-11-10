@@ -9,7 +9,7 @@ describe('Assert Upload CSV usecase is correct at all', () => {
     const usecase = new UploadCSVUsecase(repo)
 
     const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,professorPassword,roomCode,scheduleId,courseName,coordEmail,academicPeriod
-schedule,,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,user2@gmail.com,ANNUAL
+schedule,,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,pedromatumoto@gmail.com,ANNUAL
 professor,Dr. John Doe,,,,,,john.doe@example.com,12345,S!q3T@pG9z,,
 subject,Data Structures,,,CSE103,EVENING,,,,,,
 class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,,2S-4CM-D5@2024(SCS)
@@ -178,7 +178,7 @@ class,Class 202,REMOTE,LAB,CSE204,,A02,,,,,2S-4CM-D5@2024(SCS)`
     const usecase = new UploadCSVUsecase(repo)
 
     const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,professorPassword,roomCode,scheduleId,courseName,coordEmail,academicPeriod
-schedule,,,,,,,,,,,2222),Computer Science,user2@gmail.com,ANNUAL
+schedule,,,,,,,,,,,2222),Computer Science,pedromatumoto@gmail.com,ANNUAL
 professor,Dr. John Doe,,,,,,john.doe@example.com,12345,S!q3T@pG9z,,
 subject,Data Structures,,,CSE103,EVENING,,,,,,
 class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,,2S-4CM-D5@2024(SCS)
