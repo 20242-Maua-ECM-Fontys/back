@@ -18,7 +18,7 @@ export class GetProfessorAvailabilityController {
             if(typeof request.data.userId !== 'string'){
                 throw new WrongTypeParameters('userId', 'string', request.data.userId)
             }
-            if(!Number.isInteger(request.data.userId)){
+            if(!Number.isInteger(Number(request.data.userId))){
                 throw new WrongTypeParameters('userId', 'numeric string', request.data.userId)
             }
 
