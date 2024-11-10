@@ -3,8 +3,6 @@ import { CreatePossibilitiesController } from '../../../../src/modules/create_po
 import { CreatePossibilitiesUsecase } from '../../../../src/modules/create_possibilities/app/create_possibilities_usecase'
 import { HttpRequest } from '../../../../src/shared/helpers/external_interfaces/http_models'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
-import { MAUA_START_TIME } from '../../../../src/shared/domain/enums/maua_start_time_enum'
-import { MAUA_END_TIME } from '../../../../src/shared/domain/enums/maua_end_time_enum'
 
 describe('Assert CreatePossibilitiesController is correct at all', () => {
   it('Should activate controller correctly', async () => {

@@ -1,142 +1,140 @@
 import { describe, it, expect } from 'vitest'
-import { UpdateAvailabilitiesPresenter } from '../../../../src/modules/update_availabilities/app/update_availabilities_presenter'
+import { CreatePossibilitiesPresenter } from '../../../../src/modules/create_possibilities/app/create_possibilities_presenter'
 import { HttpRequest } from '../../../../src/shared/helpers/external_interfaces/http_models'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 
-describe('Tests for UpdateAvailabilitiesPresenter', () => {
-  it('Should call presenter and return status 200', async () => {
+describe('Tests for CreatePossibilitiesPresenter', () => {
+  it('Should call presenter and return status 201', async () => {
     const repo = new ScheduleRepositoryMock()
-    const userId = 3
-    const availabilities = [
-      {
-        startTime: 460,
-        endTime: 560,
-        weekDay: 'FRI'
+
+    const scheduleId = "1S-2CIC-D4@2024(SCS)"
+    const dates = {
+      "MON": {
+        notEarlier: 460,
+        notLater: 560
       },
-      {
-        startTime: 460,
-        endTime: 560,
-        weekDay: 'SAT'
+      "TUE": {
+        notEarlier: 460,
+        notLater: 670
       },
-      {
-        startTime: 570,
-        endTime: 670,
-        weekDay: 'FRI'
-      }
-    ]
+      "WED": {
+        notEarlier: 460,
+        notLater: 670
+      },
+      "THU": {
+        notEarlier: 460,
+        notLater: 1350
+      },
+      "FRI": {
+        notEarlier: 1250,
+        notLater: 1350
+      },
+      "SAT": {
+        notEarlier: 680,
+        notLater: 1240
+      },
+    }
     const httpRequest = new HttpRequest(
       {
-        'userId': userId,
-        'availabilities': availabilities
+        'scheduleId': scheduleId,
+        'dates': dates
       },
       undefined,
       {},
       undefined,
     )
-    const response = await UpdateAvailabilitiesPresenter(httpRequest, repo)
+    const response = await CreatePossibilitiesPresenter(httpRequest, repo)
 
-    expect(response?.statusCode).toEqual(200)
-    expect(response?.body.message).toEqual('availabilities updated')
+    expect(response?.statusCode).toEqual(201)
+    expect(response?.body.message).toEqual('possibilities created')
   })
   it('Should call presenter and return status 400', async () => {
     const repo = new ScheduleRepositoryMock()
-    const userId = 3
-    const availabilities = [
-      {
-        startTime: 460,
-        weekDay: 'FRI'
+
+    const scheduleId = "1S-2CIC-D4@2024(SCS)"
+    const dates = {
+      "MON": {
+        notEarlier: 1250,
+        notLater: 560
       },
-      {
-        startTime: 460,
-        endTime: 560,
-        weekDay: 'SAT'
+      "TUE": {
+        notEarlier: 460,
+        notLater: 670
       },
-      {
-        startTime: 570,
-        endTime: 670,
-        weekDay: 'FRI'
-      }
-    ]
+      "WED": {
+        notEarlier: 460,
+        notLater: 670
+      },
+      "THU": {
+        notEarlier: 460,
+        notLater: 1350
+      },
+      "FRI": {
+        notEarlier: 1250,
+        notLater: 1350
+      },
+      "SAT": {
+        notEarlier: 680,
+        notLater: 1240
+      },
+    }
     const httpRequest = new HttpRequest(
       {
-        'userId': userId,
-        'availabilities': availabilities
+        'scheduleId': scheduleId,
+        'dates': dates
       },
       undefined,
       {},
       undefined,
     )
-    const response = await UpdateAvailabilitiesPresenter(httpRequest, repo)
+    const response = await CreatePossibilitiesPresenter(httpRequest, repo)
 
     expect(response?.statusCode).toEqual(400)
-    expect(response?.body).toEqual('Field endTime is missing')
-  })
-  it('Should call presenter and return status 403', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const userId = 1
-    const availabilities = [
-      {
-        startTime: 460,
-        endTime: 560,
-        weekDay: 'FRI'
-      },
-      {
-        startTime: 460,
-        endTime: 560,
-        weekDay: 'SAT'
-      },
-      {
-        startTime: 570,
-        endTime: 670,
-        weekDay: 'FRI'
-      }
-    ]
-    const httpRequest = new HttpRequest(
-      {
-        'userId': userId,
-        'availabilities': availabilities
-      },
-      undefined,
-      {},
-      undefined,
-    )
-    const response = await UpdateAvailabilitiesPresenter(httpRequest, repo)
-
-    expect(response?.statusCode).toEqual(403)
-    expect(response?.body).toEqual('Invalid role. Expected PROFESSOR or COORDINATOR but received STAFF')
+    expect(response?.body).toEqual('Invalid time: notEarlier "1250" must be earlier than notLater "560"')
   })
   it('Should call presenter and return status 404', async () => {
     const repo = new ScheduleRepositoryMock()
-    const userId = repo.getUsersLength() + 1
-    const availabilities = [
-      {
-        startTime: 460,
-        endTime: 560,
-        weekDay: 'FRI'
+
+    const scheduleId = "1S-1CIC-D6@2024(SCS)"
+    const dates = {
+      "MON": {
+        notEarlier: 460,
+        notLater: 560
       },
-      {
-        startTime: 460,
-        endTime: 560,
-        weekDay: 'SAT'
+      "TUE": {
+        notEarlier: 460,
+        notLater: 670
       },
-      {
-        startTime: 570,
-        endTime: 670,
-        weekDay: 'FRI'
-      }
-    ]
+      "WED": {
+        notEarlier: 460,
+        notLater: 670
+      },
+      "THU": {
+        notEarlier: 460,
+        notLater: 1350
+      },
+      "FRI": {
+        notEarlier: 1250,
+        notLater: 1350
+      },
+      "SAT": {
+        notEarlier: 680,
+        notLater: 1240
+      },
+    }
     const httpRequest = new HttpRequest(
       {
-        'userId': userId,
-        'availabilities': availabilities
+        'scheduleId': scheduleId,
+        'dates': dates
       },
       undefined,
       {},
       undefined,
     )
-    const response = await UpdateAvailabilitiesPresenter(httpRequest, repo)
+    const response = await CreatePossibilitiesPresenter(httpRequest, repo)
 
     expect(response?.statusCode).toEqual(404)
-    expect(response?.body).toEqual('No items found for userId')
+    expect(response?.body).toEqual('No items found for scheduleId')
   })
+  
 })
