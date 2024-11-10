@@ -11,7 +11,7 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     const professors = await usecase.execute()
     
     // Validate that three professors are returned
-    expect(professors.length).toEqual(4)
+    expect(professors.length).toEqual(5)
     
     // Validate first professor's data
     const firstProfessor = professors[0]
@@ -88,12 +88,12 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
 
     // Validate fourth professor's data
     const fourthProfessor = professors[3]
-    expect(fourthProfessor.professor.props.id).toEqual(2)
-    expect(fourthProfessor.professor.props.name).toEqual("user2")
-    expect(fourthProfessor.professor.props.email).toEqual("user2@gmail.com")
-    expect(fourthProfessor.professor.props.role).toEqual("COORDINATOR")
-    expect(fourthProfessor.professor.props.RA).toEqual("22.00000-2")
-    expect(fourthProfessor.professor.props.password).toEqual("Password2@")
+    expect(fourthProfessor.professor.props.id).toEqual(7)
+    expect(fourthProfessor.professor.props.name).toEqual("JOAO VITOR CHOUERI BRANCO")
+    expect(fourthProfessor.professor.props.email).toEqual("21.01075-7@maua.br")
+    expect(fourthProfessor.professor.props.role).toEqual("PROFESSOR")
+    expect(fourthProfessor.professor.props.RA).toEqual("21.01075-7")
+    expect(fourthProfessor.professor.props.password).toEqual("Password7@")
 
     // Validate the availabilities of the fourth professor
     const fourthProfessorAvailabilities = fourthProfessor.availabilities
@@ -102,5 +102,15 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     // Validate the suitabilities of the fourth professor
     const fourthProfessorSuitabilities = fourthProfessor.suitabilities
     expect(fourthProfessorSuitabilities.length).toEqual(0)
+
+    // Validate fifth professor's data
+    const fifthProfessor = professors[4]
+    expect(fifthProfessor.professor.props.id).toEqual(2)
+    expect(fifthProfessor.professor.props.name).toEqual("Pedro Henrique de Sousa Matumoto")
+    expect(fifthProfessor.professor.props.email).toEqual("pedromatumoto@gmail.com")
+    expect(fifthProfessor.professor.props.role).toEqual("COORDINATOR")
+    expect(fifthProfessor.professor.props.RA).toEqual("21.00784-5")
+    expect(fifthProfessor.professor.props.password).toEqual("Password2@")
+
   })
 })
