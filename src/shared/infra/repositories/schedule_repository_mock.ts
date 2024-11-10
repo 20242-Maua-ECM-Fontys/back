@@ -35,10 +35,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
     new User({
       id: 2,
-      name: 'user2',
-      email: 'user2@gmail.com',
+      name: 'Pedro Henrique de Sousa Matumoto',
+      email: 'pedromatumoto@gmail.com',
       role: ROLE.COORDINATOR,
-      RA: '22.00000-2',
+      RA: '21.00784-5',
       password: 'Password2@',
     }),
     new User({
@@ -68,6 +68,22 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       RA: '55.00000-5',
       password: 'Password5@',
     }),
+    new User({
+      id: 6,
+      name: 'PEDRO HENRIQUE DE SOUSA MATUMOTO',
+      email: '21.00784-5@maua.br',
+      role: ROLE.STAFF,
+      RA: '21.00784-5',
+      password: 'Password6@',
+    }),
+    new User({
+      id: 7,
+      name: 'JOAO VITOR CHOUERI BRANCO',
+      email: '21.01075-7@maua.br',
+      role: ROLE.PROFESSOR,
+      RA: '21.01075-7',
+      password: 'Password7@',
+    })
   ]
   // #region classes
   private classes: Class[] = [
@@ -77,6 +93,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.THEORY,
       subjectCode: 'ECM256',
+      scheduleId: '1S-2CIC-D4@2024(SCS)',
+    }),
+    new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ab9aa',
+      name: 'Linguagens de Programacao III',
+      modality: MODALITY.IN_PERSON,
+      classType: CLASSTYPE.THEORY,
+      subjectCode: 'ECM111',
       scheduleId: '1S-2CIC-D4@2024(SCS)',
     }),
     new Class({
@@ -697,6 +721,21 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   async getAllSubjects(): Promise<Subject[]> {
     return this.subjects
   }
+  async getProfessorsByClass(classId: string): Promise<User[]> {
+
+    const foundClass = this.getClass(classId);
+
+  
+    const subjectCode = (await foundClass).subjectCode;
+
+
+    const suitableUsers = this.suitabilities
+      .filter(suitability => suitability.codeSubject === subjectCode)
+      .map(suitability => this.users.find(user => user.id === suitability.userId))
+      .filter((user): user is User => user !== undefined); 
+
+    return suitableUsers;
+  }
 
   async createSubject(subject: Subject): Promise<Subject> {
     const exists = this.subjects.find((s) => s.code === subject.code)
@@ -730,8 +769,8 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     const user = await this.getUser(suitability.userId)
 
     // Check if the user is a professor
-    if (user.role !== ROLE.PROFESSOR) {
-      throw new ViolateDataRule('user must be a professor')
+    if (user.role === ROLE.STAFF) {
+      throw new ViolateDataRule('user must be a professor or coordinator')
     }
 
     // Check if the subject exists
@@ -740,6 +779,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     this.suitabilities.push(suitability)
 
     return Promise.resolve(suitability)
+  }
+
+  async deleteSuitabilityByUserId(userId: number): Promise<Suitability[]> {
+    const suitabilities = this.suitabilities.filter((s) => s.userId !== userId)
+    this.suitabilities = suitabilities
+    return suitabilities
   }
 
   async getSuitabilitiesByUserId(userId: number): Promise<Suitability[]> {

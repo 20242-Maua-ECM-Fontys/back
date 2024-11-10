@@ -16,8 +16,8 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
       "professors": {
         "2": {
           "availabilities": [],
-          "email": "user2@gmail.com",
-          "name": "user2",
+          "email": "pedromatumoto@gmail.com",
+          "name": "Pedro Henrique de Sousa Matumoto",
           "suitabilities": [],
         },
         "3": {
@@ -142,6 +142,12 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
           "availabilities": [],
           "email": "user5@gmail.com",
           "name": "user5",
+          "suitabilities": [],
+        },
+        "7": {
+          "availabilities": [],
+          "email": "21.01075-7@maua.br",
+          "name": "JOAO VITOR CHOUERI BRANCO",
           "suitabilities": [],
         },
       },

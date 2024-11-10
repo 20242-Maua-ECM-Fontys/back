@@ -44,7 +44,7 @@ describe('Assert Login User viewmodel is correct', () => {
   it('Should correctly transform a COORDINATOR user to viewmodel', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new LoginUserUsecase(repo)
-    const user = await usecase.execute('user2@gmail.com','Password2@')
+    const user = await usecase.execute('pedromatumoto@gmail.com','Password2@')
     const userViewmodel = new LoginUserViewmodel(user.props).toJSON()
 
     expect(userViewmodel).toEqual({

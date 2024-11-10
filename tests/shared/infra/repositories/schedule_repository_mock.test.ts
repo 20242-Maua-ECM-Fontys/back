@@ -23,7 +23,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     const length = repo.getUsersLength()
 
-    expect(length).toEqual(5)
+    expect(length).toEqual(7)
   })
   it('Should get user correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -46,7 +46,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     const users = await repo.getAllUsers()
 
-    expect(users.length).toEqual(5)
+    expect(users.length).toEqual(7)
   })
   it('Should create user correctly', async () => {
     const user = new User({
@@ -84,8 +84,8 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const staff = await repo.getUsersByRole(ROLE.STAFF)
 
     expect(coordinators.length).toEqual(1)
-    expect(professors.length).toEqual(3)
-    expect(staff.length).toEqual(1)
+    expect(professors.length).toEqual(4)
+    expect(staff.length).toEqual(2)
 
     for (const user of coordinators) {
       expect(user.role).toEqual(ROLE.COORDINATOR)
@@ -199,7 +199,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     const repo = new ScheduleRepositoryMock()
     const length = repo.getClassesLength()
 
-    expect(length).toEqual(4)
+    expect(length).toEqual(5)
   })
   it('Should get class correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -224,7 +224,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     const repo = new ScheduleRepositoryMock()
     const classes = await repo.getAllClasss()
 
-    expect(classes.length).toEqual(4)
+    expect(classes.length).toEqual(5)
   })
 
   it('Should create class correctly', async () => {
@@ -331,7 +331,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     await expect(
       repo.createSuitability(new Suitability({ userId, codeSubject })),
     ).rejects.toThrowError(
-      'The data rule "user must be a professor" was violated',
+      'The data rule "user must be a professor or coordinator" was violated',
     )
     const newLength = repo.getSuitabilitiesLength()
 
@@ -363,6 +363,15 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     const suitabilities = await repo.getSuitabilitiesByUserId(5)
 
     expect(suitabilities.length).toEqual(0)
+  })
+  it('Should delete suitabilities by userId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const userId = 4
+    const lastLength = repo.getSuitabilitiesLength()
+    await repo.deleteSuitabilityByUserId(userId)
+    const newLength = repo.getSuitabilitiesLength()
+
+    expect(newLength).toEqual(lastLength - 2)
   })
 })
 
@@ -897,4 +906,31 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
     )
     expect(availabilityAfter.isTaken).toEqual(false)
   })
+  it('should return professors for a valid class with suitable users', async () => {
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ac924';
+    const repo = new ScheduleRepositoryMock()
+    const professors = repo.getProfessorsByClass(classId);
+
+    expect((await professors).length).toBe(2);
+   
+    
+  });
+
+  it('should return professors for a valid class with no suitable users', async () => {
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab9aa';
+    const repo = new ScheduleRepositoryMock()
+    const professors = repo.getProfessorsByClass(classId);
+
+    expect((await professors).length).toBe(0);
+  });
+  it('should return error for a invalid classid with no suitable users', async () => {
+    const classId = '0a8c5357-1f07-5b24-9845-9318c4ab9aa';
+    const repo = new ScheduleRepositoryMock()
+    const professors = repo.getProfessorsByClass(classId);
+
+    await expect(professors).rejects.toThrowError(
+      'No items found for classId',
+    )
+  });
+ 
 })

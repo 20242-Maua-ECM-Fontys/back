@@ -10,9 +10,11 @@ import {
   OK,
   NotFound,
 } from '../../../shared/helpers/external_interfaces/http_codes';
-import { NoItemsFound } from '../../../shared/helpers/errors/usecase_errors';
+import { NoItemsFound } from '../../../shared/helpers/errors/repo_error';
 import { User } from '../../../shared/domain/entities/user';
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
+import { GetRoleByEmailViewModel } from './get_role_by_email_viewmodel';
+
 export class GetRoleByEmailController {
   constructor(private usecase: GetRoleByEmailUsecase) {}
 
@@ -31,8 +33,9 @@ export class GetRoleByEmailController {
         return new BadRequest('Invalid email format');
       }
 
-      const role = await this.usecase.execute(email);
-      return new OK({ role });
+      const userData = await this.usecase.execute(email);
+      const viewModel = new GetRoleByEmailViewModel(userData);
+      return new OK(viewModel.toJSON());
     } catch (error: unknown) {
       if (error instanceof NoItemsFound) {
         return new NotFound(error.message);

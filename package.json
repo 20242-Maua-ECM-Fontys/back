@@ -5,8 +5,10 @@
   "license": "MIT",
   "scripts": {
     "server": "ts-node src/routes/app.ts",
+    "app": "dist/src/routes/app.js",
     "build": "tsc",
     "build:watch": "tsc -w",
+    "heroku-postbuild": "npm run build",
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --fix --ext .ts src",
     "test": "vitest --no-watch",
@@ -14,8 +16,6 @@
   },
   "dependencies": {
     "@types/uuid": "^10.0.0",
-    "aws-sdk": "^2.1506.0",
-    "aws-sdk-js-codemod": "^0.28.2",
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.3.1",
