@@ -9,6 +9,7 @@ import { UploadCSVPresenter } from '../modules/upload_csv/app/upload_csv_present
 import { GetAllSubjectsPresenter } from '../modules/get_all_subjects/app/get_all_subjects_presenter'
 import { GetAllSchedulesPresenter } from '../modules/get_all_schedules/app/get_all_schedules_presenter'
 import { GetSuitabilitiesByProfessorPresenter } from '../modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_presenter'
+import { CreatePossibilitiesPresenter } from '../modules/create_possibilities/app/create_possibilities_presenter'
 
 const upload = multer()
 const routes = express.Router()
@@ -65,6 +66,15 @@ routes.get(
       httpRequest,
       repo,
     )
+    res.status(response.statusCode).json(response.body)
+  },
+)
+
+routes.post(
+  '/create_possibilities',
+  async (req: Request, res: Response) => {
+    const httpRequest: HttpRequest = new HttpRequest(req.body, {}, {}, req.file)
+    const response = await CreatePossibilitiesPresenter(httpRequest, repo)
     res.status(response.statusCode).json(response.body)
   },
 )
