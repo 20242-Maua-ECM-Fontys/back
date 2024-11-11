@@ -50,8 +50,8 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
 
     const response = await controller.execute(request);
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.data).toEqual({ "professors": { },
+    expect(response?.statusCode).toEqual(200);
+    expect(response?.data).toEqual({ "professors": { },
         "message": "professors by class returned",
     });
   });
@@ -67,8 +67,8 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
     const response = await controller.execute(request);
 
 
-    expect(response.data.body).toBe("Field classId is not valid");
-    expect(response.statusCode).toEqual(400);
+    expect(response?.data.body).toBe("Field classId is not valid");
+    expect(response?.statusCode).toEqual(400);
   });
 
   it('should return a 400 error if classId is missing', async () => {
@@ -82,8 +82,8 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
 
     const response = await controller.execute(request);
 
-    expect(response.statusCode).toEqual(400);
-    expect(response.data.body).toBe('Field classId is missing');
+    expect(response?.statusCode).toEqual(400);
+    expect(response?.data.body).toBe('Field classId is missing');
   });
 
   it('should return a 400 error if classId is not a string', async () => {
@@ -97,8 +97,8 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
     const response = await controller.execute(request);
 
   
-    expect(response.statusCode).toEqual(400);
-    expect(response.data.body).toBe("Field classId is not valid");
+    expect(response?.statusCode).toEqual(400);
+    expect(response?.data.body).toBe("Field classId is not valid");
 
   });
   it('should return a 400 error if classId is not a valid UUID', async () => {
@@ -112,7 +112,7 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
 
     const response = await controller.execute(request);
 
-    expect(response.statusCode).toEqual(400);
-    expect(response.data.body).toBe('Field classId is not valid');
+    expect(response?.statusCode).toEqual(400);
+    expect(response?.data.body).toBe('Field classId is not valid');
   });
 });
