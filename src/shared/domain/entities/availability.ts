@@ -82,14 +82,17 @@ export class Availability {
     startTime: MAUA_START_TIME,
     endTime: MAUA_END_TIME,
   ): string {
+    if (startTime == null || startTime == undefined) {
+      return 'startTime'
+    }
     if (!Object.values(MAUA_START_TIME).includes(startTime)) {
       return 'startTime'
     }
-    if (!Object.values(MAUA_END_TIME).includes(endTime)) {
+    if (endTime == null || endTime == undefined) {
       return 'endTime'
     }
-    if (startTime >= endTime) {
-      return 'startTime and endTime'
+    if (!Object.values(MAUA_END_TIME).includes(endTime)) {
+      return 'endTime'
     }
     if (!(MAUA_START_TIME[startTime] === MAUA_END_TIME[endTime])) {
       return 'startTime and endTime'
