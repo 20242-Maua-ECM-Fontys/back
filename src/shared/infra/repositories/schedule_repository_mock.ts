@@ -817,7 +817,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return schedule
   }
 
-  async getScheduleByCoordinator(userId: number): Promise<Schedule[]> {
+  async getSchedulesByCoordinator(userId: number): Promise<Schedule[]> {
     const schedules = this.schedules.filter((s) => s.userId === userId)
     return schedules
   }

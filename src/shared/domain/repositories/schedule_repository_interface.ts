@@ -46,7 +46,7 @@ export interface IScheduleRepository {
   getSchedule(id: string, groupNumber: number): Promise<Schedule>
   getAllSchedules(): Promise<Schedule[]>
   createSchedule(schedule: Schedule): Promise<Schedule>
-  getScheduleByCoordinator(userId: number): Promise<Schedule[]>
+  getSchedulesByCoordinator(userId: number): Promise<Schedule[]>
 
   // Possibility methods
   getPossibilitiesLength(): number
