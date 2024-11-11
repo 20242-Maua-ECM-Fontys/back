@@ -11,6 +11,7 @@ import { GetAllSchedulesPresenter } from '../modules/get_all_schedules/app/get_a
 import { GetSuitabilitiesByProfessorPresenter } from '../modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_presenter'
 import { GetProfessorsByClassPresenter } from '../modules/get_professors_by_class/app/get_professors_by_class_presenter' // Import adicionado
 import { UpdateSuitabilitiesPresenter } from '../modules/update_suitabilities/app/update_suitabilities_presenter'
+import { GetSchedulesByCoordinatorPresenter } from '@/modules/get_schedules_by_coordinator/app/get_schedules_by_coordinator_presenter'
 
 const upload = multer()
 const routes = express.Router()
@@ -79,8 +80,22 @@ routes.get(
 routes.get('/get_professors_by_class', async (req: Request, res: Response) => {
   const { classId } = req.query
 
-  const httpRequest: HttpRequest = new HttpRequest({ classId }, {}, {}, req.file)
+  const httpRequest: HttpRequest = new HttpRequest(
+    { classId },
+    {},
+    {},
+    req.file,
+  )
   const response = await GetProfessorsByClassPresenter(httpRequest, repo)
   res.status(response.statusCode).json(response.body)
 })
+
+routes.get(
+  '/get_schedules_by_coordinator',
+  async (req: Request, res: Response) => {
+    const httpRequest: HttpRequest = new HttpRequest(req.body, {}, {}, req.file)
+    const response = await GetSchedulesByCoordinatorPresenter(httpRequest, repo)
+    res.status(response.statusCode).json(response.body)
+  },
+)
 export default routes
