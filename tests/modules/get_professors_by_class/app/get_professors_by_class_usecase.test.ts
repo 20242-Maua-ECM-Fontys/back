@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { GetProfessorsByClassUsecase } from '../../../../src/modules/get_professors_by_class/app/get_professors_by_class_usecase';
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock';
 import { NoItemsFound } from '../../../../src/shared/helpers/errors/repo_error';
+import { EntityError } from '../../../../src/shared/helpers/errors/domain_errors';
 
 describe('GetProfessorsByClassUsecase', () => {
   let usecase: GetProfessorsByClassUsecase;
@@ -44,9 +45,12 @@ describe('GetProfessorsByClassUsecase', () => {
     expect(result.length).toBe(0);
   });
 
-  it('should throw a NoItemsFound error if classId is invalid', async () => {
+  it('should throw a EntityError error if classId is invalid', async () => {
     const invalidClassId = 'invalid-class-id';
 
-    await expect(usecase.execute(invalidClassId)).rejects.toThrow(NoItemsFound);
+    await expect(usecase.execute(invalidClassId))
+    .rejects
+    .toThrow(new EntityError('classId'));
+    
   });
 });
