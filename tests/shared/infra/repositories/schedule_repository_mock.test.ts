@@ -495,7 +495,7 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
 
   it('Should get schedules by coordinator correctly', async () => {
     const repo = new ScheduleRepositoryMock()
-    const schedules = await repo.getScheduleByCoordinator(2)
+    const schedules = await repo.getSchedulesByCoordinator(2)
 
     expect(schedules.length).toEqual(4)
   })
