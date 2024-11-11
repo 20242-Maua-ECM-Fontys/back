@@ -12,6 +12,7 @@ import { GetProfessorAvailabilityPresenter } from '../modules/get_all_professor_
 import { GetSuitabilitiesByProfessorPresenter } from '../modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_presenter'
 import { GetProfessorsByClassPresenter } from '../modules/get_professors_by_class/app/get_professors_by_class_presenter'
 import { UpdateSuitabilitiesPresenter } from '../modules/update_suitabilities/app/update_suitabilities_presenter'
+import { CreatePossibilitiesPresenter } from '../modules/create_possibilities/app/create_possibilities_presenter'
 const upload = multer()
 const routes = express.Router()
 
@@ -93,6 +94,15 @@ routes.get(
     const response = await GetProfessorAvailabilityPresenter(httpRequest, repo);
     res.status(response.statusCode).json(response.body);
   }
+)
+
+routes.post(
+  '/create_possibilities',
+  async (req: Request, res: Response) => {
+    const httpRequest: HttpRequest = new HttpRequest(req.body, {}, {}, req.file)
+    const response = await CreatePossibilitiesPresenter(httpRequest, repo)
+    res.status(response.statusCode).json(response.body)
+  },
 )
 
 export default routes

@@ -36,3 +36,9 @@ export class ForbiddenAction extends BaseError {
     super(`The action is forbidden for this ${message}`)
   }
 }
+
+export class InvalidMauaTime extends BaseError {
+  constructor(message: string) {
+    super(`Invalid time: ${message}`)
+  }
+}
