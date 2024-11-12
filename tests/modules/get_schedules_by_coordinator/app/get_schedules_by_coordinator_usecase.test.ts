@@ -10,6 +10,16 @@ describe('GetSchedulesByCoordinatorUsecase tests', () => {
     const usecase = new GetSchedulesByCoordinatorUsecase(repo)
     const response = await usecase.execute(2)
     expect(response.length).toEqual(4)
+    expect(response[0].schedule.scheduleId).toEqual('2S-4CM-D5@2024(SCS)')
+    expect(response[0].classes.length).toEqual(2)
+    expect(response[0].possibilities.length).toEqual(18)
+  })
+
+  it('Should return an empty list if user has no schedules', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new GetSchedulesByCoordinatorUsecase(repo)
+    const response = await usecase.execute(6)
+    expect(response.length).toEqual(0)
   })
 
   it('Should throw an error if coordinatorId is invalid', async () => {

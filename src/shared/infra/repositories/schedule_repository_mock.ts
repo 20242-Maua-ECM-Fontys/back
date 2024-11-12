@@ -63,6 +63,13 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       role: ROLE.PROFESSOR,
       RA: '55.00000-5',
     }),
+    new User({
+      id: 6,
+      name: 'Keith Thompson',
+      email: 'udibon@tisim.sy',
+      role: ROLE.COORDINATOR,
+      RA: '66.00000-6',
+    }),
   ]
   // #region classes
   private classes: Class[] = [
