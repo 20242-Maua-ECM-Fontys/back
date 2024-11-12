@@ -27,7 +27,7 @@ export class GetSchedulesByCoordinatorUsecase {
       throw new InvalidRole('COORDINATOR', user.role)
     }
 
-    const schedules = await this.repo.getSchedulesByCoordinator(coordinatorId)
+    const schedules = await this.repo.getSchedulesByUserId(coordinatorId)
     const completeSchedules: completeSchedule[] = []
 
     //for each schedule, should get the classes and possibilities and create a completeSchedule object
