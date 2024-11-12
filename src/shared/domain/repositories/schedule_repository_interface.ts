@@ -20,7 +20,7 @@ export interface IScheduleRepository {
   loginUser(email: string, password: string): Promise<User | null>
   getUserByEmail(email: string): Promise<User>
   getRoleByEmail(email: string): Promise<ROLE | null>
- getProfessorsByClass(classId: string): Promise<User[]>
+  getProfessorsByClass(classId: string): Promise<User[]>
   // Class methods
   getClassesLength(): number
   getClass(id: string): Promise<Class>
