@@ -31,7 +31,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       email: 'user1@gmail.com',
       role: ROLE.STAFF,
       RA: '21.00000-1',
-      password: 'Password1@',
     }),
     new User({
       id: 2,
@@ -39,7 +38,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       email: 'user2@gmail.com',
       role: ROLE.COORDINATOR,
       RA: '22.00000-2',
-      password: 'Password2@',
     }),
     new User({
       // professor with 0 suitability
@@ -48,7 +46,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       email: 'user3@gmail.com',
       role: ROLE.PROFESSOR,
       RA: '33.00000-3',
-      password: 'Password3@',
     }),
     new User({
       // professor with 1 suitability
@@ -57,7 +54,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       email: 'user4@gmail.com',
       role: ROLE.PROFESSOR,
       RA: '44.00000-4',
-      password: 'Password4@',
     }),
     new User({
       // professor with 2 suitability
@@ -66,7 +62,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       email: 'user5@gmail.com',
       role: ROLE.PROFESSOR,
       RA: '55.00000-5',
-      password: 'Password5@',
     }),
   ]
   // #region classes
@@ -649,13 +644,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }
     this.users = this.users.filter((user) => user.id !== id)
     return user
-  }
-
-  async loginUser(email: string, password: string): Promise<User | null> {
-    const user = this.users.find(
-      (user) => user.email === email && user.password === password,
-    )
-    return user || null
   }
 
   async getUsersByRole(role: ROLE): Promise<User[]> {

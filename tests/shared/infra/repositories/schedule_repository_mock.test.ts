@@ -34,7 +34,6 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     expect(user?.email).toEqual('user1@gmail.com')
     expect(user?.role).toEqual(ROLE.STAFF)
     expect(user?.RA).toEqual('21.00000-1')
-    expect(user?.password).toEqual('Password1@')
   })
   it('Should get user wrongly: userId does not exists', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -55,7 +54,6 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
       email: 'usuario10@gmail.com',
       role: ROLE.PROFESSOR,
       RA: '10.00000-1',
-      password: 'Password10@',
     })
 
     const repo = new ScheduleRepositoryMock()
@@ -72,7 +70,6 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
       email: 'ini@vifod.nc',
       role: ROLE.STAFF,
       RA: '21.00000-1',
-      password: 'Password1@',
     })
     const repo = new ScheduleRepositoryMock()
     expect(repo.createUser(user)).rejects.toThrowError('userId already exists')

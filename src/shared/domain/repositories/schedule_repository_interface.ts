@@ -17,7 +17,6 @@ export interface IScheduleRepository {
   createUser(user: User): Promise<User>
   updateUser(id: number, newName: string, newEmail: string): Promise<User>
   deleteUser(id: number): Promise<User>
-  loginUser(email: string, password: string): Promise<User | null>
   getUserByEmail(email: string): Promise<User>
   getRoleByEmail(email: string): Promise<ROLE | null>
   getProfessorsByClass(classId: string): Promise<User[]>

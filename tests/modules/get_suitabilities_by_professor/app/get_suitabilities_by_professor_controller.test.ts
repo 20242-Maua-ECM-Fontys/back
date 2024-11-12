@@ -39,7 +39,6 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
       userId: '4',
     })
     const response = await controller.execute(request)
-    console.log(response)
 
     expect(response?.statusCode).toBe(400)
     expect(response?.body).toEqual(
