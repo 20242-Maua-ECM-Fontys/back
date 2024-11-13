@@ -26,6 +26,9 @@ export interface IScheduleRepository {
   getAllClasss(): Promise<Class[]>
   getClassesByScheduleId(scheduleId: string): Promise<Class[]>
   createClass(newClass: Class): Promise<Class>
+  getFullfilledDataByClassId(
+    classId: string,
+  ): Promise<{ professorId: number; possibilityId: string } | null>
 
   // Subject methods
   getSubjectsLength(): number

@@ -653,6 +653,21 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return user
   }
 
+  async getProfessorsByClass(classId: string): Promise<User[]> {
+    const foundClass = this.getClass(classId)
+
+    const subjectCode = (await foundClass).subjectCode
+
+    const suitableUsers = this.suitabilities
+      .filter((suitability) => suitability.codeSubject === subjectCode)
+      .map((suitability) =>
+        this.users.find((user) => user.id === suitability.userId),
+      )
+      .filter((user): user is User => user !== undefined)
+
+    return suitableUsers
+  }
+
   async getUsersByRole(role: ROLE): Promise<User[]> {
     const users = this.users.filter((user) => user.role === role)
     return users
@@ -688,6 +703,26 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return newClass
   }
 
+  async getFullfilledDataByClassId(
+    classId: string,
+  ): Promise<{ professorId: number; possibilityId: string } | null> {
+    // Encontrar o item AvFullfilled relacionado à classe
+    const avFullfilled = this.avsFullfilled.find((av) => av.classId === classId)
+
+    if (!avFullfilled) {
+      // Retorna null se não houver dados completos para essa classe
+      return null
+    }
+
+    // Obter a disponibilidade associada para obter o professorId
+    const availability = await this.getAvailability(avFullfilled.availabilityId)
+
+    return {
+      professorId: availability.userId,
+      possibilityId: avFullfilled.possibilityId,
+    }
+  }
+
   // #region Subject methods
   getSubjectsLength(): number {
     return this.subjects.length
@@ -703,20 +738,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
   async getAllSubjects(): Promise<Subject[]> {
     return this.subjects
-  }
-  async getProfessorsByClass(classId: string): Promise<User[]> {
-    const foundClass = this.getClass(classId)
-
-    const subjectCode = (await foundClass).subjectCode
-
-    const suitableUsers = this.suitabilities
-      .filter((suitability) => suitability.codeSubject === subjectCode)
-      .map((suitability) =>
-        this.users.find((user) => user.id === suitability.userId),
-      )
-      .filter((user): user is User => user !== undefined)
-
-    return suitableUsers
   }
 
   async createSubject(subject: Subject): Promise<Subject> {

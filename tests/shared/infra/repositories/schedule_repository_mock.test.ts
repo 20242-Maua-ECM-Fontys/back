@@ -268,6 +268,26 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
 
     expect(classes.length).toEqual(2)
   })
+
+  it('Should return fullfilled data correctly for a class with associated data', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ac924' // Class with AvFullfilled data
+    const fullfilledData = await repo.getFullfilledDataByClassId(classId)
+
+    expect(fullfilledData).not.toBeNull()
+    expect(fullfilledData?.professorId).toBe(4) // Expected professorId from AvFullfilled data
+    expect(fullfilledData?.possibilityId).toBe(
+      '113e4567-e89b-12d3-a456-426614174000',
+    ) // Expected possibilityId from AvFullfilled data
+  })
+
+  it('Should return null for a class with no associated fullfilled data', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab923' // Class without AvFullfilled data
+    const fullfilledData = await repo.getFullfilledDataByClassId(classId)
+
+    expect(fullfilledData).toBeNull()
+  })
 })
 
 // #region Suitability methods
