@@ -23,7 +23,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     const length = repo.getUsersLength()
 
-    expect(length).toEqual(5)
+    expect(length).toEqual(7)
   })
   it('Should get user correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -45,7 +45,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     const users = await repo.getAllUsers()
 
-    expect(users.length).toEqual(5)
+    expect(users.length).toEqual(7)
   })
   it('Should create user correctly', async () => {
     const user = new User({
@@ -80,8 +80,8 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const professors = await repo.getUsersByRole(ROLE.PROFESSOR)
     const staff = await repo.getUsersByRole(ROLE.STAFF)
 
-    expect(coordinators.length).toEqual(1)
-    expect(professors.length).toEqual(3)
+    expect(coordinators.length).toEqual(2)
+    expect(professors.length).toEqual(4)
     expect(staff.length).toEqual(1)
 
     for (const user of coordinators) {
@@ -296,13 +296,13 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     const repo = new ScheduleRepositoryMock()
     const length = repo.getSuitabilitiesLength()
 
-    expect(length).toEqual(3)
+    expect(length).toEqual(5)
   })
   it('Should get all suitabilities correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const users = await repo.getAllSuitabilities()
 
-    expect(users.length).toEqual(3)
+    expect(users.length).toEqual(5)
   })
   it('Should create suitability correctly', async () => {
     const userId = 5
@@ -617,7 +617,7 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
     const repo = new ScheduleRepositoryMock()
     const length = repo.getAvailabilitiesLength()
 
-    expect(length).toEqual(18)
+    expect(length).toEqual(20)
   })
   it('Should get availability correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -640,7 +640,7 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
     const repo = new ScheduleRepositoryMock()
     const availabilities = await repo.getAllAvailabilities()
 
-    expect(availabilities.length).toEqual(18)
+    expect(availabilities.length).toEqual(20)
   })
   it('Should get availabilities by userId correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -759,13 +759,13 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
     const repo = new ScheduleRepositoryMock()
     const length = repo.getAvsFullfilledLength()
 
-    expect(length).toEqual(2)
+    expect(length).toEqual(4)
   })
   it('Should get all AvFullfilled correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const avFullfilled = await repo.getAllAvsFullfilled()
 
-    expect(avFullfilled.length).toEqual(2)
+    expect(avFullfilled.length).toEqual(4)
   })
   it('Should create AvFullfilled correctly', async () => {
     /*
@@ -951,7 +951,7 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
     const repo = new ScheduleRepositoryMock()
     const professors = repo.getProfessorsByClass(classId)
 
-    expect((await professors).length).toBe(2)
+    expect((await professors).length).toBe(3)
   })
 
   it('should return professors for a valid class with no suitable users', async () => {

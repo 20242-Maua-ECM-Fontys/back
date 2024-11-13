@@ -74,7 +74,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       id: 7,
       name: 'Austin Green',
       email: 'viraw@mon.cm',
-      role: ROLE.COORDINATOR,
+      role: ROLE.PROFESSOR,
       RA: '66.00000-6',
     }),
   ]
