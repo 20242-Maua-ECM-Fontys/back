@@ -19,4 +19,31 @@ describe('Tests for GetSchedulesByCoordinatorPresenter', () => {
     expect(response?.statusCode).toEqual(200)
     expect(response?.body.message).toEqual('schedules by coordinator returned')
   })
+
+  it('Should call presenter and return status 400', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    const event = new HttpRequest(undefined, undefined, {}, undefined)
+
+    const response = await GetSchedulesByCoordinatorPresenter(event, repo)
+
+    expect(response?.statusCode).toEqual(400)
+    expect(response?.body).toEqual('Field userId is missing')
+  })
+
+  it('Should call presenter and return status 404', async () => {
+    const repo = new ScheduleRepositoryMock()
+
+    const event = new HttpRequest(
+      undefined,
+      undefined,
+      { userId: 200 },
+      undefined,
+    )
+
+    const response = await GetSchedulesByCoordinatorPresenter(event, repo)
+
+    expect(response?.statusCode).toEqual(404)
+    expect(response?.body).toEqual('No items found for userId')
+  })
 })
