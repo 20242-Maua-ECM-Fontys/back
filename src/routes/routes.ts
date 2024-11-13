@@ -89,13 +89,21 @@ routes.get('/get_professors_by_class', async (req: Request, res: Response) => {
   const response = await GetProfessorsByClassPresenter(httpRequest, repo)
   res.status(response.statusCode).json(response.body)
 })
-
+// should get the user id on the query_params
 routes.get(
   '/get_schedules_by_coordinator',
   async (req: Request, res: Response) => {
-    const httpRequest: HttpRequest = new HttpRequest(req.body, {}, {}, req.file)
+    const { userId } = req.query
+
+    const httpRequest: HttpRequest = new HttpRequest(
+      { userId },
+      {},
+      {},
+      req.file,
+    )
     const response = await GetSchedulesByCoordinatorPresenter(httpRequest, repo)
     res.status(response.statusCode).json(response.body)
   },
 )
+
 export default routes
