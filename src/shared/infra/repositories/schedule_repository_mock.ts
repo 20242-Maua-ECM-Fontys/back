@@ -40,7 +40,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       RA: '22.00000-2',
     }),
     new User({
-      // professor with 0 suitability
+      // professor with 1 suitability
       id: 3,
       name: 'user3',
       email: 'user3@gmail.com',
@@ -48,7 +48,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       RA: '33.00000-3',
     }),
     new User({
-      // professor with 1 suitability
+      // professor with 2 suitability
       id: 4,
       name: 'user4',
       email: 'user4@gmail.com',
@@ -56,7 +56,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       RA: '44.00000-4',
     }),
     new User({
-      // professor with 2 suitability
+      // professor with 0 suitability
       id: 5,
       name: 'user5',
       email: 'user5@gmail.com',
@@ -67,6 +67,13 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       id: 6,
       name: 'Keith Thompson',
       email: 'udibon@tisim.sy',
+      role: ROLE.COORDINATOR,
+      RA: '66.00000-6',
+    }),
+    new User({
+      id: 7,
+      name: 'Austin Green',
+      email: 'viraw@mon.cm',
       role: ROLE.COORDINATOR,
       RA: '66.00000-6',
     }),
@@ -140,6 +147,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     new Suitability({
       userId: 4,
       codeSubject: 'ECM256',
+    }),
+    new Suitability({
+      userId: 7,
+      codeSubject: 'ECM256',
+    }),
+    new Suitability({
+      userId: 7,
+      codeSubject: 'EFB207',
     }),
   ]
   // #region schedules
@@ -563,6 +578,23 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       isTaken: false,
       weekDay: WEEK_DAY.MON,
     }),
+    // Professor with userId = 7
+    new Availability({
+      id: '4990da07-f233-5053-8a6f-33bf8aecb4a3',
+      userId: 7,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '262cfbd2-ad3f-5940-839f-7ff1e3d2b7dc',
+      userId: 7,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
   ]
   // #region avFullfilled
   private avsFullfilled: AvFullfilled[] = [
@@ -587,6 +619,17 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000009',
       possibilityId: 'b63e4567-e89b-12d3-a456-426614174001',
       classId: '0a8c5357-1f07-5b24-9845-9318c47ac925',
+    }),
+    // professor with userId=7
+    new AvFullfilled({
+      availabilityId: '4990da07-f233-5053-8a6f-33bf8aecb4a3',
+      possibilityId: '113e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac924',
+    }),
+    new AvFullfilled({
+      availabilityId: '262cfbd2-ad3f-5940-839f-7ff1e3d2b7dc',
+      possibilityId: '123e4567-e89b-12d3-a456-426614174001',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
     }),
   ]
 
