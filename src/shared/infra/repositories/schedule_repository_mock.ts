@@ -761,7 +761,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return newClass
   }
 
-  async getClassesByIds(classesIds: string[]): Promise<Class[]>{
+  async getClassesByIds(classesIds: string[]): Promise<Record<string, Class>> {
     const classes = this.classes.filter((c) => classesIds.includes(c.id))
     
     // check if some class does not exist
@@ -769,7 +769,11 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       throw new NoItemsFound('classId')
     }
 
-    return classes
+    // format the data
+    return classes.reduce<Record<string, Class>>((acc, curr) => {
+      acc[curr.id] = curr;
+      return acc;
+    }, {});
   }
 
   // #region Subject methods
@@ -914,7 +918,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return possibility
   }
 
-  async getPossibilitiesByIds(possibilitiesIds: string[]): Promise<Possibility[]>{
+  async getPossibilitiesByIds(possibilitiesIds: string[]): Promise<Record<string, Possibility>>{
     const possibilities = this.possibilities.filter((p) => possibilitiesIds.includes(p.id))
     
     // check if some possibility does not exist
@@ -922,7 +926,11 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       throw new NoItemsFound('possibilityId')
     }
 
-    return possibilities
+    // format the data
+    return possibilities.reduce<Record<string, Possibility>>((acc, curr) => {
+      acc[curr.id] = curr;
+      return acc;
+    }, {});
   }
   
   // #region Availability methods

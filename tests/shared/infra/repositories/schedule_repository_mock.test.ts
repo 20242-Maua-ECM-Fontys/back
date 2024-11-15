@@ -314,7 +314,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     ]
     const classes = await repo.getClassesByIds(classIds)
 
-    expect(classes.length).toEqual(3)
+    expect(Object.keys(classes).length).toEqual(3)
   })
 
   it('Should getClassesByIds correctly: empty list', async () => {
@@ -322,7 +322,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     const classIds = []
     const classes = await repo.getClassesByIds(classIds)
 
-    expect(classes.length).toEqual(0)
+    expect(Object.keys(classes).length).toEqual(0)
   })
 
   it('Should getClassesByIds wrongly: no items found for certain classId', async () => {
@@ -646,14 +646,14 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
     ]
     const possibilities = await repo.getPossibilitiesByIds(possibilityIds)
 
-    expect(possibilities.length).toEqual(3)
+    expect(Object.keys(possibilities).length).toEqual(3)
   })
   it('Should getPossibilitiesByIds correctly: empty list', async () => {
     const repo = new ScheduleRepositoryMock()
     const possibilityIds = []
     const possibilities = await repo.getPossibilitiesByIds(possibilityIds)
 
-    expect(possibilities.length).toEqual(0)
+    expect(Object.keys(possibilities).length).toEqual(0)
   })
   it('Should getPossibilitiesByIds wrongly: no items found for certain possibilityId', async () => {
     const repo = new ScheduleRepositoryMock()

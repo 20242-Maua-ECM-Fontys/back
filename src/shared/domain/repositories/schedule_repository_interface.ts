@@ -34,7 +34,7 @@ export interface IScheduleRepository {
   getClass(id: string): Promise<Class>
   getAllClasss(): Promise<Class[]>
   createClass(newClass: Class): Promise<Class>
-  getClassesByIds(classesIds: string[]): Promise<Class[]>
+  getClassesByIds(classesIds: string[]): Promise<Record<string, Class>> 
 
   // Subject methods
   getSubjectsLength(): number
@@ -60,7 +60,7 @@ export interface IScheduleRepository {
   getPossibility(id: string): Promise<Possibility>
   getAllPossibilities(): Promise<Possibility[]>
   createPossibility(possibility: Possibility): Promise<Possibility>
-  getPossibilitiesByIds(possibilitiesIds: string[]): Promise<Possibility[]>
+  getPossibilitiesByIds(possibilitiesIds: string[]): Promise<Record<string, Possibility>>
 
   // Availability methods
   getAvailabilitiesLength(): number
