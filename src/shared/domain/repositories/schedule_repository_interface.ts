@@ -21,11 +21,20 @@ export interface IScheduleRepository {
   getUserByEmail(email: string): Promise<User>
   getRoleByEmail(email: string): Promise<ROLE | null>
   getProfessorsByClass(classId: string): Promise<User[]>
+  getUsersWithAvailabilitiesAndSuitabilities(usersIds: number[]): Promise<Record<
+    number, { 
+      user: User; 
+      suitabilities: Suitability[]; 
+      availabilities: Availability[] }
+    >
+  > 
+
   // Class methods
   getClassesLength(): number
   getClass(id: string): Promise<Class>
   getAllClasss(): Promise<Class[]>
   createClass(newClass: Class): Promise<Class>
+  getClassesByIds(classesIds: string[]): Promise<Class[]>
 
   // Subject methods
   getSubjectsLength(): number
@@ -51,6 +60,7 @@ export interface IScheduleRepository {
   getPossibility(id: string): Promise<Possibility>
   getAllPossibilities(): Promise<Possibility[]>
   createPossibility(possibility: Possibility): Promise<Possibility>
+  getPossibilitiesByIds(possibilitiesIds: string[]): Promise<Possibility[]>
 
   // Availability methods
   getAvailabilitiesLength(): number

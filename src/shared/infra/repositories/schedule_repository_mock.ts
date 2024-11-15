@@ -679,6 +679,62 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return users
   }
 
+  async getProfessorsByClass(classId: string): Promise<User[]> {
+
+    const foundClass = this.getClass(classId);
+
+  
+    const subjectCode = (await foundClass).subjectCode;
+
+
+    const suitableUsers = this.suitabilities
+      .filter(suitability => suitability.codeSubject === subjectCode)
+      .map(suitability => this.users.find(user => user.id === suitability.userId))
+      .filter((user): user is User => user !== undefined); 
+
+    return suitableUsers;
+  }
+
+  async getUsersWithAvailabilitiesAndSuitabilities(usersIds: number[]): Promise<Record<
+    number, { 
+      user: User; 
+      suitabilities: Suitability[]; 
+      availabilities: Availability[] }
+    >
+  > {
+    // get list of users
+    const users = this.users.filter((user) => usersIds.includes(user.id))
+
+    // check if some user does not exist
+    if (users.length !== usersIds.length) {
+      throw new NoItemsFound('userId')
+    }
+    
+    // check if those users are not professors or coordinators
+    users.forEach((user) => {
+      if (user.role === ROLE.STAFF) {
+        throw new ViolateDataRule('user must be a professor')
+      }
+    })
+    // get the availabilities and suitabilities for each user
+    const usersWithAvailabilitiesAndSuitabilities = users.map((user) => {
+      const suitabilities = this.suitabilities.filter(
+        (suitability) => suitability.userId === user.id,
+      )
+      const availabilities = this.availabilities.filter(
+        (availability) => availability.userId === user.id,
+      )
+      return { user, suitabilities, availabilities }
+    })
+
+    // format the data
+    return usersWithAvailabilitiesAndSuitabilities.reduce((acc, user) => {
+      acc[user.user.id] = user
+      return acc
+    }, {} as Record<number, { user: User; suitabilities: Suitability[]; availabilities: Availability[] }>)
+
+  }
+
   // #region Class methods
   getClassesLength(): number {
     return this.classes.length
@@ -705,6 +761,17 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return newClass
   }
 
+  async getClassesByIds(classesIds: string[]): Promise<Class[]>{
+    const classes = this.classes.filter((c) => classesIds.includes(c.id))
+    
+    // check if some class does not exist
+    if (classes.length !== classesIds.length) {
+      throw new NoItemsFound('classId')
+    }
+
+    return classes
+  }
+
   // #region Subject methods
   getSubjectsLength(): number {
     return this.subjects.length
@@ -721,21 +788,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   async getAllSubjects(): Promise<Subject[]> {
     return this.subjects
   }
-  async getProfessorsByClass(classId: string): Promise<User[]> {
-
-    const foundClass = this.getClass(classId);
-
   
-    const subjectCode = (await foundClass).subjectCode;
-
-
-    const suitableUsers = this.suitabilities
-      .filter(suitability => suitability.codeSubject === subjectCode)
-      .map(suitability => this.users.find(user => user.id === suitability.userId))
-      .filter((user): user is User => user !== undefined); 
-
-    return suitableUsers;
-  }
 
   async createSubject(subject: Subject): Promise<Subject> {
     const exists = this.subjects.find((s) => s.code === subject.code)
@@ -861,6 +914,17 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return possibility
   }
 
+  async getPossibilitiesByIds(possibilitiesIds: string[]): Promise<Possibility[]>{
+    const possibilities = this.possibilities.filter((p) => possibilitiesIds.includes(p.id))
+    
+    // check if some possibility does not exist
+    if (possibilities.length !== possibilitiesIds.length) {
+      throw new NoItemsFound('possibilityId')
+    }
+
+    return possibilities
+  }
+  
   // #region Availability methods
   getAvailabilitiesLength(): number {
     return this.availabilities.length
