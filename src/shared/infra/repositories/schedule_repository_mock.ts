@@ -885,10 +885,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return possibility
   }
 
-  async getAllPossibilities(): Promise<Possibility[]> {
-    return this.possibilities
-  }
-
   async getPossibilitiesByScheduleId(
     scheduleId: string,
   ): Promise<Possibility[]> {

@@ -50,7 +50,6 @@ export interface IScheduleRepository {
   // Possibility methods
   getPossibilitiesLength(): number
   getPossibility(id: string): Promise<Possibility>
-  getAllPossibilities(): Promise<Possibility[]>
   getPossibilitiesByScheduleId(scheduleId: string): Promise<Possibility[]>
   createPossibility(possibility: Possibility): Promise<Possibility>
 

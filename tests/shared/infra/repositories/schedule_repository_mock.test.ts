@@ -523,12 +523,6 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
       repo.getPossibility('123e4567-e892d3-a456-426614174000'),
     ).rejects.toThrowError('No items found for possibilityId')
   })
-  it('Should get all possibilities correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const possibilities = await repo.getAllPossibilities()
-
-    expect(possibilities.length).toEqual(33)
-  })
   it('Should create possibility correctly', async () => {
     const possibility = new Possibility({
       id: '1afe4137-dd2f-5719-a780-e6d53e68960e',
