@@ -41,12 +41,6 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
       'No items found for userId',
     )
   })
-  it('Should get all users correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const users = await repo.getAllUsers()
-
-    expect(users.length).toEqual(7)
-  })
   it('Should create user correctly', async () => {
     const user = new User({
       id: 10,

@@ -12,7 +12,6 @@ export interface IScheduleRepository {
   // User methods
   getUsersLength(): number
   getUser(id: number): Promise<User>
-  getAllUsers(): Promise<User[]>
   getUsersByRole(role: ROLE): Promise<User[]>
   createUser(user: User): Promise<User>
   updateUser(id: number, newName: string, newEmail: string): Promise<User>

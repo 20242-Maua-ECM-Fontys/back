@@ -660,9 +660,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }
     return user.role
   }
-  async getAllUsers(): Promise<User[]> {
-    return this.users
-  }
 
   async createUser(user: User): Promise<User> {
     const exists = this.users.find((u) => u.id === user.id)
