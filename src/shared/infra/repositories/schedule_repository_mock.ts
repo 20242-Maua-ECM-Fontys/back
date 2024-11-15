@@ -789,10 +789,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return this.suitabilities.length
   }
 
-  async getAllSuitabilities(): Promise<Suitability[]> {
-    return this.suitabilities
-  }
-
   async createSuitability(suitability: Suitability): Promise<Suitability> {
     // Check if the suitability already exists
     const exists = this.suitabilities.find(

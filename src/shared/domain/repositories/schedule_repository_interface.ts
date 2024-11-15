@@ -36,7 +36,6 @@ export interface IScheduleRepository {
 
   // Suitability methods
   getSuitabilitiesLength(): number
-  getAllSuitabilities(): Promise<Suitability[]>
   createSuitability(suitability: Suitability): Promise<Suitability>
   getSuitabilitiesByUserId(userId: number): Promise<Suitability[]>
   deleteSuitabilityByUserId(userId: number): Promise<Suitability[]>

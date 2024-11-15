@@ -286,12 +286,6 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
 
     expect(length).toEqual(5)
   })
-  it('Should get all suitabilities correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const users = await repo.getAllSuitabilities()
-
-    expect(users.length).toEqual(5)
-  })
   it('Should create suitability correctly', async () => {
     const userId = 5
     const codeSubject = 'ECM256'
