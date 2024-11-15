@@ -22,7 +22,6 @@ export interface IScheduleRepository {
   // Class methods
   getClassesLength(): number
   getClass(id: string): Promise<Class>
-  getAllClasss(): Promise<Class[]>
   getClassesByScheduleId(scheduleId: string): Promise<Class[]>
   createClass(newClass: Class): Promise<Class>
   getFullfilledDataByClassId(

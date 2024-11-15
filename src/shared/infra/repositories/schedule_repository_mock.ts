@@ -726,10 +726,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return selectedClass
   }
 
-  async getAllClasss(): Promise<Class[]> {
-    return this.classes
-  }
-
   async getClassesByScheduleId(scheduleId: string): Promise<Class[]> {
     return this.classes.filter((c) => c.scheduleId === scheduleId)
   }

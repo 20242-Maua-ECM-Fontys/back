@@ -211,12 +211,6 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
       'No items found for classId',
     )
   })
-  it('Should get all classes correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const classes = await repo.getAllClasss()
-
-    expect(classes.length).toEqual(5)
-  })
 
   it('Should create class correctly', async () => {
     const classEntity = new Class({
