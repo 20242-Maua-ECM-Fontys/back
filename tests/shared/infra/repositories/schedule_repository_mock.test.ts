@@ -612,12 +612,6 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
       repo.getAvailability('0a8c5357-0007-5b24-9845-9318c4000003'),
     ).rejects.toThrowError('No items found for availabilityId')
   })
-  it('Should get all availabilities correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const availabilities = await repo.getAllAvailabilities()
-
-    expect(availabilities.length).toEqual(20)
-  })
   it('Should get availabilities by userId correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const availabilities = await repo.getAvailabilitiesByUserId(3)
@@ -736,12 +730,6 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
     const length = repo.getAvsFullfilledLength()
 
     expect(length).toEqual(4)
-  })
-  it('Should get all AvFullfilled correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const avFullfilled = await repo.getAllAvsFullfilled()
-
-    expect(avFullfilled.length).toEqual(4)
   })
   it('Should create AvFullfilled correctly', async () => {
     /*

@@ -918,10 +918,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return availability
   }
 
-  async getAllAvailabilities(): Promise<Availability[]> {
-    return this.availabilities
-  }
-
   async getAvailabilitiesByUserId(userId: number): Promise<Availability[]> {
     return this.availabilities.filter((a) => a.userId === userId)
   }
@@ -960,10 +956,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   // #region AvFullfilled methods
   getAvsFullfilledLength(): number {
     return this.avsFullfilled.length
-  }
-
-  async getAllAvsFullfilled(): Promise<AvFullfilled[]> {
-    return this.avsFullfilled
   }
 
   async createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled> {
