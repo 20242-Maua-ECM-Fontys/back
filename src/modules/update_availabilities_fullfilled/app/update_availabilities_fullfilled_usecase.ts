@@ -1,5 +1,6 @@
 import { DuplicatedId, InvalidReferenceToScheduleId, ProfessorAlreadyAssignToOtherSchedule, ProfessorCannotTeachClass, ProfessorDoenstHaveAvailability } from '../../../shared/helpers/errors/usecase_errors'
 import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
+import { AvFullfilled } from '../../../shared/domain/entities/avFullfilled'
 
 export type AvailabilitiesFullfilledParam = {
   userId: number
@@ -40,6 +41,9 @@ export class UpdateAvailabilitiesFullfilledUsecase {
     if (new Set(possibilityIdList).size !== possibilityIdList.length) {
       throw new DuplicatedId('possibility')
     }
+
+    // create a list of all avFullfilled created
+    const newAvFullfilledList: AvFullfilled[] = []
     
     // validations for each availabilityFullfilled
     for (const avFullfilled of availabilitiesFullfilled) {
@@ -70,12 +74,20 @@ export class UpdateAvailabilitiesFullfilledUsecase {
         throw new ProfessorAlreadyAssignToOtherSchedule(avFullfilled.userId, userAvailabiltiy.scheduleFullfilled)
       }
 
+      // create avFullfilled
+      const newAvFullfilled = new AvFullfilled({
+        availabilityId: userAvailabiltiy.data.availabilityId,
+        possibilityId: avFullfilled.possibilityId,
+        classId: avFullfilled.classId
+      })
+      newAvFullfilledList.push(newAvFullfilled)
     }
 
     // remove all avFullfilled from specified schedule from repo
-    
+    await this.repo.deleteAvsFullfilledByScheduleId(scheduleId)
 
-    // create new avFullfilled on repo
+    // create all avFullfilled into repo
+    await this.repo.createAvsFullfilled(newAvFullfilledList)
 
     return true
   }
