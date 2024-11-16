@@ -20,6 +20,73 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
     expect(response?.data).toEqual({
       message: "professors by class returned",
       "professors": {
+        "3": {
+      "RA": "33.00000-3",
+      "availabilities": {
+        "0a8c5357-1f07-5b24-9845-9318c4000000": {
+          "endTime": 560,
+          "isTaken": false,
+          "startTime": 460,
+          "weekDay": "MON",
+        },
+        "0a8c5357-1f07-5b24-9845-9318c4000001": {
+          "endTime": 670,
+          "isTaken": false,
+          "startTime": 570,
+          "weekDay": "MON",
+        },
+        "0a8c5357-1f07-5b24-9845-9318c4000002": {
+          "endTime": 560,
+          "isTaken": false,
+          "startTime": 460,
+          "weekDay": "TUE",
+        },
+        "0a8c5357-1f07-5b24-9845-9318c4000003": {
+          "endTime": 670,
+          "isTaken": false,
+          "startTime": 570,
+          "weekDay": "TUE",
+        },
+        "0a8c5357-1f07-5b24-9845-9318c4000004": {
+          "endTime": 560,
+          "isTaken": false,
+          "startTime": 460,
+          "weekDay": "WED",
+        },
+        "0a8c5357-1f07-5b24-9845-9318c4000005": {
+          "endTime": 670,
+          "isTaken": false,
+          "startTime": 570,
+          "weekDay": "WED",
+        },
+        "0a8c5357-1f07-5b24-9845-9318c4000006": {
+          "endTime": 560,
+          "isTaken": false,
+          "startTime": 460,
+          "weekDay": "THU",
+        },
+        "0a8c5357-1f07-5b24-9845-9318c4000007": {
+          "endTime": 670,
+          "isTaken": false,
+          "startTime": 570,
+          "weekDay": "THU",
+        },
+        "0a8c5357-1f07-5b24-9845-9318c4000008": {
+          "endTime": 560,
+          "isTaken": false,
+          "startTime": 460,
+          "weekDay": "FRI",
+        },
+        "0a8c5357-1f07-5b24-9845-9318c4000009": {
+          "endTime": 670,
+          "isTaken": true,
+          "startTime": 570,
+          "weekDay": "FRI",
+        },
+      },
+      "email": "user3@gmail.com",
+      "name": "user3",
+    },
         "4":  {
           
           name: "user4",

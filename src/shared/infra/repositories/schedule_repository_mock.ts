@@ -127,6 +127,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       subjectCode: 'EFB207',
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
+    new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ac927',
+      name: 'Linguagens de Programacao II',
+      modality: MODALITY.HYBRID,
+      classType: CLASSTYPE.THEORY,
+      subjectCode: 'ECM256',
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
   ]
   // #region subjects
   private subjects: Subject[] = [
@@ -152,7 +160,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       codeSubject: 'EFB207',
     }),
     new Suitability({
-      userId: 4,
+      userId: 3,
       codeSubject: 'ECM256',
     }),
   ]
@@ -1065,5 +1073,27 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
     this.avsFullfilled.push(avFullfilled)
     return avFullfilled
+  }
+
+  async createAvsFullfilled(avsFullfilled: AvFullfilled[]): Promise<AvFullfilled[]>{
+    for (const avFullfilled of avsFullfilled) {
+      await this.createAvFullfilled(avFullfilled)
+    }
+    return avsFullfilled
+  }
+
+  async deleteAvsFullfilledByScheduleId(scheduleId: string): Promise<AvFullfilled[]>{
+    const avsFullfilled = this.avsFullfilled.filter((avFullfilled) => {
+      const possibility = this.possibilities.find((p) => p.id === avFullfilled.possibilityId)
+      return possibility?.scheduleId !== scheduleId
+    })
+    const avsFullfilledIds = avsFullfilled.map((avFullfilled) => avFullfilled.availabilityId)
+    this.availabilities.forEach((availability) => {
+      if (!avsFullfilledIds.includes(availability.availabilityId)) {
+        availability.isTaken = false
+      }
+    })
+    this.avsFullfilled = avsFullfilled
+    return avsFullfilled
   }
 }

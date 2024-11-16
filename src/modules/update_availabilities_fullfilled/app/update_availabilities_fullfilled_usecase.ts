@@ -1,3 +1,4 @@
+import { DuplicatedId, InvalidReferenceToScheduleId, ProfessorAlreadyAssignToOtherSchedule, ProfessorCannotTeachClass, ProfessorDoenstHaveAvailability } from '../../../shared/helpers/errors/usecase_errors'
 import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
 
 export type AvailabilitiesFullfilledParam = {
@@ -11,24 +12,70 @@ export class UpdateAvailabilitiesFullfilledUsecase {
 
   async execute(scheduleId: string, availabilitiesFullfilled: AvailabilitiesFullfilledParam[]): Promise<boolean> {
     // check if schedule exists
-    const schedule = await this.repo.getSchedule(scheduleId, 1)
+    await this.repo.getSchedule(scheduleId, 1)
 
     // get a list of classes on repo (check if those classId exists)
     const classIdList = availabilitiesFullfilled.map((item) => item.classId)
     const classes = await this.repo.getClassesByIds(classIdList)
 
+    // check if all classesId are unique
+    if (new Set(classIdList).size !== classIdList.length) {
+      throw new DuplicatedId('class')
+    }
+
     // get a list of users on repo (check if those userId exists), with its availabilities and suitabilities
     const userIdList = availabilitiesFullfilled.map((item) => item.userId)
     const usersWithAvailabilitiesAndSuitabilities = await this.repo.getUsersWithAvailabilitiesAndSuitabilities(userIdList)
 
+    // check if all userId are unique
+    if (new Set(userIdList).size !== userIdList.length) {
+      throw new DuplicatedId('user')
+    }
+
     // get a list of possibilities on repo (check if those possibilityId exists)
     const possibilityIdList = availabilitiesFullfilled.map((item) => item.possibilityId)
     const possibilities = await this.repo.getPossibilitiesByIds(possibilityIdList)
-    
-    // validate 
-    for (const element of object) {
-      
+
+    // check if all possibilityId are unique
+    if (new Set(possibilityIdList).size !== possibilityIdList.length) {
+      throw new DuplicatedId('possibility')
     }
+    
+    // validations for each availabilityFullfilled
+    for (const avFullfilled of availabilitiesFullfilled) {
+
+      // check if possibility and class refeers to the specified scheduleId
+      if (possibilities[avFullfilled.possibilityId].scheduleId !== scheduleId) {
+        throw new InvalidReferenceToScheduleId('possibility', avFullfilled.possibilityId, scheduleId)
+      }
+      if (classes[avFullfilled.classId].scheduleId !== scheduleId) {
+        throw new InvalidReferenceToScheduleId('class', avFullfilled.classId, scheduleId)
+      }
+
+      // check if user can teach the class
+      const avFullfilledClass = classes[avFullfilled.classId]
+      if (!usersWithAvailabilitiesAndSuitabilities[avFullfilled.userId].suitabilities.some((suitability) => suitability.codeSubject === avFullfilledClass.subjectCode)) {
+        throw new ProfessorCannotTeachClass(avFullfilled.userId, avFullfilled.classId)
+      }
+
+      // check if user has free time on the specified possibility
+      const avFullfilledPossibility = possibilities[avFullfilled.possibilityId]
+      const userAvailabiltiy = usersWithAvailabilitiesAndSuitabilities[avFullfilled.userId].availabilities.find((availability) => availability.data.startTime === avFullfilledPossibility.startTime && availability.data.endTime === avFullfilledPossibility.endTime)
+      if (!userAvailabiltiy) {
+        throw new ProfessorDoenstHaveAvailability(avFullfilled.userId, avFullfilledPossibility.startTime, avFullfilledPossibility.endTime)
+      }
+
+      // check if user has already fullfilled the availability into other schedule
+      if (userAvailabiltiy.scheduleFullfilled && userAvailabiltiy.scheduleFullfilled !== scheduleId) {
+        throw new ProfessorAlreadyAssignToOtherSchedule(avFullfilled.userId, userAvailabiltiy.scheduleFullfilled)
+      }
+
+    }
+
+    // remove all avFullfilled from specified schedule from repo
+    
+
+    // create new avFullfilled on repo
 
     return true
   }

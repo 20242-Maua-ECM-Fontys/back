@@ -80,6 +80,10 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
               "codeSubject": "EFB207",
               "subjectName": "Physics I",
             },
+            {
+              "codeSubject": "ECM256",
+              "subjectName": "Programming Languages II",
+            },
           ],
         },
         "4": {
@@ -128,10 +132,6 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
           "email": "user4@gmail.com",
           "name": "user4",
           "suitabilities": [
-           {
-              "codeSubject": "ECM256",
-              "subjectName": "Programming Languages II",
-            },
            {
               "codeSubject": "ECM256",
               "subjectName": "Programming Languages II",

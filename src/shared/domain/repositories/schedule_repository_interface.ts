@@ -75,5 +75,7 @@ export interface IScheduleRepository {
   // AvFullfilled methods
   getAvsFullfilledLength(): number
   getAllAvsFullfilled(): Promise<AvFullfilled[]>
-  // createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled>
+  createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled>
+  createAvsFullfilled(avsFullfilled: AvFullfilled[]): Promise<AvFullfilled[]> // by now, because it is just used on update_availabilities_fullfilled (that already validates everything), this method doesn't validate anything
+  deleteAvsFullfilledByScheduleId(scheduleId: string): Promise<AvFullfilled[]>
 }

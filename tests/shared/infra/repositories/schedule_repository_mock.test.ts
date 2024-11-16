@@ -16,6 +16,7 @@ import { MAUA_END_TIME } from '../../../../src/shared/domain/enums/maua_end_time
 import { Availability } from '../../../../src/shared/domain/entities/availability'
 import { AvFullfilled } from '../../../../src/shared/domain/entities/avFullfilled'
 import { ACADEMIC_PERIOD } from '../../../../src/shared/domain/enums/academic_period_enum'
+import { av } from 'vitest/dist/chunks/reporters.DAfKSDh5.js'
 
 // #region User methods
 describe('Assert Schedule Repository Mock is correct at all for User methods', () => {
@@ -145,12 +146,12 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     expect(usersWithAvailabilitiesAndSuitabilities[3].user.role).toEqual(ROLE.PROFESSOR)
     expect(usersWithAvailabilitiesAndSuitabilities[3].availabilities.length).toEqual(10)
     expect(usersWithAvailabilitiesAndSuitabilities[3].availabilities[9].scheduleFullfilled).toEqual("2S-3CM-D5@2024(SCS)")
-    expect(usersWithAvailabilitiesAndSuitabilities[3].suitabilities.length).toEqual(1)
+    expect(usersWithAvailabilitiesAndSuitabilities[3].suitabilities.length).toEqual(2)
 
     expect(usersWithAvailabilitiesAndSuitabilities[4].user.id).toEqual(4)
     expect(usersWithAvailabilitiesAndSuitabilities[4].user.role).toEqual(ROLE.PROFESSOR)
     expect(usersWithAvailabilitiesAndSuitabilities[4].availabilities.length).toEqual(8)
-    expect(usersWithAvailabilitiesAndSuitabilities[4].suitabilities.length).toEqual(2)
+    expect(usersWithAvailabilitiesAndSuitabilities[4].suitabilities.length).toEqual(1)
   })
 
   it('should getUsersWithAvailabilitiesAndSuitabilities correctly with usersIds length equals 0', async () => {
@@ -240,7 +241,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     const repo = new ScheduleRepositoryMock()
     const length = repo.getClassesLength()
 
-    expect(length).toEqual(5)
+    expect(length).toEqual(6)
   })
   it('Should get class correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -265,7 +266,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     const repo = new ScheduleRepositoryMock()
     const classes = await repo.getAllClasses()
 
-    expect(classes.length).toEqual(5)
+    expect(classes.length).toEqual(6)
   })
 
   it('Should create class correctly', async () => {
@@ -425,7 +426,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     const repo = new ScheduleRepositoryMock()
     const suitabilities = await repo.getSuitabilitiesByUserId(4)
 
-    expect(suitabilities.length).toEqual(2)
+    expect(suitabilities.length).toEqual(1)
   })
   it('Should get suitabilities by userId correctly: empty list', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -440,7 +441,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     await repo.deleteSuitabilityByUserId(userId)
     const newLength = repo.getSuitabilitiesLength()
 
-    expect(newLength).toEqual(lastLength - 2)
+    expect(newLength).toEqual(lastLength - 1)
   })
 })
 
@@ -1029,5 +1030,100 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
       'No items found for classId',
     )
   });
- 
+  it('Should create AvsFullfilled correctly', async () => {
+    /*
+      userId = 3
+      startTime = MAUA_START_TIME.H09_30_11_10
+      weekDay = WEEK_DAY.FRI
+      className = Physics I
+      subjectCode = EFB207
+      scheduleId = 2S-4CM-D5@2024(SCS)
+    */
+    /*
+      userId = 4
+      startTime = MAUA_START_TIME.H09_30_11_10
+      weekDay = WEEK_DAY.MON
+      className = Linguagens de Programacao II
+      classId = 0a8c5357-1f07-5b24-9845-9318c47ac927
+      subjectCode = ECM256
+      scheduleId = 2S-4CM-D5@2024(SCS)
+    */
+    const avFullfilled1 = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      possibilityId: '124e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
+    })
+    const avFullfilled2 = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c400000b',
+      possibilityId: '123e4567-e89b-12d3-a456-426614174001',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac927',
+    })
+    const avsFullfilled = [avFullfilled1, avFullfilled2]
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+    const availability1Before = await repo.getAvailability(avFullfilled1.availabilityId)
+    expect(availability1Before.isTaken).toEqual(false)
+    const availability2Before = await repo.getAvailability(avFullfilled2.availabilityId)
+    expect(availability2Before.isTaken).toEqual(false)
+
+    await repo.createAvsFullfilled(avsFullfilled)
+
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength + 2)
+
+    const availabilityAfter = await repo.getAvailability(avFullfilled1.availabilityId)
+    expect(availabilityAfter.isTaken).toEqual(true)
+    const availabilityAfter2 = await repo.getAvailability(avFullfilled2.availabilityId)
+    expect(availabilityAfter2.isTaken).toEqual(true)
+  })
+  it('Should create AvsFullfilled correctly: empty list', async () => {
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+
+    await repo.createAvsFullfilled([])
+
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should deleteAvsFullfilledByScheduleId correctly', async () => {
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+
+    const isTakenBerfore = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000009')
+    expect(isTakenBerfore.isTaken).toEqual(true)
+    await repo.deleteAvsFullfilledByScheduleId('2S-3CM-D5@2024(SCS)')
+    const isTakenAfter = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000009')
+    expect(isTakenAfter.isTaken).toEqual(false)
+
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength - 1)
+  })
+  it('Should deleteAvsFullfilledByScheduleId correctly (adding more one availability to test more than 1 deletion', async () => {
+
+    const repo = new ScheduleRepositoryMock()
+    const avFullfilled = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      possibilityId: '124e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
+    })
+    await repo.createAvFullfilled(avFullfilled)
+    const availabilityBefore = await repo.getAvailability(
+      '0a8c5357-1f07-5b24-9845-9318c4000008',
+    )
+    expect(availabilityBefore.isTaken).toEqual(true)
+    const lastLength = repo.getAvsFullfilledLength()
+
+
+    await repo.deleteAvsFullfilledByScheduleId('2S-4CM-D5@2024(SCS)')
+    const availabilityAfter = await repo.getAvailability(
+      '0a8c5357-1f07-5b24-9845-9318c4000008',
+    )
+    expect(availabilityAfter.isTaken).toEqual(false)
+
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength - 2)
+  })
 })
