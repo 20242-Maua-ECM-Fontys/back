@@ -25,6 +25,10 @@ export class UpdateAvailabilitiesFullfilledUsecase {
     const possibilityIdList = availabilitiesFullfilled.map((item) => item.possibilityId)
     const possibilities = await this.repo.getPossibilitiesByIds(possibilityIdList)
     
+    // validate 
+    for (const element of object) {
+      
+    }
 
     return true
   }

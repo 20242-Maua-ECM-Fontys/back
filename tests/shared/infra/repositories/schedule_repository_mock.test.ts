@@ -144,6 +144,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     expect(usersWithAvailabilitiesAndSuitabilities[3].user.id).toEqual(3)
     expect(usersWithAvailabilitiesAndSuitabilities[3].user.role).toEqual(ROLE.PROFESSOR)
     expect(usersWithAvailabilitiesAndSuitabilities[3].availabilities.length).toEqual(10)
+    expect(usersWithAvailabilitiesAndSuitabilities[3].availabilities[9].scheduleFullfilled).toEqual("2S-3CM-D5@2024(SCS)")
     expect(usersWithAvailabilitiesAndSuitabilities[3].suitabilities.length).toEqual(1)
 
     expect(usersWithAvailabilitiesAndSuitabilities[4].user.id).toEqual(4)
@@ -262,7 +263,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
   })
   it('Should get all classes correctly', async () => {
     const repo = new ScheduleRepositoryMock()
-    const classes = await repo.getAllClasss()
+    const classes = await repo.getAllClasses()
 
     expect(classes.length).toEqual(5)
   })

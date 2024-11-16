@@ -25,14 +25,15 @@ export interface IScheduleRepository {
     number, { 
       user: User; 
       suitabilities: Suitability[]; 
-      availabilities: Availability[] }
+      availabilities: {data: Availability, scheduleFullfilled: string | undefined}[]
+    }
     >
   > 
 
   // Class methods
   getClassesLength(): number
   getClass(id: string): Promise<Class>
-  getAllClasss(): Promise<Class[]>
+  getAllClasses(): Promise<Class[]>
   createClass(newClass: Class): Promise<Class>
   getClassesByIds(classesIds: string[]): Promise<Record<string, Class>> 
 

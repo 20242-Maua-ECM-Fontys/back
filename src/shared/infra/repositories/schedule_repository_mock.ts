@@ -695,44 +695,82 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return suitableUsers;
   }
 
-  async getUsersWithAvailabilitiesAndSuitabilities(usersIds: number[]): Promise<Record<
-    number, { 
-      user: User; 
-      suitabilities: Suitability[]; 
-      availabilities: Availability[] }
+  async getUsersWithAvailabilitiesAndSuitabilities(
+    userIds: number[]
+  ): Promise<
+    Record<
+      number,
+      {
+        user: User;
+        suitabilities: Suitability[];
+        availabilities: { data: Availability; scheduleFullfilled: string | undefined }[];
+      }
     >
   > {
-    // get list of users
-    const users = this.users.filter((user) => usersIds.includes(user.id))
-
-    // check if some user does not exist
-    if (users.length !== usersIds.length) {
-      throw new NoItemsFound('userId')
+    // Filter users based on the provided userIds
+    const users = this.users.filter((user) => userIds.includes(user.id));
+  
+    // Check if all userIds exist
+    if (users.length !== userIds.length) {
+      throw new NoItemsFound('userId');
     }
-    
-    // check if those users are not professors or coordinators
+  
+    // Ensure users are not STAFF
     users.forEach((user) => {
       if (user.role === ROLE.STAFF) {
-        throw new ViolateDataRule('user must be a professor')
+        throw new ViolateDataRule('user must be a professor');
       }
-    })
-    // get the availabilities and suitabilities for each user
-    const usersWithAvailabilitiesAndSuitabilities = users.map((user) => {
-      const suitabilities = this.suitabilities.filter(
-        (suitability) => suitability.userId === user.id,
-      )
-      const availabilities = this.availabilities.filter(
-        (availability) => availability.userId === user.id,
-      )
-      return { user, suitabilities, availabilities }
-    })
-
-    // format the data
-    return usersWithAvailabilitiesAndSuitabilities.reduce((acc, user) => {
-      acc[user.user.id] = user
-      return acc
-    }, {} as Record<number, { user: User; suitabilities: Suitability[]; availabilities: Availability[] }>)
-
+    });
+  
+    // Create the result object
+    const result: Record<
+      number,
+      {
+        user: User;
+        suitabilities: Suitability[];
+        availabilities: { data: Availability; scheduleFullfilled: string | undefined }[];
+      }
+    > = {};
+  
+    // Process each user
+    for (const user of users) {
+      // Fetch suitabilities and availabilities for the current user
+      const suitabilities = this.suitabilities.filter((suitability) => suitability.userId === user.id);
+      const availabilities = this.availabilities.filter((availability) => availability.userId === user.id);
+  
+      // Check each availability for fulfilled schedules
+      const availabilitiesWithFullfilled = await Promise.all(
+        availabilities.map(async (availability) => {
+          const avFullfilled = this.avsFullfilled.find(
+            (item) => item.availabilityId === availability.availabilityId
+          );
+  
+          if (!avFullfilled) {
+            return {
+              data: availability,
+              scheduleFullfilled: undefined,
+            };
+          }
+  
+          const classId = avFullfilled.classId;
+          const specificClass = this.classes.find((c) => c.id === classId);
+  
+          return {
+            data: availability,
+            scheduleFullfilled: specificClass?.scheduleId,
+          };
+        })
+      );
+  
+      // Store the data in the result object
+      result[user.id] = {
+        user,
+        suitabilities,
+        availabilities: availabilitiesWithFullfilled,
+      };
+    }
+  
+    return result;
   }
 
   // #region Class methods
@@ -748,7 +786,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return selectedClass
   }
 
-  async getAllClasss(): Promise<Class[]> {
+  async getAllClasses(): Promise<Class[]> {
     return this.classes
   }
 
