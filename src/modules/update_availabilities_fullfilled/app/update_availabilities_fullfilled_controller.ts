@@ -3,93 +3,80 @@ import {
   WrongTypeParameters,
 } from '../../../shared/helpers/errors/controller_errors'
 import { IRequest } from '../../../shared/helpers/external_interfaces/external_interface'
-import { UpdateAvailabilitiesUsecase } from './update_availabilities_fullfilled_usecase'
+import { UpdateAvailabilitiesFullfilledUsecase } from './update_availabilities_fullfilled_usecase'
 import {
   BadRequest,
   OK,
   InternalServerError,
   NotFound,
   Forbidden,
+  Conflict,
 } from '../../../shared/helpers/external_interfaces/http_codes'
 import {
   NoItemsFound as NoItemsFoundRepo,
+  ViolateDataRule,
 } from '../../../shared/helpers/errors/repo_error'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
-import { InvalidRole } from '../../../shared/helpers/errors/usecase_errors'
-import { toEnum as startTimeToEnum } from '../../../shared/domain/enums/maua_start_time_enum'
-import { toEnum as endTimeToEnum } from '../../../shared/domain/enums/maua_end_time_enum'
-import { toEnum as weekDayToEnum } from '../../../shared/domain/enums/week_day_enum'
-import { UpdateAvailabilitiesViewmodel } from './update_availabilities_fullfilled_viewmodel'
+import { DuplicatedId, InvalidReferenceToScheduleId, InvalidRole, ProfessorAlreadyAssignToOtherSchedule, ProfessorCannotTeachClass, ProfessorDoesntHaveAvailability } from '../../../shared/helpers/errors/usecase_errors'
+import { UpdateAvailabilitiesFullfilledViewmodel } from './update_availabilities_fullfilled_viewmodel'
 
-export class UpdateAvailabilitiesController {
-  constructor(private usecase: UpdateAvailabilitiesUsecase) {}
+export class UpdateAvailabilitiesFullfilledController {
+  constructor(private usecase: UpdateAvailabilitiesFullfilledUsecase) {}
 
   async execute(request: IRequest) {
     try {
-      // check userId
-      if (request.data.userId === undefined) {
-        throw new MissingParameters('userId')
+      // check scheduleId
+      if (request.data.scheduleId === undefined) {
+        throw new MissingParameters('scheduleId')
       }
-      if (typeof request.data.userId !== 'number') {
-        throw new WrongTypeParameters('userId', 'number', request.data.userId)
+      if (typeof request.data.scheduleId !== 'string') {
+        throw new WrongTypeParameters('scheduleId', 'string', request.data.scheduleId)
       }
-      const userId = request.data.userId
+      const scheduleId = request.data.scheduleId
 
-      // check availabilities
-      const availabilities = [];
-      if (request.data.availabilities === undefined) {
-        throw new MissingParameters('availabilities')
+      // check availabilitiesFullfilled
+      const availabilitiesFullfilled = [];
+      if (request.data.availabilitiesFullfilled === undefined) {
+        throw new MissingParameters('availabilitiesFullfilled')
       }
-      if (!Array.isArray(request.data.availabilities)) {
-        throw new WrongTypeParameters('availabilities', 'array', request.data.availabilities)
+      if (!Array.isArray(request.data.availabilitiesFullfilled)) {
+        throw new WrongTypeParameters('availabilitiesFullfilled', 'array', request.data.availabilitiesFullfilled)
       }
-      for (const availability of request.data.availabilities) {
-        // check startTime
-        if (availability.startTime === undefined) {
-          throw new MissingParameters('startTime')
+      for (const avFullfilled of request.data.availabilitiesFullfilled) {
+        // check userId
+        if (avFullfilled.userId === undefined) {
+          throw new MissingParameters('userId')
         }
-        let startTime;
-        try{
-          startTime = startTimeToEnum(availability.startTime)
-        }
-        catch (error: unknown) {
-          throw new WrongTypeParameters('startTime', 'string as MAUA_START_TIME', availability.startTime)
+        if (typeof avFullfilled.userId !== 'number') {
+          throw new WrongTypeParameters('userId', 'number', avFullfilled.userId)
         }
 
-        // check endTime
-        if (availability.endTime === undefined) {
-          throw new MissingParameters('endTime')
+        // check classId
+        if (avFullfilled.classId === undefined) {
+          throw new MissingParameters('classId')
         }
-        let endTime;
-        try{
-          endTime = endTimeToEnum(availability.endTime)
-        }
-        catch (error: unknown) {
-          throw new WrongTypeParameters('endTime', 'string as MAUA_END_TIME', availability.endTime)
+        if (typeof avFullfilled.classId !== 'string') {
+          throw new WrongTypeParameters('classId', 'string', avFullfilled.classId)
         }
 
-        // check weekDay
-        if (availability.weekDay === undefined) {
-          throw new MissingParameters('weekDay')
+        // check possibilityId
+        if (avFullfilled.possibilityId === undefined) {
+          throw new MissingParameters('possibilityId')
         }
-        let weekDay;
-        try{
-          weekDay = weekDayToEnum(availability.weekDay)
-        }
-        catch (error: unknown) {
-          throw new WrongTypeParameters('weekDay', 'string as WEEK_DAY', availability.weekDay)
+        if (typeof avFullfilled.possibilityId !== 'string') {
+          throw new WrongTypeParameters('possibilityId', 'string', avFullfilled.possibilityId)
         }
 
-        availabilities.push({
-          startTime,
-          endTime,
-          weekDay
+        availabilitiesFullfilled.push({
+          userId: avFullfilled.userId,
+          classId: avFullfilled.classId,
+          possibilityId: avFullfilled.possibilityId,
         })
       }
 
-      await this.usecase.execute(userId, availabilities)
+      await this.usecase.execute(scheduleId, availabilitiesFullfilled)
 
-      const viewmodel = new UpdateAvailabilitiesViewmodel().toJSON()
+      const viewmodel = new UpdateAvailabilitiesFullfilledViewmodel().toJSON()
 
       const response = new OK(viewmodel)
 
@@ -100,6 +87,24 @@ export class UpdateAvailabilitiesController {
       }
       if (error instanceof WrongTypeParameters) {
         return new BadRequest(error.message)
+      }
+      if (error instanceof DuplicatedId) {
+        return new BadRequest(error.message)
+      }
+      if (error instanceof InvalidReferenceToScheduleId) {
+        return new BadRequest(error.message)
+      }
+      if (error instanceof ProfessorAlreadyAssignToOtherSchedule) {
+        return new Conflict(error.message)
+      }
+      if (error instanceof ProfessorCannotTeachClass) {
+        return new Forbidden(error.message)
+      }
+      if (error instanceof ViolateDataRule) {
+        return new Forbidden(error.message)
+      }
+      if (error instanceof ProfessorDoesntHaveAvailability) {
+        return new Conflict(error.message)
       }
       if (error instanceof NoItemsFoundRepo) {
         return new NotFound(error.message)

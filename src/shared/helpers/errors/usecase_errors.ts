@@ -63,7 +63,7 @@ export class ProfessorCannotTeachClass extends BaseError {
   }
 }
 
-export class ProfessorDoenstHaveAvailability extends BaseError {
+export class ProfessorDoesntHaveAvailability extends BaseError {
   constructor(userId: number, startTime: MAUA_START_TIME, endTime: MAUA_END_TIME) {
     super(`The professor with id ${userId} doesn't have availability from ${startTime} to ${endTime}`)
   }

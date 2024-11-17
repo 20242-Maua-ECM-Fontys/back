@@ -1,4 +1,4 @@
-import { DuplicatedId, InvalidReferenceToScheduleId, ProfessorAlreadyAssignToOtherSchedule, ProfessorCannotTeachClass, ProfessorDoenstHaveAvailability } from '../../../shared/helpers/errors/usecase_errors'
+import { DuplicatedId, InvalidReferenceToScheduleId, ProfessorAlreadyAssignToOtherSchedule, ProfessorCannotTeachClass, ProfessorDoesntHaveAvailability } from '../../../shared/helpers/errors/usecase_errors'
 import { IScheduleRepository } from '../../../shared/domain/repositories/schedule_repository_interface'
 import { AvFullfilled } from '../../../shared/domain/entities/avFullfilled'
 
@@ -62,7 +62,7 @@ export class UpdateAvailabilitiesFullfilledUsecase {
       const avFullfilledPossibility = possibilities[avFullfilled.possibilityId]
       const userAvailabiltiy = usersWithAvailabilitiesAndSuitabilities[avFullfilled.userId].availabilities.find((availability) => availability.data.startTime === avFullfilledPossibility.startTime && availability.data.endTime === avFullfilledPossibility.endTime && avFullfilledPossibility.weekDay === availability.data.weekDay)
       if (!userAvailabiltiy) {
-        throw new ProfessorDoenstHaveAvailability(avFullfilled.userId, avFullfilledPossibility.startTime, avFullfilledPossibility.endTime)
+        throw new ProfessorDoesntHaveAvailability(avFullfilled.userId, avFullfilledPossibility.startTime, avFullfilledPossibility.endTime)
       }
 
       // check if user has already fullfilled the availability into other schedule
