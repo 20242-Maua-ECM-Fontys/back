@@ -15,32 +15,28 @@ export class UpdateAvailabilitiesFullfilledUsecase {
     // check if schedule exists
     await this.repo.getSchedule(scheduleId, 1)
 
-    // get a list of classes on repo (check if those classId exists)
-    const classIdList = availabilitiesFullfilled.map((item) => item.classId)
-    const classes = await this.repo.getClassesByIds(classIdList)
-
     // check if all classesId are unique
+    const classIdList = availabilitiesFullfilled.map((item) => item.classId)
     if (new Set(classIdList).size !== classIdList.length) {
       throw new DuplicatedId('class')
     }
+    
+    // get a list of classes on repo (check if those classId exists)
+    const classes = await this.repo.getClassesByIds(classIdList)
 
     // get a list of users on repo (check if those userId exists), with its availabilities and suitabilities
     const userIdList = availabilitiesFullfilled.map((item) => item.userId)
-    const usersWithAvailabilitiesAndSuitabilities = await this.repo.getUsersWithAvailabilitiesAndSuitabilities(userIdList)
-
-    // check if all userId are unique
-    if (new Set(userIdList).size !== userIdList.length) {
-      throw new DuplicatedId('user')
-    }
-
-    // get a list of possibilities on repo (check if those possibilityId exists)
-    const possibilityIdList = availabilitiesFullfilled.map((item) => item.possibilityId)
-    const possibilities = await this.repo.getPossibilitiesByIds(possibilityIdList)
+    const userIdListUnique = Array.from(new Set(userIdList))
+    const usersWithAvailabilitiesAndSuitabilities = await this.repo.getUsersWithAvailabilitiesAndSuitabilities(userIdListUnique)
 
     // check if all possibilityId are unique
+    const possibilityIdList = availabilitiesFullfilled.map((item) => item.possibilityId)
     if (new Set(possibilityIdList).size !== possibilityIdList.length) {
       throw new DuplicatedId('possibility')
     }
+    
+    // get a list of possibilities on repo (check if those possibilityId exists)
+    const possibilities = await this.repo.getPossibilitiesByIds(possibilityIdList)
 
     // create a list of all avFullfilled created
     const newAvFullfilledList: AvFullfilled[] = []
@@ -64,7 +60,7 @@ export class UpdateAvailabilitiesFullfilledUsecase {
 
       // check if user has free time on the specified possibility
       const avFullfilledPossibility = possibilities[avFullfilled.possibilityId]
-      const userAvailabiltiy = usersWithAvailabilitiesAndSuitabilities[avFullfilled.userId].availabilities.find((availability) => availability.data.startTime === avFullfilledPossibility.startTime && availability.data.endTime === avFullfilledPossibility.endTime)
+      const userAvailabiltiy = usersWithAvailabilitiesAndSuitabilities[avFullfilled.userId].availabilities.find((availability) => availability.data.startTime === avFullfilledPossibility.startTime && availability.data.endTime === avFullfilledPossibility.endTime && avFullfilledPossibility.weekDay === availability.data.weekDay)
       if (!userAvailabiltiy) {
         throw new ProfessorDoenstHaveAvailability(avFullfilled.userId, avFullfilledPossibility.startTime, avFullfilledPossibility.endTime)
       }

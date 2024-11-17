@@ -103,7 +103,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       subjectCode: 'ECM111',
       scheduleId: '1S-2CIC-D4@2024(SCS)',
     }),
-    new Class({
+    new Class({ // is taken
       id: '0a8c5357-1f07-5b24-9845-9318c47ac924',
       name: 'Linguagens de Programacao II',
       modality: MODALITY.IN_PERSON,
@@ -111,7 +111,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       subjectCode: 'ECM256',
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
-    new Class({
+    new Class({ // is taken
       id: '0a8c5357-1f07-5b24-9845-9318c47ac925',
       name: 'Physics I',
       modality: MODALITY.REMOTE,
