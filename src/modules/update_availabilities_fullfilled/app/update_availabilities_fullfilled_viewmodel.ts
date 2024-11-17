@@ -1,8 +1,8 @@
-export class UpdateAvailabilitiesViewmodel {
+export class UpdateAvailabilitiesFullfilledViewmodel {
   private message: string
 
   constructor() {
-    this.message = 'availabilities updated'
+    this.message = 'availabilities fullfilled updated'
   }
 
   toJSON() {
