@@ -7,7 +7,6 @@ export type UserProps = {
   email: string
   role: ROLE
   RA: string
-  password: string
 }
 
 export type JsonProps = {
@@ -16,7 +15,6 @@ export type JsonProps = {
   email: string
   role: string
   RA: string
-  password: string
 }
 
 export class User {
@@ -45,11 +43,6 @@ export class User {
       throw new EntityError('props.RA')
     }
     this.props.RA = props.RA
-
-    if (!User.validatePassword(props.password)) {
-      throw new EntityError('props.password')
-    }
-    this.props.password = props.password
   }
 
   get id() {
@@ -107,17 +100,6 @@ export class User {
     this.props.RA = RA
   }
 
-  get password() {
-    return this.props.password
-  }
-
-  set setPassword(password: string) {
-    if (!User.validatePassword(password)) {
-      throw new EntityError('props.password')
-    }
-    this.props.password = password
-  }
-
   static fromJSON(json: JsonProps) {
     return new User({
       id: json.id,
@@ -125,7 +107,6 @@ export class User {
       email: json.email,
       role: toEnum(json.role as string),
       RA: json.RA,
-      password: json.password,
     })
   }
 
@@ -136,7 +117,6 @@ export class User {
       email: this.email,
       role: this.role,
       RA: this.RA,
-      password: this.password,
     }
   }
 
@@ -159,15 +139,5 @@ export class User {
 
   static validateRA(RA: string): boolean {
     return RA != null && typeof RA === 'string'
-  }
-
-  static validatePassword(password: string): boolean {
-    const passwordRegexp =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-    return (
-      password != null &&
-      typeof password === 'string' &&
-      passwordRegexp.test(password)
-    )
   }
 }
