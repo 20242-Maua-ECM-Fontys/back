@@ -69,7 +69,7 @@ routes.get('/get_role_by_email', async (req: Request, res: Response) => {
 routes.get(
   '/get_suitabilities_by_professor',
   async (req: Request, res: Response) => {
-    const httpRequest: HttpRequest = new HttpRequest(req.body, {}, {}, req.file)
+    const httpRequest: HttpRequest = new HttpRequest(req.query, {}, {}, req.file)
     const response = await GetSuitabilitiesByProfessorPresenter(
       httpRequest,
       repo,
