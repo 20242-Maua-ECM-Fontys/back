@@ -8,8 +8,9 @@ describe('GetRoleByEmailUsecase', () => {
     const repo = new ScheduleRepositoryMock();
     const usecase = new GetRoleByEmailUsecase(repo);
 
-    const role = await usecase.execute('user1@gmail.com');
-    expect(role).toBe('STAFF');
+    const userData = await usecase.execute('user1@gmail.com');
+    expect(userData.role).toBe('STAFF');
+    expect(userData.userId).toBe(1);
   });
 
   it('should throw NoItemsFound error if the user is not found', async () => {

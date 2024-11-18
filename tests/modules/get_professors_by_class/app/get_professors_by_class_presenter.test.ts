@@ -22,19 +22,64 @@ describe('Tests for GetProfessorsByClassPresenter', () => {
 
     expect(response?.statusCode).toEqual(200)
     expect(response?.data).toEqual({
-      data: {
+      message: 'professors by class returned',
+      professors: {
         '4': {
-          RA: '44.00000-4',
-          email: 'user4@gmail.com',
           name: 'user4',
-        },
-        '7': {
-          RA: '66.00000-6',
-          email: 'viraw@mon.cm',
-          name: 'Austin Green',
+          email: 'user4@gmail.com',
+          RA: '44.00000-4',
+          availabilities: {
+            '0a8c5357-1f07-5b24-9845-9318c400000a': {
+              endTime: 560,
+              isTaken: true,
+              startTime: 460,
+              weekDay: 'MON',
+            },
+            '0a8c5357-1f07-5b24-9845-9318c400000b': {
+              endTime: 670,
+              isTaken: false,
+              startTime: 570,
+              weekDay: 'MON',
+            },
+            '0a8c5357-1f07-5b24-9845-9318c400000c': {
+              endTime: 780,
+              isTaken: false,
+              startTime: 680,
+              weekDay: 'MON',
+            },
+            '0a8c5357-1f07-5b24-9845-9318c400000d': {
+              endTime: 890,
+              isTaken: false,
+              startTime: 790,
+              weekDay: 'MON',
+            },
+            '0a8c5357-1f07-5b24-9845-9318c400000e': {
+              endTime: 1000,
+              isTaken: false,
+              startTime: 900,
+              weekDay: 'MON',
+            },
+            '0a8c5357-1f07-5b24-9845-9318c400000f': {
+              endTime: 1110,
+              isTaken: false,
+              startTime: 1010,
+              weekDay: 'MON',
+            },
+            '0a8c5357-1f07-5b24-9845-9318c4000010': {
+              endTime: 1240,
+              isTaken: false,
+              startTime: 1140,
+              weekDay: 'MON',
+            },
+            '0a8c5357-1f07-5b24-9845-9318c4000011': {
+              endTime: 1350,
+              isTaken: false,
+              startTime: 1250,
+              weekDay: 'MON',
+            },
+          },
         },
       },
-      message: 'professors by class returned',
     })
   })
 

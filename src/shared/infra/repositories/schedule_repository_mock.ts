@@ -34,8 +34,8 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
     new User({
       id: 2,
-      name: 'user2',
-      email: 'user2@gmail.com',
+      name: 'Pedro Henrique de Sousa Matumoto',
+      email: 'pedromatumoto@gmail.com',
       role: ROLE.COORDINATOR,
       RA: '22.00000-2',
     }),

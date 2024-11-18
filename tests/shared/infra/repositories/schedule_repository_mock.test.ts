@@ -24,6 +24,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const length = repo.getUsersLength()
 
     expect(length).toEqual(7)
+    expect(length).toEqual(7)
   })
   it('Should get user correctly', async () => {
     const repo = new ScheduleRepositoryMock()

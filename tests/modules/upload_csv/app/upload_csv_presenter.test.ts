@@ -6,14 +6,14 @@ import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositorie
 describe('Tests for Upload CSV Presenter', () => {
   it('Should call presenter and return status 200', async () => {
     const repo = new ScheduleRepositoryMock()
-    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
-schedule,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,user2@gmail.com,ANNUAL
-professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,
-subject,Data Structures,,,CSE103,EVENING,,,,,
-class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS)
-professor,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,
-subject,Algorithms,,,CSE203,AFTERNOON,,,,,
-class,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS)`
+    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,professorPassword,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,pedromatumoto@gmail.com,ANNUAL
+professor,Dr. John Doe,,,,,,john.doe@example.com,12345,S!q3T@pG9z,,
+subject,Data Structures,,,CSE103,EVENING,,,,,,
+class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,,2S-4CM-D5@2024(SCS)
+professor,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,Y@uP!zG6rX,,
+subject,Algorithms,,,CSE203,AFTERNOON,,,,,,
+class,Class 202,REMOTE,LAB,CSE204,,A02,,,,,2S-4CM-D5@2024(SCS)`
 
     const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
 
