@@ -12,20 +12,21 @@ export interface IScheduleRepository {
   // User methods
   getUsersLength(): number
   getUser(id: number): Promise<User>
-  getAllUsers(): Promise<User[]>
   getUsersByRole(role: ROLE): Promise<User[]>
   createUser(user: User): Promise<User>
   updateUser(id: number, newName: string, newEmail: string): Promise<User>
   deleteUser(id: number): Promise<User>
-  loginUser(email: string, password: string): Promise<User | null>
   getUserByEmail(email: string): Promise<User>
   getRoleByEmail(email: string): Promise<ROLE | null>
   getProfessorsByClass(classId: string): Promise<User[]>
   // Class methods
   getClassesLength(): number
   getClass(id: string): Promise<Class>
-  getAllClasss(): Promise<Class[]>
+  getClassesByScheduleId(scheduleId: string): Promise<Class[]>
   createClass(newClass: Class): Promise<Class>
+  getFullfilledDataByClassId(
+    classId: string,
+  ): Promise<{ professorId: number; possibilityId: string } | null>
 
   // Subject methods
   getSubjectsLength(): number
@@ -35,7 +36,6 @@ export interface IScheduleRepository {
 
   // Suitability methods
   getSuitabilitiesLength(): number
-  getAllSuitabilities(): Promise<Suitability[]>
   createSuitability(suitability: Suitability): Promise<Suitability>
   getSuitabilitiesByUserId(userId: number): Promise<Suitability[]>
   deleteSuitabilityByUserId(userId: number): Promise<Suitability[]>
@@ -45,17 +45,17 @@ export interface IScheduleRepository {
   getSchedule(id: string, groupNumber: number): Promise<Schedule>
   getAllSchedules(): Promise<Schedule[]>
   createSchedule(schedule: Schedule): Promise<Schedule>
+  getSchedulesByUserId(userId: number): Promise<Schedule[]>
 
   // Possibility methods
   getPossibilitiesLength(): number
   getPossibility(id: string): Promise<Possibility>
-  getAllPossibilities(): Promise<Possibility[]>
+  getPossibilitiesByScheduleId(scheduleId: string): Promise<Possibility[]>
   createPossibility(possibility: Possibility): Promise<Possibility>
 
   // Availability methods
   getAvailabilitiesLength(): number
   getAvailability(id: string): Promise<Availability>
-  getAllAvailabilities(): Promise<Availability[]>
   getAvailabilitiesByUserId(userId: number): Promise<Availability[]>
   deleteAvailability(id: string): Promise<Availability>
   createAvailability(availability: Availability): Promise<Availability>
@@ -63,6 +63,5 @@ export interface IScheduleRepository {
 
   // AvFullfilled methods
   getAvsFullfilledLength(): number
-  getAllAvsFullfilled(): Promise<AvFullfilled[]>
-  // createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled>
+  createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled>
 }

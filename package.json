@@ -9,7 +9,7 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "heroku-postbuild": "npm run build",
-    "lint": "eslint --ext .ts src",
+    "lint": "eslint src",
     "lint:fix": "eslint --fix --ext .ts src",
     "test": "vitest --no-watch",
     "test:watch": "vitest"
