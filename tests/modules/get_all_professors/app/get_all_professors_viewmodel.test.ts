@@ -17,8 +17,8 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
       professors: {
         '2': {
           availabilities: [],
-          email: 'user2@gmail.com',
-          name: 'user2',
+          email: 'pedromatumoto@gmail.com',
+          name: 'Pedro Henrique de Sousa Matumoto',
           suitabilities: [],
         },
         '3': {

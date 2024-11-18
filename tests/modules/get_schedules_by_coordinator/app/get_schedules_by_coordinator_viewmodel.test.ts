@@ -9,7 +9,7 @@ describe('GetSchedulesByCoordinatorViewmodel tests', () => {
     const usecase = new GetSchedulesByCoordinatorUsecase(repo)
     const response = await usecase.execute(2)
     const viewmodel = new GetSchedulesByCoordinatorViewmodel(response)
-    console.log(JSON.stringify(viewmodel.toJSON()))
+    //console.log(JSON.stringify(viewmodel.toJSON()))
     expect(viewmodel.toJSON()).toEqual({
       message: 'schedules by coordinator returned',
       schedules: {
