@@ -51,8 +51,14 @@ export class Schedule {
     }
     this.props.courseGrade = props.courseGrade
 
-    if (parseInt(Schedule.getCourseNameFromScheduleId(this.props.scheduleId)!) != this.props.courseGrade) { // scheduleId must contains the correct courseGrade
-      throw new EntityError('props.courseGrade must be equal to courseGrade in scheduleId')
+    if (
+      parseInt(Schedule.getCourseNameFromScheduleId(this.props.scheduleId)!) !=
+      this.props.courseGrade
+    ) {
+      // scheduleId must contains the correct courseGrade
+      throw new EntityError(
+        'props.courseGrade must be equal to courseGrade in scheduleId',
+      )
     }
   }
 
@@ -147,18 +153,30 @@ export class Schedule {
     }
     this.props.courseGrade = courseGrade
   }
-
+  // #region static methods
   static validateScheduleId(scheduleId: string): boolean {
     const scheduleIdRegex = /^[0-9]+S-.+-[DN][2-6]@[0-9]{4}\(SCS\)$/
-    return scheduleId !== undefined && typeof scheduleId === 'string' && scheduleIdRegex.test(scheduleId)
+    return (
+      scheduleId !== undefined &&
+      typeof scheduleId === 'string' &&
+      scheduleIdRegex.test(scheduleId)
+    )
   }
 
   static validateCourseName(courseName: string): boolean {
-    return courseName !== undefined && typeof courseName === 'string' && courseName.length > 0
+    return (
+      courseName !== undefined &&
+      typeof courseName === 'string' &&
+      courseName.length > 0
+    )
   }
 
   static validateGroupNumber(groupNumber: number): boolean {
-    return groupNumber !== undefined && typeof groupNumber === 'number' && groupNumber > 0
+    return (
+      groupNumber !== undefined &&
+      typeof groupNumber === 'number' &&
+      groupNumber > 0
+    )
   }
 
   static validateUserId(userId: number): boolean {

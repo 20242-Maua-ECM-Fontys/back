@@ -50,7 +50,6 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
       undefined,
     )
     const response = await controller.execute(request)
-    console.log(response)
 
     expect(response?.statusCode).toBe(400)
     expect(response?.body).toEqual(
