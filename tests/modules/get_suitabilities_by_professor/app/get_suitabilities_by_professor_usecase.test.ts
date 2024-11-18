@@ -30,7 +30,7 @@ describe('GetSuitabilitiesByProfessorUsecase tests', () => {
       'Invalid role. Expected PROFESSOR or COORDINATOR but received STAFF',
     )
   })
-
+ 
   it('Should throw an error if user does not exist', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
