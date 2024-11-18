@@ -9,9 +9,12 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
     const controller = new GetSuitabilitiesByProfessorController(usecase)
-    const request = new HttpRequest({
-      userId: 4,
-    })
+    const request = new HttpRequest(
+      undefined, 
+      undefined,
+      {userId: "2"},
+      undefined,
+    );
     const response = await controller.execute(request)
 
     expect(response?.statusCode).toBe(200)
@@ -24,28 +27,36 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
     const controller = new GetSuitabilitiesByProfessorController(usecase)
-    const request = new HttpRequest({})
+    const request = new HttpRequest(
+      undefined, 
+      undefined,
+      {},
+      undefined,
+    )
     const response = await controller.execute(request)
 
     expect(response?.statusCode).toBe(400)
     expect(response?.body).toEqual('Field userId is missing')
   })
 
-  it('should return 400 if userId is not a number', async () => {
+  it('should return 400 if userId is not a numeric string', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
     const controller = new GetSuitabilitiesByProfessorController(usecase)
-    const request = new HttpRequest({
-      userId: '4',
-    })
+    const request = new HttpRequest(
+      undefined, 
+      undefined,
+      {userId: "2a"},
+      undefined,
+    )
     const response = await controller.execute(request)
     console.log(response)
 
     expect(response?.statusCode).toBe(400)
     expect(response?.body).toEqual(
       "Field userId isn't in the right type.\n" +
-        ' Received: 4.\n' +
-        ' Expected to be a number.',
+        ' Received: 2a.\n' +
+        ' Expected to be a numeric string.',
     )
   })
 
@@ -53,9 +64,12 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
     const controller = new GetSuitabilitiesByProfessorController(usecase)
-    const request = new HttpRequest({
-      userId: 20,
-    })
+    const request = new HttpRequest(
+      undefined, 
+      undefined,
+      {userId: "20"},
+      undefined,
+    )
     const response = await controller.execute(request)
 
     expect(response?.statusCode).toBe(404)
@@ -66,9 +80,12 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
     const controller = new GetSuitabilitiesByProfessorController(usecase)
-    const request = new HttpRequest({
-      userId: -1,
-    })
+    const request = new HttpRequest(
+      undefined, 
+      undefined,
+      {userId: "-2"},
+      undefined,
+    )
     const response = await controller.execute(request)
 
     expect(response?.statusCode).toBe(400)

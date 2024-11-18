@@ -10,7 +10,7 @@ describe('Tests for GetSuitabilitiesByProfessorPresenter', () => {
     const event = new HttpRequest(
       undefined,
       undefined,
-      { userId: 4 },
+      { userId: "4" },
       undefined,
     )
 
