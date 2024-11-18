@@ -8,9 +8,11 @@ describe('Tests for GetSchedulesByCoordinatorPresenter', () => {
     const repo = new ScheduleRepositoryMock()
 
     const event = new HttpRequest(
+      {
+      },
       undefined,
-      undefined,
-      { userId: 2 },
+      {
+        userId: '2',},
       undefined,
     )
 
@@ -23,7 +25,13 @@ describe('Tests for GetSchedulesByCoordinatorPresenter', () => {
   it('Should call presenter and return status 400', async () => {
     const repo = new ScheduleRepositoryMock()
 
-    const event = new HttpRequest(undefined, undefined, {}, undefined)
+    const event = new HttpRequest(
+      {
+      },
+      undefined,
+      {},
+      undefined,
+    )
 
     const response = await GetSchedulesByCoordinatorPresenter(event, repo)
 
@@ -35,9 +43,11 @@ describe('Tests for GetSchedulesByCoordinatorPresenter', () => {
     const repo = new ScheduleRepositoryMock()
 
     const event = new HttpRequest(
+      {
+      },
       undefined,
-      undefined,
-      { userId: 200 },
+      {
+        userId: '2023',},
       undefined,
     )
 
