@@ -24,6 +24,13 @@ describe('GetSuitabilitiesByProfessorUsecase tests', () => {
 
     expect(response.length).toEqual(0)
   })
+  it('Should return error if user is not a professor', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
+    await expect(usecase.execute(1)).rejects.toThrow(
+      'Invalid role. Expected PROFESSOR or COORDINATOR but received STAFF',
+    )
+  })
 
   it('Should throw an error if user does not exist', async () => {
     const repo = new ScheduleRepositoryMock()
