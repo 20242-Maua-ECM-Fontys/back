@@ -13,171 +13,173 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
     ).toJSON()
 
     const expectedProfessors = {
-      message: 'professors with his availabilities and suitabilities returned',
+      message: "professors with his availabilities and suitabilities returned",
       professors: {
-        '2': {
-          availabilities: [],
-          email: 'pedromatumoto@gmail.com',
-          name: 'Pedro Henrique de Sousa Matumoto',
-          suitabilities: [],
+        "2": {
+          name: "Pedro Henrique de Sousa Matumoto",
+          email: "pedromatumoto@gmail.com",
+          availabilities: [
+          ],
+          suitabilities: [
+          ],
         },
-        '3': {
+        "3": {
+          name: "user3",
+          email: "user3@gmail.com",
           availabilities: [
             {
-              endTime: 560,
               startTime: 460,
-              weekDay: 'MON',
-            },
-            {
-              endTime: 670,
-              startTime: 570,
-              weekDay: 'MON',
-            },
-            {
               endTime: 560,
-              startTime: 460,
-              weekDay: 'TUE',
+              weekDay: "MON",
             },
             {
-              endTime: 670,
               startTime: 570,
-              weekDay: 'TUE',
+              endTime: 670,
+              weekDay: "MON",
             },
             {
+              startTime: 460,
               endTime: 560,
-              startTime: 460,
-              weekDay: 'WED',
+              weekDay: "TUE",
             },
             {
-              endTime: 670,
               startTime: 570,
-              weekDay: 'WED',
+              endTime: 670,
+              weekDay: "TUE",
             },
             {
+              startTime: 460,
               endTime: 560,
-              startTime: 460,
-              weekDay: 'THU',
+              weekDay: "WED",
             },
             {
-              endTime: 670,
               startTime: 570,
-              weekDay: 'THU',
+              endTime: 670,
+              weekDay: "WED",
             },
             {
+              startTime: 460,
               endTime: 560,
-              startTime: 460,
-              weekDay: 'FRI',
+              weekDay: "THU",
             },
             {
-              endTime: 670,
               startTime: 570,
-              weekDay: 'FRI',
+              endTime: 670,
+              weekDay: "THU",
+            },
+            {
+              startTime: 460,
+              endTime: 560,
+              weekDay: "FRI",
+            },
+            {
+              startTime: 570,
+              endTime: 670,
+              weekDay: "FRI",
             },
           ],
-          email: 'user3@gmail.com',
-          name: 'user3',
           suitabilities: [
             {
-              codeSubject: 'EFB207',
-              subjectName: 'Physics I',
+              codeSubject: "EFB207",
+              subjectName: "Physics I",
             },
             {
-              "codeSubject": "ECM256",
-              "subjectName": "Programming Languages II",
+              codeSubject: "ECM256",
+              subjectName: "Programming Languages II",
             },
           ],
         },
-        '4': {
+        "4": {
+          name: "user4",
+          email: "user4@gmail.com",
           availabilities: [
             {
-              endTime: 560,
               startTime: 460,
-              weekDay: 'MON',
+              endTime: 560,
+              weekDay: "MON",
             },
             {
-              endTime: 670,
               startTime: 570,
-              weekDay: 'MON',
+              endTime: 670,
+              weekDay: "MON",
             },
             {
-              endTime: 780,
               startTime: 680,
-              weekDay: 'MON',
+              endTime: 780,
+              weekDay: "MON",
             },
             {
-              endTime: 890,
               startTime: 790,
-              weekDay: 'MON',
+              endTime: 890,
+              weekDay: "MON",
             },
             {
-              endTime: 1000,
               startTime: 900,
-              weekDay: 'MON',
+              endTime: 1000,
+              weekDay: "MON",
             },
             {
-              endTime: 1110,
               startTime: 1010,
-              weekDay: 'MON',
+              endTime: 1110,
+              weekDay: "MON",
             },
             {
-              endTime: 1240,
               startTime: 1140,
-              weekDay: 'MON',
+              endTime: 1240,
+              weekDay: "MON",
             },
             {
-              endTime: 1350,
               startTime: 1250,
-              weekDay: 'MON',
+              endTime: 1350,
+              weekDay: "MON",
             },
           ],
-          email: 'user4@gmail.com',
-          name: 'user4',
           suitabilities: [
             {
-              codeSubject: 'ECM256',
-              subjectName: 'Programming Languages II',
-            },
-            {
-              codeSubject: 'ECM256',
-              subjectName: 'Programming Languages II',
+              codeSubject: "ECM256",
+              subjectName: "Programming Languages II",
             },
           ],
         },
-        '5': {
-          availabilities: [],
-          email: 'user5@gmail.com',
-          name: 'user5',
-          suitabilities: [],
+        "5": {
+          name: "user5",
+          email: "user5@gmail.com",
+          availabilities: [
+          ],
+          suitabilities: [
+          ],
         },
-        '6': {
-          availabilities: [],
-          email: 'udibon@tisim.sy',
-          name: 'Keith Thompson',
-          suitabilities: [],
+        "6": {
+          name: "Keith Thompson",
+          email: "udibon@tisim.sy",
+          availabilities: [
+          ],
+          suitabilities: [
+          ],
         },
-        '7': {
+        "7": {
+          name: "Austin Green",
+          email: "viraw@mon.cm",
           availabilities: [
             {
-              endTime: 560,
               startTime: 460,
-              weekDay: 'MON',
+              endTime: 560,
+              weekDay: "MON",
             },
             {
-              endTime: 670,
               startTime: 570,
-              weekDay: 'MON',
+              endTime: 670,
+              weekDay: "MON",
             },
           ],
-          email: 'viraw@mon.cm',
-          name: 'Austin Green',
           suitabilities: [
             {
-              codeSubject: 'ECM256',
-              subjectName: 'Programming Languages II',
+              codeSubject: "ECM256",
+              subjectName: "Programming Languages II",
             },
             {
-              codeSubject: 'EFB207',
-              subjectName: 'Physics I',
+              codeSubject: "EFB207",
+              subjectName: "Physics I",
             },
           ],
         },

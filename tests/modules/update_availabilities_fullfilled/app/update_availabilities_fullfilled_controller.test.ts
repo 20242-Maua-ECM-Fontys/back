@@ -726,7 +726,7 @@ describe('Assert UpdateAvailabilitiesFullfilledController is correct at all', ()
 
     const response = await controller.execute(httpRequest)
     expect(response?.statusCode).toEqual(400)
-    expect(response?.body).toEqual("The entity possibility with id a13e4567-e89b-12d3-a456-426614174000 doesn't refeers to scheduleId 2S-4CM-D5@2024(SCS)")
+    expect(response?.body).toEqual("The entity possibility with id a13e4567-e89b-12d3-a456-426614174000 doesn't refeers to scheduleId 2S-4CM-D5@2024(SCS) and groupNumber 1")
   })
   it('Should return BadRequest: class do not refeer to scheduleId specified', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -766,7 +766,7 @@ describe('Assert UpdateAvailabilitiesFullfilledController is correct at all', ()
 
     const response = await controller.execute(httpRequest)
     expect(response?.statusCode).toEqual(400)
-    expect(response?.body).toEqual("The entity class with id 0a8c5357-1f07-5b24-9845-9318c47ac925 doesn't refeers to scheduleId 2S-4CM-D5@2024(SCS)")
+    expect(response?.body).toEqual("The entity class with id 0a8c5357-1f07-5b24-9845-9318c47ac925 doesn't refeers to scheduleId 2S-4CM-D5@2024(SCS) and groupNumber 1")
   })
   it('Should return Forbidden: professor does not have suitability for certain class', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -883,6 +883,125 @@ describe('Assert UpdateAvailabilitiesFullfilledController is correct at all', ()
     expect(response?.statusCode).toEqual(409)
     expect(response?.body).toEqual("The professor with id 3 is already assigned to schedule with id 2S-3CM-D5@2024(SCS)")
   })
-  
+  it('Should return BadRequest: invalid classId format', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new UpdateAvailabilitiesFullfilledUsecase(
+      repo
+    )
+
+    const scheduleId = "2S-4CM-D5@2024(SCS)"
+    const availabilitiesFullfilled : AvailabilitiesFullfilledParam[] = [
+      {
+        userId:3,
+        classId:"0a8c5357-1f079845-9318c47ac926",
+        possibilityId:"124e4567-e89b-12d3-a456-426614174000"
+      },
+      {
+        userId:3,
+        possibilityId:"123e4567-e89b-12d3-a456-426614174001",
+        classId:"0a8c5357-1f07-5b24-9845-9318c47ac927"
+      },
+      {
+        userId: 3,
+        possibilityId: '113e4567-e89b-12d3-a456-426614174000',
+        classId: '0a8c5357-1f07-5b24-9845-9318c47ac924',
+      }
+    ]
+
+    const controller = new UpdateAvailabilitiesFullfilledController(usecase)
+    const httpRequest = new HttpRequest(
+      {
+        'scheduleId': scheduleId,
+        'availabilitiesFullfilled': availabilitiesFullfilled
+      },
+      undefined,
+      {},
+      undefined,
+    )
+
+    const response = await controller.execute(httpRequest)
+    expect(response?.statusCode).toEqual(400)
+    expect(response?.body).toEqual('Field classId is not valid')
+  })
+  it('Should return BadRequest: invalid possibilityId format', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new UpdateAvailabilitiesFullfilledUsecase(
+      repo
+    )
+
+    const scheduleId = "2S-4CM-D5@2024(SCS)"
+    const availabilitiesFullfilled : AvailabilitiesFullfilledParam[] = [
+      {
+        userId:3,
+        classId:"0a8c5357-1f07-5b24-9845-9318c47ac926",
+        possibilityId:"124e4567-e89b-12d3-a456-426614174000"
+      },
+      {
+        userId:3,
+        possibilityId:"123123e4567-e89b-12d3-a456-426614174001",
+        classId:"0a8c5357-1f07-5b24-9845-9318c47ac927"
+      },
+      {
+        userId: 3,
+        possibilityId: '113e4567-e89b-12d3-a456-426614174000',
+        classId: '0a8c5357-1f07-5b24-9845-9318c47ac924',
+      }
+    ]
+
+    const controller = new UpdateAvailabilitiesFullfilledController(usecase)
+    const httpRequest = new HttpRequest(
+      {
+        'scheduleId': scheduleId,
+        'availabilitiesFullfilled': availabilitiesFullfilled
+      },
+      undefined,
+      {},
+      undefined,
+    )
+
+    const response = await controller.execute(httpRequest)
+    expect(response?.statusCode).toEqual(400)
+    expect(response?.body).toEqual('Field possibilityId is not valid')
+  })
+  it('Should return BadRequest: invalid userId format', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new UpdateAvailabilitiesFullfilledUsecase(
+      repo
+    )
+
+    const scheduleId = "2S-4CM-D5@2024(SCS)"
+    const availabilitiesFullfilled : AvailabilitiesFullfilledParam[] = [
+      {
+        userId:3,
+        classId:"0a8c5357-1f07-5b24-9845-9318c47ac926",
+        possibilityId:"124e4567-e89b-12d3-a456-426614174000"
+      },
+      {
+        userId:3,
+        possibilityId:"123e4567-e89b-12d3-a456-426614174001",
+        classId:"0a8c5357-1f07-5b24-9845-9318c47ac927"
+      },
+      {
+        userId: -3,
+        possibilityId: '113e4567-e89b-12d3-a456-426614174000',
+        classId: '0a8c5357-1f07-5b24-9845-9318c47ac924',
+      }
+    ]
+
+    const controller = new UpdateAvailabilitiesFullfilledController(usecase)
+    const httpRequest = new HttpRequest(
+      {
+        'scheduleId': scheduleId,
+        'availabilitiesFullfilled': availabilitiesFullfilled
+      },
+      undefined,
+      {},
+      undefined,
+    )
+
+    const response = await controller.execute(httpRequest)
+    expect(response?.statusCode).toEqual(400)
+    expect(response?.body).toEqual('Field userId is not valid')
+  })
 
 })

@@ -46,10 +46,10 @@ export class UpdateAvailabilitiesFullfilledUsecase {
 
       // check if possibility and class refeers to the specified scheduleId
       if (possibilities[avFullfilled.possibilityId].scheduleId !== scheduleId) {
-        throw new InvalidReferenceToScheduleId('possibility', avFullfilled.possibilityId, scheduleId)
+        throw new InvalidReferenceToScheduleId('possibility', avFullfilled.possibilityId, scheduleId, 1)
       }
       if (classes[avFullfilled.classId].scheduleId !== scheduleId) {
-        throw new InvalidReferenceToScheduleId('class', avFullfilled.classId, scheduleId)
+        throw new InvalidReferenceToScheduleId('class', avFullfilled.classId, scheduleId, 1)
       }
 
       // check if user can teach the class

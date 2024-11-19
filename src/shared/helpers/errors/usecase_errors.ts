@@ -52,8 +52,8 @@ export class InvalidMauaTime extends BaseError {
 }
 
 export class InvalidReferenceToScheduleId extends BaseError {
-  constructor(entity: string, id: string, scheduleId: string) {
-    super(`The entity ${entity} with id ${id} doesn't refeers to scheduleId ${scheduleId}`)
+  constructor(entity: string, id: string, scheduleId: string, groupNumber: number) {
+    super(`The entity ${entity} with id ${id} doesn't refeers to scheduleId ${scheduleId} and groupNumber ${groupNumber}`)
   }
 }
 

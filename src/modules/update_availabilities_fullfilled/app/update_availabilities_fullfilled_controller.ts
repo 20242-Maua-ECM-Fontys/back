@@ -19,6 +19,9 @@ import {
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
 import { DuplicatedId, InvalidReferenceToScheduleId, InvalidRole, ProfessorAlreadyAssignToOtherSchedule, ProfessorCannotTeachClass, ProfessorDoesntHaveAvailability } from '../../../shared/helpers/errors/usecase_errors'
 import { UpdateAvailabilitiesFullfilledViewmodel } from './update_availabilities_fullfilled_viewmodel'
+import { User } from '../../../shared/domain/entities/user'
+import { Class } from '../../../shared/domain/entities/class'
+import { Possibility } from '../../../shared/domain/entities/possibility'
 
 export class UpdateAvailabilitiesFullfilledController {
   constructor(private usecase: UpdateAvailabilitiesFullfilledUsecase) {}
@@ -50,6 +53,9 @@ export class UpdateAvailabilitiesFullfilledController {
         if (typeof avFullfilled.userId !== 'number') {
           throw new WrongTypeParameters('userId', 'number', avFullfilled.userId)
         }
+        if (User.validateId(avFullfilled.userId) === false) {
+          throw new EntityError('userId')
+        }
 
         // check classId
         if (avFullfilled.classId === undefined) {
@@ -58,6 +64,9 @@ export class UpdateAvailabilitiesFullfilledController {
         if (typeof avFullfilled.classId !== 'string') {
           throw new WrongTypeParameters('classId', 'string', avFullfilled.classId)
         }
+        if (Class.validateId(avFullfilled.classId) === false) {
+          throw new EntityError('classId')
+        }
 
         // check possibilityId
         if (avFullfilled.possibilityId === undefined) {
@@ -65,6 +74,9 @@ export class UpdateAvailabilitiesFullfilledController {
         }
         if (typeof avFullfilled.possibilityId !== 'string') {
           throw new WrongTypeParameters('possibilityId', 'string', avFullfilled.possibilityId)
+        }
+        if (Possibility.validateId(avFullfilled.possibilityId) === false) {
+          throw new EntityError('possibilityId')
         }
 
         availabilitiesFullfilled.push({

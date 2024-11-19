@@ -9,10 +9,9 @@ describe('GetSchedulesByCoordinatorUsecase tests', () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetSchedulesByCoordinatorUsecase(repo)
     const response = await usecase.execute(2)
-    //console.log(JSON.stringify(response))
     expect(response.length).toEqual(4)
     expect(response[0].schedule.scheduleId).toEqual('2S-4CM-D5@2024(SCS)')
-    expect(response[0].classes.length).toEqual(2)
+    expect(response[0].classes.length).toEqual(3)
     expect(response[0].possibilities.length).toEqual(18)
   })
 

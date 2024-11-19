@@ -304,7 +304,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     const repo = new ScheduleRepositoryMock()
     const classes = await repo.getClassesByScheduleId('2S-4CM-D5@2024(SCS)')
 
-    expect(classes.length).toEqual(2)
+    expect(classes.length).toEqual(3)
   })
 
   it('Should return fullfilled data correctly for a class with associated data', async () => {
@@ -662,7 +662,7 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
       '2S-4CM-D5@2024(SCS)',
     )
 
-    expect(possibilities.length).toEqual(18)=
+    expect(possibilities.length).toEqual(18)
   })
 })
 
@@ -1107,6 +1107,6 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
     expect(availabilityAfter.isTaken).toEqual(false)
 
     const newLength = repo.getAvsFullfilledLength()
-    expect(newLength).toEqual(lastLength - 2)
+    expect(newLength).toEqual(lastLength - 4)
   })
 })

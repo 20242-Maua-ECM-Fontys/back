@@ -721,22 +721,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return users
   }
 
-  async getProfessorsByClass(classId: string): Promise<User[]> {
-
-    const foundClass = this.getClass(classId);
-
-  
-    const subjectCode = (await foundClass).subjectCode;
-
-
-    const suitableUsers = this.suitabilities
-      .filter(suitability => suitability.codeSubject === subjectCode)
-      .map(suitability => this.users.find(user => user.id === suitability.userId))
-      .filter((user): user is User => user !== undefined); 
-
-    return suitableUsers;
-  }
-
   async getUsersWithAvailabilitiesAndSuitabilities(
     userIds: number[]
   ): Promise<
@@ -833,7 +817,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }   
    
   async getClassesByScheduleId(scheduleId: string): Promise<Class[]> {
-    return this.classes.filter((c) => c.scheduleId === scheduleId
+    return this.classes.filter((c) => c.scheduleId === scheduleId)
   }
 
   async createClass(newClass: Class): Promise<Class> {
@@ -858,6 +842,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       acc[curr.id] = curr;
       return acc;
     }, {});
+  }
 
   async getFullfilledDataByClassId(
     classId: string,
@@ -1091,6 +1076,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   // #region AvFullfilled methods
   getAvsFullfilledLength(): number {
     return this.avsFullfilled.length
+  }
+
+  async getAllAvsFullfilled(): Promise<AvFullfilled[]> {
+    return this.avsFullfilled
   }
 
   async createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled> {
