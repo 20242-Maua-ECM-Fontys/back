@@ -38,11 +38,12 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
 
     // Validate the suitabilities of the first professor
     const firstProfessorSuitabilities = firstProfessor.suitabilities
-    expect(firstProfessorSuitabilities.length).toEqual(1)
-    firstProfessorSuitabilities.forEach((suitability) => {
-      expect(suitability.codeSubject).toEqual('EFB207')
-      expect(suitability.subjectName).toEqual('Physics I')
-    })
+    expect(firstProfessorSuitabilities.length).toEqual(2)
+    expect(firstProfessorSuitabilities[0].codeSubject).toEqual("EFB207")
+    expect(firstProfessorSuitabilities[0].subjectName).toEqual("Physics I")
+    expect(firstProfessorSuitabilities[1].codeSubject).toEqual("ECM256")
+    expect(firstProfessorSuitabilities[1].subjectName).toEqual("Programming Languages II")
+    
 
     // Validate second professor's data
     const secondProfessor = professors[1]
@@ -69,11 +70,10 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
 
     // Validate the suitabilities of the second professor
     const secondProfessorSuitabilities = secondProfessor.suitabilities
-    expect(secondProfessorSuitabilities.length).toEqual(2)
-    secondProfessorSuitabilities.forEach((suitability) => {
-      expect(suitability.codeSubject).toEqual('ECM256')
-      expect(suitability.subjectName).toEqual('Programming Languages II')
-    })
+    expect(secondProfessorSuitabilities.length).toEqual(1)
+    expect(secondProfessorSuitabilities[0].codeSubject).toEqual("ECM256")
+    expect(secondProfessorSuitabilities[0].subjectName).toEqual("Programming Languages II")
+    
 
     // Validate third professor's data
     const thirdProfessor = professors[2]
