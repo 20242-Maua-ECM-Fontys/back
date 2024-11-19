@@ -27,7 +27,6 @@ interface ParsedData {
   subjectPeriod: string
   professorEmail: string
   professorRa: string
-  professorPassword: string
   roomCode: string
   scheduleId: string
   courseName: string
@@ -74,14 +73,8 @@ export class UploadCSVUsecase {
               const newName = row.name
               const newEmail = row.professorEmail
               const newRA = row.professorRa
-              const newPassword = row.professorPassword
 
-              if (
-                newName === '' ||
-                newEmail === '' ||
-                newRA === '' ||
-                newPassword === ''
-              ) {
+              if (newName === '' || newEmail === '' || newRA === '') {
                 noProblems = 'invalidCSVFormat'
                 return
               }
@@ -92,7 +85,6 @@ export class UploadCSVUsecase {
                 email: newEmail,
                 role: ROLE.PROFESSOR,
                 RA: newRA,
-                password: newPassword,
               })
               userList.push(newUser)
             } else if (row.type === 'subject') {
@@ -162,7 +154,6 @@ export class UploadCSVUsecase {
               row.subjectPeriod === 'subjectPeriod' &&
               row.professorEmail === 'professorEmail' &&
               row.professorRa === 'professorRa' &&
-              row.professorPassword === 'professorPassword' &&
               row.roomCode === 'roomCode' &&
               row.scheduleId === 'scheduleId'
             ) {

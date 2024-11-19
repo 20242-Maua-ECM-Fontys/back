@@ -3,7 +3,7 @@ import { Possibility } from '../../../../src/shared/domain/entities/possibility'
 import { WEEK_DAY } from '../../../../src/shared/domain/enums/week_day_enum'
 import { MAUA_START_TIME } from '../../../../src/shared/domain/enums/maua_start_time_enum'
 import { MAUA_END_TIME } from '../../../../src/shared/domain/enums/maua_end_time_enum'
-import { EntityError } from '../../../../src/shared/helpers/errors/domain_errors'
+import { EntityError, TimeError } from '../../../../src/shared/helpers/errors/domain_errors'
 
 describe('Possibility entity', () => {
   it('should create a possibility entity', () => {
@@ -83,7 +83,7 @@ describe('Possibility entity', () => {
         scheduleId: '2S-4CM-D5@2024(SCS)',
 
       })
-    }).toThrowError(EntityError)
+    }).toThrowError('460 can not be greater than or equal to 670')
     expect(() => {
       new Possibility({
         id: '123e4567-e89b-12d3-a456-426614174000',
@@ -93,7 +93,7 @@ describe('Possibility entity', () => {
         scheduleId: '2S-4CM-D5@2024(SCS)',
 
       })
-    }).toThrowError(EntityError)
+    }).toThrowError('570 can not be greater than or equal to 560')
   })
 
   it('should throw an error if scheduleId is invalid', () => {

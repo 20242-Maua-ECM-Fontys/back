@@ -1,34 +1,35 @@
 import { describe, it, expect } from 'vitest'
-import { GetSuitabilitiesByProfessorController } from '../../../../src/modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_controller'
-import { GetSuitabilitiesByProfessorUsecase } from '../../../../src/modules/get_suitabilities_by_professor/app/get_suitabilities_by_professor_usecase'
+import { GetSchedulesByCoordinatorController } from '../../../../src/modules/get_schedules_by_coordinator/app/get_schedules_by_coordinator_controller'
+import { GetSchedulesByCoordinatorUsecase } from '../../../../src/modules/get_schedules_by_coordinator/app/get_schedules_by_coordinator_usecase'
 import { HttpRequest } from '../../../../src/shared/helpers/external_interfaces/http_models'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 
-describe('Tests for GetSuitabilitiesByProfessorController', () => {
-  it('should return a list of suitabilities', async () => {
+describe('Tests for GetSchedulesByCoordinatorController', () => {
+  it('should return a list of schedules', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
-    const controller = new GetSuitabilitiesByProfessorController(usecase)
+    const usecase = new GetSchedulesByCoordinatorUsecase(repo)
+    const controller = new GetSchedulesByCoordinatorController(usecase)
     const request = new HttpRequest(
-      undefined, 
+      {
+      },
       undefined,
-      {userId: "2"},
+      {
+        userId: '2',},
       undefined,
-    );
+    )
     const response = await controller.execute(request)
 
     expect(response?.statusCode).toBe(200)
-    expect(response?.body.message).toEqual(
-      'suitabilities by professor returned',
-    )
+    expect(response?.body.message).toEqual('schedules by coordinator returned')
   })
 
   it('should return 400 if userId is missing', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
-    const controller = new GetSuitabilitiesByProfessorController(usecase)
+    const usecase = new GetSchedulesByCoordinatorUsecase(repo)
+    const controller = new GetSchedulesByCoordinatorController(usecase)
     const request = new HttpRequest(
-      undefined, 
+      {
+      },
       undefined,
       {},
       undefined,
@@ -41,12 +42,13 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
 
   it('should return 400 if userId is not a numeric string', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
-    const controller = new GetSuitabilitiesByProfessorController(usecase)
+    const usecase = new GetSchedulesByCoordinatorUsecase(repo)
+    const controller = new GetSchedulesByCoordinatorController(usecase)
     const request = new HttpRequest(
-      undefined, 
+      {
+      },
       undefined,
-      {userId: "2a"},
+      {userId: '2a',},
       undefined,
     )
     const response = await controller.execute(request)
@@ -61,12 +63,14 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
 
   it('should return 404 if no users are found', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
-    const controller = new GetSuitabilitiesByProfessorController(usecase)
+    const usecase = new GetSchedulesByCoordinatorUsecase(repo)
+    const controller = new GetSchedulesByCoordinatorController(usecase)
     const request = new HttpRequest(
-      undefined, 
+      {
+      },
       undefined,
-      {userId: "20"},
+      {
+        userId: '20',},
       undefined,
     )
     const response = await controller.execute(request)
@@ -75,19 +79,24 @@ describe('Tests for GetSuitabilitiesByProfessorController', () => {
     expect(response?.body).toEqual('No items found for userId')
   })
 
-  it('should return 400 if userId is not valid', async () => {
+  it('should return 400 if user is not a coordinator', async () => {
     const repo = new ScheduleRepositoryMock()
-    const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
-    const controller = new GetSuitabilitiesByProfessorController(usecase)
+    const usecase = new GetSchedulesByCoordinatorUsecase(repo)
+    const controller = new GetSchedulesByCoordinatorController(usecase)
     const request = new HttpRequest(
-      undefined, 
+      {
+      },
       undefined,
-      {userId: "-2"},
+      {
+        userId: '1',
+      },
       undefined,
     )
     const response = await controller.execute(request)
 
     expect(response?.statusCode).toBe(400)
-    expect(response?.body).toEqual('Field userId is not valid')
+    expect(response?.body).toEqual(
+      'Invalid role. Expected COORDINATOR but received STAFF',
+    )
   })
 })

@@ -1,4 +1,4 @@
-import { EntityError } from '../../../shared/helpers/errors/domain_errors'
+import { EntityError, TimeError } from '../../../shared/helpers/errors/domain_errors'
 import { WEEK_DAY, toEnum as WeekDayToEnum } from '../enums/week_day_enum'
 import {
   MAUA_START_TIME,
@@ -37,10 +37,17 @@ export class Possibility {
       throw new EntityError('props.weekDay')
     }
     this.props.weekDay = props.weekDay
-
-    if (!Possibility.validateStartEndTime(props.startTime, props.endTime)) {
+    //remake start
+    if (!Possibility.validateStartTime(props.startTime)) {
       throw new EntityError('props.startTime')
     }
+    if (!Possibility.validateEndTime(props.endTime)) {
+      throw new EntityError('props.endTime')
+    }
+    if (!Possibility.validateStartEndComparison(props.startTime, props.endTime)) {
+      throw new TimeError(props.startTime, props.endTime)
+    }
+    //remake end
     this.props.startTime = props.startTime
     this.props.endTime = props.endTime
 
@@ -63,18 +70,29 @@ export class Possibility {
   static validateWeekDay(weekDay: WEEK_DAY): boolean {
     return Object.values(WEEK_DAY).includes(weekDay)
   }
-
-  static validateStartEndTime(
-    startTime: MAUA_START_TIME,
-    endTime: MAUA_END_TIME,
-  ): boolean {
+  
+  //remade methods start
+  static validateStartTime(startTime: MAUA_START_TIME){
     if (!Object.values(MAUA_START_TIME).includes(startTime)) {
       return false
     }
+    return true
+  }
+  
+  static validateEndTime(endTime: MAUA_END_TIME){
     if (!Object.values(MAUA_END_TIME).includes(endTime)) {
       return false
     }
+    return true
+  }
+
+  static validateStartEndComparison(
+    startTime: MAUA_START_TIME,
+    endTime: MAUA_END_TIME,
+  ): boolean{
     if (!(MAUA_START_TIME[startTime] === MAUA_END_TIME[endTime])) {
+      return false
+    }if (!(MAUA_START_TIME[startTime] <= MAUA_END_TIME[endTime])) {
       return false
     }
     return true
@@ -86,6 +104,7 @@ export class Possibility {
     }
     return true
   }
+  //remade methods end
 
   static fromJSON(json: JsonProps): Possibility {
     return new Possibility({
@@ -135,14 +154,14 @@ export class Possibility {
   }
 
   set startTime(startTime: MAUA_START_TIME) {
-    if (!Possibility.validateStartEndTime(startTime, this.endTime)) {
+    if (!Possibility.validateStartTime(startTime)) {
       throw new EntityError('startTime')
     }
     this.props.startTime = startTime
   }
 
   set endTime(endTime: MAUA_END_TIME) {
-    if (!Possibility.validateStartEndTime(this.startTime, endTime)) {
+    if (!Possibility.validateEndTime(endTime)) {
       throw new EntityError('endTime')
     }
     this.props.endTime = endTime
