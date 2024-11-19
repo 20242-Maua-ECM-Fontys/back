@@ -154,14 +154,14 @@ export class Possibility {
   }
 
   set startTime(startTime: MAUA_START_TIME) {
-    if (!Possibility.validateStartEndTime(startTime, this.endTime)) {
+    if (!Possibility.validateStartTime(startTime)) {
       throw new EntityError('startTime')
     }
     this.props.startTime = startTime
   }
 
   set endTime(endTime: MAUA_END_TIME) {
-    if (!Possibility.validateStartEndTime(this.startTime, endTime)) {
+    if (!Possibility.validateEndTime(endTime)) {
       throw new EntityError('endTime')
     }
     this.props.endTime = endTime
