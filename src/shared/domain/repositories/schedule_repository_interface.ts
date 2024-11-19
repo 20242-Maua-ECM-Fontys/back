@@ -19,11 +19,22 @@ export interface IScheduleRepository {
   getUserByEmail(email: string): Promise<User>
   getRoleByEmail(email: string): Promise<ROLE | null>
   getProfessorsByClass(classId: string): Promise<User[]>
+  getUsersWithAvailabilitiesAndSuitabilities(usersIds: number[]): Promise<Record<
+    number, { 
+      user: User; 
+      suitabilities: Suitability[]; 
+      availabilities: {data: Availability, scheduleFullfilled: string | undefined}[]
+    }
+    >
+  > 
+
   // Class methods
   getClassesLength(): number
   getClass(id: string): Promise<Class>
-  getClassesByScheduleId(scheduleId: string): Promise<Class[]>
+  getAllClasses(): Promise<Class[]>
   createClass(newClass: Class): Promise<Class>
+  getClassesByIds(classesIds: string[]): Promise<Record<string, Class>> 
+  getClassesByScheduleId(scheduleId: string): Promise<Class[]>
   getFullfilledDataByClassId(
     classId: string,
   ): Promise<{ professorId: number; possibilityId: string } | null>
@@ -52,6 +63,7 @@ export interface IScheduleRepository {
   getPossibility(id: string): Promise<Possibility>
   getPossibilitiesByScheduleId(scheduleId: string): Promise<Possibility[]>
   createPossibility(possibility: Possibility): Promise<Possibility>
+  getPossibilitiesByIds(possibilitiesIds: string[]): Promise<Record<string, Possibility>>
 
   // Availability methods
   getAvailabilitiesLength(): number
@@ -63,5 +75,8 @@ export interface IScheduleRepository {
 
   // AvFullfilled methods
   getAvsFullfilledLength(): number
+  getAllAvsFullfilled(): Promise<AvFullfilled[]>
   createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled>
+  createAvsFullfilled(avsFullfilled: AvFullfilled[]): Promise<AvFullfilled[]> // by now, because it is just used on update_availabilities_fullfilled (that already validates everything), this method doesn't validate anything
+  deleteAvsFullfilledByScheduleId(scheduleId: string): Promise<AvFullfilled[]>
 }

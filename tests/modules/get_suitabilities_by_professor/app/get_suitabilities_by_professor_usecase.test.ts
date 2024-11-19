@@ -8,7 +8,7 @@ describe('GetSuitabilitiesByProfessorUsecase tests', () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetSuitabilitiesByProfessorUsecase(repo)
     const response = await usecase.execute(4)
-    expect(response.length).toEqual(2)
+    expect(response.length).toEqual(1)
   })
   it('Should throw an error if userId is invalid', async () => {
     const repo = new ScheduleRepositoryMock()
