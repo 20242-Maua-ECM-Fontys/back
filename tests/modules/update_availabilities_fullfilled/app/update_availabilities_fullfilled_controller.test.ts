@@ -32,7 +32,7 @@ describe('Assert UpdateAvailabilitiesFullfilledController is correct at all', ()
 
     const controller = new UpdateAvailabilitiesFullfilledController(usecase)
     const httpRequest = new HttpRequest(
-      {
+      { 
         'scheduleId': scheduleId,
         'availabilitiesFullfilled': availabilitiesFullfilled
       },
