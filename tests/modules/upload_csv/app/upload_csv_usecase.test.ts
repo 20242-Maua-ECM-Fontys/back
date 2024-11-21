@@ -159,7 +159,7 @@ room,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS)`
     const usecase = new UploadCSVUsecase(repo)
 
     const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
-schedule,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,user1@gmail.com,ANNUAL
+schedule,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,21.01075-7@maua.br,ANNUAL
 professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,
 subject,Data Structures,,,CSE103,EVENING,,,,,
 class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS)

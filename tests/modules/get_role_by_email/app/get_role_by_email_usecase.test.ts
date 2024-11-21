@@ -8,7 +8,7 @@ describe('GetRoleByEmailUsecase', () => {
     const repo = new ScheduleRepositoryMock();
     const usecase = new GetRoleByEmailUsecase(repo);
 
-    const userData = await usecase.execute('user1@gmail.com');
+    const userData = await usecase.execute('21.01075-7@maua.br');
     expect(userData.role).toBe('STAFF');
     expect(userData.userId).toBe(1);
   });

@@ -7,10 +7,10 @@ describe('[User Entity Tests]', () => {
   it('Assert User Entity is correct at all', () => {
     const user = new User({
       id: 5,
-      name: 'user1',
-      email: 'user1@gmail.com',
+      name: 'JOAO VITOR CHOUERI BRANCO',
+      email: '21.01075-7@maua.br',
       role: ROLE.STAFF,
-      RA: '21.00000-1',
+      RA: '21.01075-7',
     })
 
     expect(user).toBeInstanceOf(User)
@@ -20,9 +20,9 @@ describe('[User Entity Tests]', () => {
       new User({
         id: -5,
         name: 'John Doe',
-        email: 'user1@gmail.com',
+        email: '21.01075-7@maua.br',
         role: ROLE.STAFF,
-        RA: '21.00000-1',
+        RA: '21.01075-7',
       })
     }).toThrowError('Field props.id is not valid')
   })
@@ -31,18 +31,18 @@ describe('[User Entity Tests]', () => {
       new User({
         id: 5,
         name: '',
-        email: 'user1@gmail.com',
+        email: '21.01075-7@maua.br',
         role: ROLE.STAFF,
-        RA: '21.00000-1',
+        RA: '21.01075-7',
       })
     }).toThrowError(EntityError)
     expect(() => {
       new User({
         id: 5,
         name: '',
-        email: 'user1@gmail.com',
+        email: '21.01075-7@maua.br',
         role: ROLE.STAFF,
-        RA: '21.00000-1',
+        RA: '21.01075-7',
       })
     }).toThrowError('Field props.name is not valid')
   })
@@ -50,19 +50,19 @@ describe('[User Entity Tests]', () => {
     expect(() => {
       new User({
         id: 5,
-        name: 'user1',
-        email: 'user1m',
+        name: 'JOAO VITOR CHOUERI BRANCO',
+        email: 'JOAO VITOR CHOUERI BRANCOm',
         role: ROLE.STAFF,
-        RA: '21.00000-1',
+        RA: '21.01075-7',
       })
     }).toThrowError(EntityError)
     expect(() => {
       new User({
         id: 5,
-        name: 'user1',
-        email: 'user1m',
+        name: 'JOAO VITOR CHOUERI BRANCO',
+        email: 'JOAO VITOR CHOUERI BRANCOm',
         role: ROLE.STAFF,
-        RA: '21.00000-1',
+        RA: '21.01075-7',
       })
     }).toThrowError('Field props.email is not valid')
   })
@@ -70,17 +70,17 @@ describe('[User Entity Tests]', () => {
     expect(() => {
       new User({
         id: 5,
-        name: 'user1',
-        email: 'user1@gmail.com',
-        RA: '21.00000-1',
+        name: 'JOAO VITOR CHOUERI BRANCO',
+        email: '21.01075-7@maua.br',
+        RA: '21.01075-7',
       })
     }).toThrowError(EntityError)
     expect(() => {
       new User({
         id: 5,
-        name: 'user1',
-        email: 'user1@gmail.com',
-        RA: '21.00000-1',
+        name: 'JOAO VITOR CHOUERI BRANCO',
+        email: '21.01075-7@maua.br',
+        RA: '21.01075-7',
       })
     }).toThrowError('Field props.role is not valid')
   })
@@ -89,8 +89,8 @@ describe('[User Entity Tests]', () => {
     expect(() => {
       new User({
         id: 5,
-        name: 'user1',
-        email: 'user1@gmail.com',
+        name: 'JOAO VITOR CHOUERI BRANCO',
+        email: '21.01075-7@maua.br',
         role: ROLE.STAFF,
         RA: 21.0,
       })
@@ -98,8 +98,8 @@ describe('[User Entity Tests]', () => {
     expect(() => {
       new User({
         id: 5,
-        name: 'user1',
-        email: 'user1@gmail.com',
+        name: 'JOAO VITOR CHOUERI BRANCO',
+        email: '21.01075-7@maua.br',
         role: ROLE.STAFF,
         RA: 21.0,
       })

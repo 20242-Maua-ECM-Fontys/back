@@ -9,7 +9,7 @@ describe('Assert GetRoleByEmailController is correct at all', () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new GetRoleByEmailUsecase(repo)
 
-    const email = 'user3@gmail.com'
+    const email = '21.00784-5@maua.br'
     const expectedRole = 'PROFESSOR'
 
     const controller = new GetRoleByEmailController(usecase)
