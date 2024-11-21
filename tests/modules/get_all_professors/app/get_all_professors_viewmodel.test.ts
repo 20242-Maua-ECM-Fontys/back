@@ -90,8 +90,8 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
           ],
         },
         "4": {
-          name: "user4",
-          email: "user4@gmail.com",
+          name: "FLAVIO MURATA",
+          email: "21.01192-3@maua.br",
           availabilities: [
             {
               startTime: 460,
@@ -182,6 +182,12 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
               subjectName: "Physics I",
             },
           ],
+        },
+        "9":  {
+          "availabilities":  [],
+          "email": "523464@student.fontys.nl",
+          "name": "UMUT",
+          "suitabilities":  [],
         },
       },
     }

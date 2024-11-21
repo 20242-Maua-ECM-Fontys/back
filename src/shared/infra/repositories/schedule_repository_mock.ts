@@ -50,10 +50,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     new User({
       // professor with 2 suitability
       id: 4,
-      name: 'user4',
-      email: 'user4@gmail.com',
+      name: 'FLAVIO MURATA',
+      email: '21.01192-3@maua.br',
       role: ROLE.PROFESSOR,
-      RA: '44.00000-4',
+      RA: '21.01192-3',
     }),
     new User({
       // professor with 0 suitability
@@ -77,6 +77,20 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       role: ROLE.PROFESSOR,
       RA: '66.00000-6',
     }),
+    new User({
+      id: 8,
+      name: 'MISHA',
+      email: '537010@student.fontys.nl',
+      role: ROLE.STAFF,
+      RA: '00.53701-0',
+    }),
+    new User({
+      id: 9,
+      name: 'UMUT',
+      email: '523464@student.fontys.nl',
+      role: ROLE.PROFESSOR,
+      RA: '00.52346-4',
+    })
   ]
   // #region classes
   private classes: Class[] = [

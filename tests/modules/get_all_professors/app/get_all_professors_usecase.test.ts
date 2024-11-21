@@ -11,7 +11,7 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     const professors = await usecase.execute()
 
     // Validate that three professors are returned
-    expect(professors.length).toEqual(6)
+    expect(professors.length).toEqual(7)
 
     // Validate first professor's data
     const firstProfessor = professors[0]
@@ -48,10 +48,10 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     // Validate second professor's data
     const secondProfessor = professors[1]
     expect(secondProfessor.professor.props.id).toEqual(4)
-    expect(secondProfessor.professor.props.name).toEqual('user4')
-    expect(secondProfessor.professor.props.email).toEqual('user4@gmail.com')
+    expect(secondProfessor.professor.props.name).toEqual('FLAVIO MURATA')
+    expect(secondProfessor.professor.props.email).toEqual('21.01192-3@maua.br')
     expect(secondProfessor.professor.props.role).toEqual('PROFESSOR')
-    expect(secondProfessor.professor.props.RA).toEqual('44.00000-4')
+    expect(secondProfessor.professor.props.RA).toEqual('21.01192-3')
 
     // Validate the availabilities of the second professor
     const secondProfessorAvailabilities = secondProfessor.availabilities

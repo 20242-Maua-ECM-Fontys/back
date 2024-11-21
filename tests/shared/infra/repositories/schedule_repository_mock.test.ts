@@ -24,8 +24,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     const length = repo.getUsersLength()
 
-    expect(length).toEqual(7)
-    expect(length).toEqual(7)
+    expect(length).toEqual(9)
   })
   it('Should get user correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -77,8 +76,8 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const staff = await repo.getUsersByRole(ROLE.STAFF)
 
     expect(coordinators.length).toEqual(2)
-    expect(professors.length).toEqual(4)
-    expect(staff.length).toEqual(1)
+    expect(professors.length).toEqual(5)
+    expect(staff.length).toEqual(2)
 
     for (const user of coordinators) {
       expect(user.role).toEqual(ROLE.COORDINATOR)
