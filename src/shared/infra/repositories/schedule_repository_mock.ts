@@ -27,10 +27,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   private users: User[] = [
     new User({
       id: 1,
-      name: 'user1',
-      email: 'user1@gmail.com',
+      name: 'JOAO VITOR CHOUERI BRANCO',
+      email: '21.01075-7@maua.br',
       role: ROLE.STAFF,
-      RA: '21.00000-1',
+      RA: '21.01075-7',
     }),
     new User({
       id: 2,
@@ -42,10 +42,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     new User({
       // professor with 1 suitability
       id: 3,
-      name: 'user3',
-      email: 'user3@gmail.com',
+      name: 'PEDRO HENRIQUE DE SOUSA MATUMOTO',
+      email: '21.00784-5@maua.br',
       role: ROLE.PROFESSOR,
-      RA: '33.00000-3',
+      RA: '21.00784-5',
     }),
     new User({
       // professor with 2 suitability
@@ -169,7 +169,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   private schedules: Schedule[] = [
     new Schedule({
       scheduleId: '2S-4CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 2,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -177,7 +177,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
     new Schedule({
       scheduleId: '2S-2CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 2,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -185,7 +185,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
     new Schedule({
       scheduleId: '2S-3CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 2,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -193,7 +193,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }),
     new Schedule({
       scheduleId: '1S-2CIC-D4@2024(SCS)',
-      courseName: 'Cience Coputing',
+      courseName: 'Science Computing',
       groupNumber: 1,
       userId: 2,
       academicPeriod: ACADEMIC_PERIOD.FIRST_SEMESTER,

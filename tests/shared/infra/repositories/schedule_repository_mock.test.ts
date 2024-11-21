@@ -32,10 +32,10 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const user = await repo.getUser(1)
 
     expect(user?.id).toEqual(1)
-    expect(user?.name).toEqual('user1')
-    expect(user?.email).toEqual('user1@gmail.com')
+    expect(user?.name).toEqual('JOAO VITOR CHOUERI BRANCO')
+    expect(user?.email).toEqual('21.01075-7@maua.br')
     expect(user?.role).toEqual(ROLE.STAFF)
-    expect(user?.RA).toEqual('21.00000-1')
+    expect(user?.RA).toEqual('21.01075-7')
   })
   it('Should get user wrongly: userId does not exists', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -62,10 +62,10 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
   it('Should not create user: user already exists', async () => {
     const user = new User({
       id: 1,
-      name: 'user1',
+      name: 'JOAO VITOR CHOUERI BRANCO',
       email: 'ini@vifod.nc',
       role: ROLE.STAFF,
-      RA: '21.00000-1',
+      RA: '21.01075-7',
     })
     const repo = new ScheduleRepositoryMock()
     expect(repo.createUser(user)).rejects.toThrowError('userId already exists')
@@ -95,7 +95,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
 
   it('Should get users by email correctly', async () => {
     const repo = new ScheduleRepositoryMock()
-    const user = await repo.getUserByEmail('user1@gmail.com')
+    const user = await repo.getUserByEmail('21.01075-7@maua.br')
 
     expect(user?.id).toEqual(1)
   })
@@ -111,7 +111,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
   it('should get users by email correctly', async () => {
     const repo = new ScheduleRepositoryMock()
 
-    const role = await repo.getRoleByEmail('user1@gmail.com')
+    const role = await repo.getRoleByEmail('21.01075-7@maua.br')
 
     expect(role).toEqual(ROLE.STAFF)
   })
@@ -470,7 +470,7 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   it('Should create schedule correctly', async () => {
     const schedule = new Schedule({
       scheduleId: '2S-1CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 2,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -487,7 +487,7 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   it('Should create schedule wrongly: already exists', async () => {
     const schedule = new Schedule({
       scheduleId: '2S-4CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 2,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -507,7 +507,7 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
     const repo = new ScheduleRepositoryMock()
     const schedule = new Schedule({
       scheduleId: '2S-1CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: repo.getUsersLength() + 1,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -526,7 +526,7 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
     const repo = new ScheduleRepositoryMock()
     const schedule = new Schedule({
       scheduleId: '2S-1CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 1,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,

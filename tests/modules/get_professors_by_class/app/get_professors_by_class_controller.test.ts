@@ -20,7 +20,7 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
       "message": "professors by class returned",
     "professors": {
       "3": {
-        "RA": "33.00000-3",
+        "RA": "21.00784-5",
         "availabilities": {
           "0a8c5357-1f07-5b24-9845-9318c4000000": {
             "endTime": 560,
@@ -83,8 +83,8 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
             "weekDay": "FRI",
           },
         },
-        "email": "user3@gmail.com",
-        "name": "user3",
+        "email": "21.00784-5@maua.br",
+        "name": "PEDRO HENRIQUE DE SOUSA MATUMOTO",
       },
       "4": {
         "RA": "44.00000-4",

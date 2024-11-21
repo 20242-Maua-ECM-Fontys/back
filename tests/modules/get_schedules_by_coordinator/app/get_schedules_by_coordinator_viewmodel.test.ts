@@ -14,7 +14,7 @@ describe('GetSchedulesByCoordinatorViewmodel tests', () => {
       schedules: {
         "2S-4CM-D5@2024(SCS)": {
           academicPeriod: "ANNUAL",
-          courseName: "Compute Engineering",
+          courseName: "Computer Engineering",
           groupNumber: 1,
           courseGrade: 4,
           possibilities: {
@@ -140,7 +140,7 @@ describe('GetSchedulesByCoordinatorViewmodel tests', () => {
         },
         "2S-2CM-D5@2024(SCS)": {
           academicPeriod: "ANNUAL",
-          courseName: "Compute Engineering",
+          courseName: "Computer Engineering",
           groupNumber: 1,
           courseGrade: 2,
           possibilities: {
@@ -150,7 +150,7 @@ describe('GetSchedulesByCoordinatorViewmodel tests', () => {
         },
         "2S-3CM-D5@2024(SCS)": {
           academicPeriod: "ANNUAL",
-          courseName: "Compute Engineering",
+          courseName: "Computer Engineering",
           groupNumber: 1,
           courseGrade: 3,
           possibilities: {
@@ -245,7 +245,7 @@ describe('GetSchedulesByCoordinatorViewmodel tests', () => {
         },
         "1S-2CIC-D4@2024(SCS)": {
           academicPeriod: "1SEM",
-          courseName: "Cience Coputing",
+          courseName: "Science Computing",
           groupNumber: 1,
           courseGrade: 2,
           possibilities: {

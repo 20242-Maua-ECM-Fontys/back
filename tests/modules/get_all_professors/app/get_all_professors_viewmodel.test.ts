@@ -24,8 +24,8 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
           ],
         },
         "3": {
-          name: "user3",
-          email: "user3@gmail.com",
+          name: "PEDRO HENRIQUE DE SOUSA MATUMOTO",
+          email: "21.00784-5@maua.br",
           availabilities: [
             {
               startTime: 460,

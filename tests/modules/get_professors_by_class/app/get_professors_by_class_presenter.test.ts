@@ -25,9 +25,9 @@ describe('Tests for GetProfessorsByClassPresenter', () => {
       message: "professors by class returned",
       professors: {
         "3": {
-          name: "user3",
-          email: "user3@gmail.com",
-          RA: "33.00000-3",
+          name: "PEDRO HENRIQUE DE SOUSA MATUMOTO",
+          email: "21.00784-5@maua.br",
+          RA: "21.00784-5",
           availabilities: {
             "0a8c5357-1f07-5b24-9845-9318c4000000": {
               weekDay: "MON",

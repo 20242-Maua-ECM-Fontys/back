@@ -18,7 +18,7 @@ describe('Assert GetAllSchedulesController is correct', () => {
     expect(response?.statusCode).toEqual(200)
     expect(response?.body.message).toEqual('schedules returned')
     expect(response?.body.courses).toEqual({
-      "Compute Engineering": [
+      "Computer Engineering": [
         {
           "scheduleId": "2S-4CM-D5@2024(SCS)",
           "courseGrade": 4,
@@ -35,7 +35,7 @@ describe('Assert GetAllSchedulesController is correct', () => {
           "schedulePeriod": "ANNUAL",
         },
       ],
-      "Cience Coputing": [
+      "Science Computing": [
         {
           "scheduleId": "1S-2CIC-D4@2024(SCS)",
           "courseGrade": 2,

@@ -16,10 +16,10 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     // Validate first professor's data
     const firstProfessor = professors[0]
     expect(firstProfessor.professor.props.id).toEqual(3)
-    expect(firstProfessor.professor.props.name).toEqual('user3')
-    expect(firstProfessor.professor.props.email).toEqual('user3@gmail.com')
+    expect(firstProfessor.professor.props.name).toEqual('PEDRO HENRIQUE DE SOUSA MATUMOTO')
+    expect(firstProfessor.professor.props.email).toEqual('21.00784-5@maua.br')
     expect(firstProfessor.professor.props.role).toEqual('PROFESSOR')
-    expect(firstProfessor.professor.props.RA).toEqual('33.00000-3')
+    expect(firstProfessor.professor.props.RA).toEqual('21.00784-5')
 
     // Validate the availabilities of the first professor
     const firstProfessorAvailabilities = firstProfessor.availabilities
