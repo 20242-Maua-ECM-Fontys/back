@@ -470,7 +470,7 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   it('Should create schedule correctly', async () => {
     const schedule = new Schedule({
       scheduleId: '2S-1CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 2,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -487,7 +487,7 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
   it('Should create schedule wrongly: already exists', async () => {
     const schedule = new Schedule({
       scheduleId: '2S-4CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 2,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -507,7 +507,7 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
     const repo = new ScheduleRepositoryMock()
     const schedule = new Schedule({
       scheduleId: '2S-1CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: repo.getUsersLength() + 1,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -526,7 +526,7 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
     const repo = new ScheduleRepositoryMock()
     const schedule = new Schedule({
       scheduleId: '2S-1CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 1,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,

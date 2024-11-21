@@ -7,7 +7,7 @@ describe('Schedule Entity Tests', () => {
   it('Assert Schedule Entity is correct at all', () => {
     const schedule = new Schedule({
       scheduleId: '2S-4CM-D5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 2,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -16,12 +16,12 @@ describe('Schedule Entity Tests', () => {
 
     expect(schedule).toBeInstanceOf(Schedule)
     expect(schedule.scheduleId).toBe('2S-4CM-D5@2024(SCS)')
-    expect(schedule.courseName).toBe('Compute Engineering')
+    expect(schedule.courseName).toBe('Computer Engineering')
   })
   it('Assert Schedule Entity is correct at all for "Noturno"', () => {
     const schedule = new Schedule({
       scheduleId: '2S-4CM-N5@2024(SCS)',
-      courseName: 'Compute Engineering',
+      courseName: 'Computer Engineering',
       groupNumber: 1,
       userId: 2,
       academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -30,14 +30,14 @@ describe('Schedule Entity Tests', () => {
 
     expect(schedule).toBeInstanceOf(Schedule)
     expect(schedule.scheduleId).toBe('2S-4CM-N5@2024(SCS)')
-    expect(schedule.courseName).toBe('Compute Engineering')
+    expect(schedule.courseName).toBe('Computer Engineering')
   })
 
   it('Assert Schedule Entity wrong with invalid scheduleId', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2-4CM-D5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -47,7 +47,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: 'S-4CM-D5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -57,7 +57,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S--D5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -67,7 +67,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-A5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -77,7 +77,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-D1@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -87,7 +87,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-D7@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -97,7 +97,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-D52024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -107,7 +107,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-D5@999(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -117,7 +117,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-D5@2024(RJ)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -143,7 +143,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-N5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: -1,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -153,7 +153,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-N5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 0,
         userId: 2,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -166,7 +166,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: -1,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -179,7 +179,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: -1,
         academicPeriod: 'FIRST SEMESTER' as ACADEMIC_PERIOD,
@@ -192,7 +192,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: -1,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -202,7 +202,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: -1,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -214,7 +214,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-4CM-D5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: -1,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -224,7 +224,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-2CIC-D5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: -1,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,
@@ -234,7 +234,7 @@ describe('Schedule Entity Tests', () => {
     expect(() => {
       new Schedule({
         scheduleId: '2S-6SI-D5@2024(SCS)',
-        courseName: 'Compute Engineering',
+        courseName: 'Computer Engineering',
         groupNumber: 1,
         userId: -1,
         academicPeriod: ACADEMIC_PERIOD.ANNUAL,

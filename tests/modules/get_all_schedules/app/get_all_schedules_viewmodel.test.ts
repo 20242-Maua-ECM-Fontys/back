@@ -15,7 +15,7 @@ describe('Assert GetAllSchedulesViewModel is correct', () => {
     expect(getAllSchedulesViewModel).toEqual({
       "message": "schedules returned",
       "courses": {
-        "Compute Engineering": [
+        "Computer Engineering": [
           {
             "scheduleId": "2S-4CM-D5@2024(SCS)",
             "courseGrade": 4,
@@ -32,7 +32,7 @@ describe('Assert GetAllSchedulesViewModel is correct', () => {
             "schedulePeriod": "ANNUAL",  
           },
         ],
-        "Cience Coputing": [
+        "Science Computing": [
           {
             "scheduleId": "1S-2CIC-D4@2024(SCS)",
             "courseGrade": 2,
