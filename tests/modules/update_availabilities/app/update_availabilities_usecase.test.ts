@@ -180,7 +180,7 @@ describe('Assert UpdateAvailabilityUsecase is correct at all', () => {
     const lengthUserAvailabilitiesBefore = await repo.getAvailabilitiesLength() 
 
     await expect(usecase.execute(userId, availabilities)).rejects.toThrowError(
-      'Field startTime and endTime is not valid',
+      'startTime and endTime are not equal',
     )
 
     const lengthUserAvailabilitiesAfter = await repo.getAvailabilitiesLength()

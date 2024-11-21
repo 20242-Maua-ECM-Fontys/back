@@ -17,8 +17,13 @@ export class NullError extends BaseError {
 export class AvailabilityTimeError extends BaseError {
   constructor() {
     super(`startTime and endTime are not equal`)
+  }
+}
+
 export class TimeError extends BaseError {
   constructor(startTime: MAUA_START_TIME, endTime: MAUA_END_TIME){
     super(`${startTime} can not be greater than or equal to ${endTime}`)
   }
 }
+  
+
