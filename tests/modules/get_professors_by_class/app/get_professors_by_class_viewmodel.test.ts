@@ -89,9 +89,9 @@ describe('GetProfessorsByClassViewmodel', () => {
           },
         },
         "4": {
-          name: "user4",
-          email: "user4@gmail.com",
-          RA: "44.00000-4",
+          name: "FLAVIO MURATA",
+          email: "21.01192-3@maua.br",
+          RA: "21.01192-3",
           availabilities: {
             "0a8c5357-1f07-5b24-9845-9318c400000a": {
               weekDay: "MON",
