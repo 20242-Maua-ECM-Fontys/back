@@ -3,7 +3,7 @@ import { Availability } from '../../../../src/shared/domain/entities/availabilit
 import { WEEK_DAY } from '../../../../src/shared/domain/enums/week_day_enum'
 import { MAUA_START_TIME } from '../../../../src/shared/domain/enums/maua_start_time_enum'
 import { MAUA_END_TIME } from '../../../../src/shared/domain/enums/maua_end_time_enum'
-import { EntityError } from '../../../../src/shared/helpers/errors/domain_errors'
+import { AvailabilityTimeError, EntityError } from '../../../../src/shared/helpers/errors/domain_errors'
 
 describe('Availability entity', () => {
   it('should create a availability entity', () => {
@@ -87,7 +87,7 @@ describe('Availability entity', () => {
         weekDay: WEEK_DAY.FRI,
 
       })
-    }).toThrowError(EntityError)
+    }).toThrowError(AvailabilityTimeError)
     expect(() => {
       new Availability({
         id: '123e4567-e89b-12d3-a456-426614174000',
@@ -98,7 +98,7 @@ describe('Availability entity', () => {
         weekDay: WEEK_DAY.FRI,
 
       })
-    }).toThrowError(EntityError)
+    }).toThrowError(`startTime and endTime are not equal`)
   })
   it('should throw an error weekDay id is invalid', () => {
     expect(() => {
