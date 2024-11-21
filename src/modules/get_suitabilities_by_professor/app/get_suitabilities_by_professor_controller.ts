@@ -9,10 +9,12 @@ import {
   OK,
   InternalServerError,
   NotFound,
+  Forbidden,
 } from '../../../shared/helpers/external_interfaces/http_codes'
 import { NoItemsFound } from '../../../shared/helpers/errors/repo_error'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
 import { GetSuitabilitiesByProfessorViewmodel } from './get_suitabilities_by_professor_viewmodel'
+import { InvalidRole } from '../../../shared/helpers/errors/usecase_errors'
 
 export class GetSuitabilitiesByProfessorController {
   constructor(private usecase: GetSuitabilitiesByProfessorUsecase) {}
@@ -23,10 +25,14 @@ export class GetSuitabilitiesByProfessorController {
       if (request.data.userId === undefined) {
         throw new MissingParameters('userId')
       }
-      if (typeof request.data.userId !== 'number') {
-        throw new WrongTypeParameters('userId', 'number', request.data.userId)
+      if (typeof request.data.userId !== 'string') {
+        throw new WrongTypeParameters('userId', 'string', request.data.userId)
       }
-      const userId = request.data.userId
+      // check if this string is numeric
+      if (isNaN(Number(request.data.userId))) {
+        throw new WrongTypeParameters('userId', 'numeric string', request.data.userId)
+      }
+      const userId = Number(request.data.userId)
 
       const suitabilities = await this.usecase.execute(userId)
 
@@ -42,6 +48,9 @@ export class GetSuitabilitiesByProfessorController {
       }
       if (error instanceof NoItemsFound) {
         return new NotFound(error.message)
+      }
+      if (error instanceof InvalidRole) {
+        return new Forbidden(error.message)
       }
       if (error instanceof EntityError) {
         return new BadRequest(error.message)

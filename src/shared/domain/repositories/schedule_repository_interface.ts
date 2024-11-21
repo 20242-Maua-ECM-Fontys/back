@@ -12,20 +12,32 @@ export interface IScheduleRepository {
   // User methods
   getUsersLength(): number
   getUser(id: number): Promise<User>
-  getAllUsers(): Promise<User[]>
   getUsersByRole(role: ROLE): Promise<User[]>
   createUser(user: User): Promise<User>
   updateUser(id: number, newName: string, newEmail: string): Promise<User>
   deleteUser(id: number): Promise<User>
-  loginUser(email: string, password: string): Promise<User | null>
   getUserByEmail(email: string): Promise<User>
   getRoleByEmail(email: string): Promise<ROLE | null>
- getProfessorsByClass(classId: string): Promise<User[]>
+  getProfessorsByClass(classId: string): Promise<User[]>
+  getUsersWithAvailabilitiesAndSuitabilities(usersIds: number[]): Promise<Record<
+    number, { 
+      user: User; 
+      suitabilities: Suitability[]; 
+      availabilities: {data: Availability, scheduleFullfilled: string | undefined}[]
+    }
+    >
+  > 
+
   // Class methods
   getClassesLength(): number
   getClass(id: string): Promise<Class>
-  getAllClasss(): Promise<Class[]>
+  getAllClasses(): Promise<Class[]>
   createClass(newClass: Class): Promise<Class>
+  getClassesByIds(classesIds: string[]): Promise<Record<string, Class>> 
+  getClassesByScheduleId(scheduleId: string): Promise<Class[]>
+  getFullfilledDataByClassId(
+    classId: string,
+  ): Promise<{ professorId: number; possibilityId: string } | null>
 
   // Subject methods
   getSubjectsLength(): number
@@ -35,7 +47,6 @@ export interface IScheduleRepository {
 
   // Suitability methods
   getSuitabilitiesLength(): number
-  getAllSuitabilities(): Promise<Suitability[]>
   createSuitability(suitability: Suitability): Promise<Suitability>
   getSuitabilitiesByUserId(userId: number): Promise<Suitability[]>
   deleteSuitabilityByUserId(userId: number): Promise<Suitability[]>
@@ -45,17 +56,18 @@ export interface IScheduleRepository {
   getSchedule(id: string, groupNumber: number): Promise<Schedule>
   getAllSchedules(): Promise<Schedule[]>
   createSchedule(schedule: Schedule): Promise<Schedule>
+  getSchedulesByUserId(userId: number): Promise<Schedule[]>
 
   // Possibility methods
   getPossibilitiesLength(): number
   getPossibility(id: string): Promise<Possibility>
-  getAllPossibilities(): Promise<Possibility[]>
+  getPossibilitiesByScheduleId(scheduleId: string): Promise<Possibility[]>
   createPossibility(possibility: Possibility): Promise<Possibility>
+  getPossibilitiesByIds(possibilitiesIds: string[]): Promise<Record<string, Possibility>>
 
   // Availability methods
   getAvailabilitiesLength(): number
   getAvailability(id: string): Promise<Availability>
-  getAllAvailabilities(): Promise<Availability[]>
   getAvailabilitiesByUserId(userId: number): Promise<Availability[]>
   deleteAvailability(id: string): Promise<Availability>
   createAvailability(availability: Availability): Promise<Availability>
@@ -64,5 +76,7 @@ export interface IScheduleRepository {
   // AvFullfilled methods
   getAvsFullfilledLength(): number
   getAllAvsFullfilled(): Promise<AvFullfilled[]>
-  // createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled>
+  createAvFullfilled(avFullfilled: AvFullfilled): Promise<AvFullfilled>
+  createAvsFullfilled(avsFullfilled: AvFullfilled[]): Promise<AvFullfilled[]> // by now, because it is just used on update_availabilities_fullfilled (that already validates everything), this method doesn't validate anything
+  deleteAvsFullfilledByScheduleId(scheduleId: string): Promise<AvFullfilled[]>
 }

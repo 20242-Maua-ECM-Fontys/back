@@ -31,59 +31,52 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       email: 'user1@gmail.com',
       role: ROLE.STAFF,
       RA: '21.00000-1',
-      password: 'Password1@',
     }),
     new User({
       id: 2,
       name: 'Pedro Henrique de Sousa Matumoto',
       email: 'pedromatumoto@gmail.com',
       role: ROLE.COORDINATOR,
-      RA: '21.00784-5',
-      password: 'Password2@',
+      RA: '22.00000-2',
     }),
     new User({
-      // professor with 0 suitability
+      // professor with 1 suitability
       id: 3,
       name: 'user3',
       email: 'user3@gmail.com',
       role: ROLE.PROFESSOR,
       RA: '33.00000-3',
-      password: 'Password3@',
     }),
     new User({
-      // professor with 1 suitability
+      // professor with 2 suitability
       id: 4,
       name: 'user4',
       email: 'user4@gmail.com',
       role: ROLE.PROFESSOR,
       RA: '44.00000-4',
-      password: 'Password4@',
     }),
     new User({
-      // professor with 2 suitability
+      // professor with 0 suitability
       id: 5,
       name: 'user5',
       email: 'user5@gmail.com',
       role: ROLE.PROFESSOR,
       RA: '55.00000-5',
-      password: 'Password5@',
     }),
     new User({
       id: 6,
-      name: 'PEDRO HENRIQUE DE SOUSA MATUMOTO',
-      email: '21.00784-5@maua.br',
-      role: ROLE.STAFF,
-      RA: '21.00784-5',
-      password: 'Password6@',
+      name: 'Keith Thompson',
+      email: 'udibon@tisim.sy',
+      role: ROLE.COORDINATOR,
+      RA: '66.00000-6',
     }),
     new User({
       id: 7,
-      name: 'JOAO VITOR CHOUERI BRANCO',
-      email: '21.01075-7@maua.br',
+      name: 'Austin Green',
+      email: 'viraw@mon.cm',
       role: ROLE.PROFESSOR,
-      RA: '21.01075-7',
-      password: 'Password7@',
-    })
+      RA: '66.00000-6',
+    }),
   ]
   // #region classes
   private classes: Class[] = [
@@ -103,7 +96,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       subjectCode: 'ECM111',
       scheduleId: '1S-2CIC-D4@2024(SCS)',
     }),
-    new Class({
+    new Class({ // is taken
       id: '0a8c5357-1f07-5b24-9845-9318c47ac924',
       name: 'Linguagens de Programacao II',
       modality: MODALITY.IN_PERSON,
@@ -111,7 +104,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       subjectCode: 'ECM256',
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
-    new Class({
+    new Class({ // is taken
       id: '0a8c5357-1f07-5b24-9845-9318c47ac925',
       name: 'Physics I',
       modality: MODALITY.REMOTE,
@@ -125,6 +118,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       modality: MODALITY.IN_PERSON,
       classType: CLASSTYPE.LAB,
       subjectCode: 'EFB207',
+      scheduleId: '2S-4CM-D5@2024(SCS)',
+    }),
+    new Class({
+      id: '0a8c5357-1f07-5b24-9845-9318c47ac927',
+      name: 'Linguagens de Programacao II',
+      modality: MODALITY.HYBRID,
+      classType: CLASSTYPE.THEORY,
+      subjectCode: 'ECM256',
       scheduleId: '2S-4CM-D5@2024(SCS)',
     }),
   ]
@@ -152,8 +153,16 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       codeSubject: 'EFB207',
     }),
     new Suitability({
-      userId: 4,
+      userId: 3,
       codeSubject: 'ECM256',
+    }),
+    new Suitability({
+      userId: 7,
+      codeSubject: 'ECM256',
+    }),
+    new Suitability({
+      userId: 7,
+      codeSubject: 'EFB207',
     }),
   ]
   // #region schedules
@@ -577,6 +586,23 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       isTaken: false,
       weekDay: WEEK_DAY.MON,
     }),
+    // Professor with userId = 7
+    new Availability({
+      id: '4990da07-f233-5053-8a6f-33bf8aecb4a3',
+      userId: 7,
+      startTime: MAUA_START_TIME.H07_40_09_20,
+      endTime: MAUA_END_TIME.H07_40_09_20,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
+    new Availability({
+      id: '262cfbd2-ad3f-5940-839f-7ff1e3d2b7dc',
+      userId: 7,
+      startTime: MAUA_START_TIME.H09_30_11_10,
+      endTime: MAUA_END_TIME.H09_30_11_10,
+      isTaken: false,
+      weekDay: WEEK_DAY.MON,
+    }),
   ]
   // #region avFullfilled
   private avsFullfilled: AvFullfilled[] = [
@@ -601,6 +627,17 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000009',
       possibilityId: 'b63e4567-e89b-12d3-a456-426614174001',
       classId: '0a8c5357-1f07-5b24-9845-9318c47ac925',
+    }),
+    // professor with userId=7
+    new AvFullfilled({
+      availabilityId: '4990da07-f233-5053-8a6f-33bf8aecb4a3',
+      possibilityId: '113e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac924',
+    }),
+    new AvFullfilled({
+      availabilityId: '262cfbd2-ad3f-5940-839f-7ff1e3d2b7dc',
+      possibilityId: '123e4567-e89b-12d3-a456-426614174001',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
     }),
   ]
 
@@ -630,9 +667,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       return null
     }
     return user.role
-  }
-  async getAllUsers(): Promise<User[]> {
-    return this.users
   }
 
   async createUser(user: User): Promise<User> {
@@ -667,16 +701,102 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return user
   }
 
-  async loginUser(email: string, password: string): Promise<User | null> {
-    const user = this.users.find(
-      (user) => user.email === email && user.password === password,
-    )
-    return user || null
+  async getProfessorsByClass(classId: string): Promise<User[]> {
+    const foundClass = this.getClass(classId)
+
+    const subjectCode = (await foundClass).subjectCode
+
+    const suitableUsers = this.suitabilities
+      .filter((suitability) => suitability.codeSubject === subjectCode)
+      .map((suitability) =>
+        this.users.find((user) => user.id === suitability.userId),
+      )
+      .filter((user): user is User => user !== undefined)
+
+    return suitableUsers
   }
 
   async getUsersByRole(role: ROLE): Promise<User[]> {
     const users = this.users.filter((user) => user.role === role)
     return users
+  }
+
+  async getUsersWithAvailabilitiesAndSuitabilities(
+    userIds: number[]
+  ): Promise<
+    Record<
+      number,
+      {
+        user: User;
+        suitabilities: Suitability[];
+        availabilities: { data: Availability; scheduleFullfilled: string | undefined }[];
+      }
+    >
+  > {
+    // Filter users based on the provided userIds
+    const users = this.users.filter((user) => userIds.includes(user.id));
+  
+    // Check if all userIds exist
+    if (users.length !== userIds.length) {
+      throw new NoItemsFound('userId');
+    }
+  
+    // Ensure users are not STAFF
+    users.forEach((user) => {
+      if (user.role === ROLE.STAFF) {
+        throw new ViolateDataRule('user must be a professor');
+      }
+    });
+  
+    // Create the result object
+    const result: Record<
+      number,
+      {
+        user: User;
+        suitabilities: Suitability[];
+        availabilities: { data: Availability; scheduleFullfilled: string | undefined }[];
+      }
+    > = {};
+  
+    // Process each user
+    for (const user of users) {
+      // Fetch suitabilities and availabilities for the current user
+      const suitabilities = this.suitabilities.filter((suitability) => suitability.userId === user.id);
+      const availabilities = this.availabilities.filter((availability) => availability.userId === user.id);
+  
+      // Check each availability for fulfilled schedules
+      const availabilitiesWithFullfilled = await Promise.all(
+        availabilities.map(async (availability) => {
+          const avFullfilled = this.avsFullfilled.find(
+            (item) => item.availabilityId === availability.availabilityId
+          );
+  
+          if (!avFullfilled) {
+            return {
+              data: availability,
+              scheduleFullfilled: undefined,
+            };
+          }
+  
+          const classId = avFullfilled.classId;
+          const specificClass = this.classes.find((c) => c.id === classId);
+  
+          return {
+            data: availability,
+            scheduleFullfilled: specificClass?.scheduleId,
+          };
+        })
+      );
+  
+      // Store the data in the result object
+      result[user.id] = {
+        user,
+        suitabilities,
+        availabilities: availabilitiesWithFullfilled,
+      };
+    }
+  
+    return result;
   }
 
   // #region Class methods
@@ -692,8 +812,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return selectedClass
   }
 
-  async getAllClasss(): Promise<Class[]> {
+  async getAllClasses(): Promise<Class[]> {
     return this.classes
+  }   
+   
+  async getClassesByScheduleId(scheduleId: string): Promise<Class[]> {
+    return this.classes.filter((c) => c.scheduleId === scheduleId)
   }
 
   async createClass(newClass: Class): Promise<Class> {
@@ -703,6 +827,41 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }
     this.classes.push(newClass)
     return newClass
+  }
+
+  async getClassesByIds(classesIds: string[]): Promise<Record<string, Class>> {
+    const classes = this.classes.filter((c) => classesIds.includes(c.id))
+    
+    // check if some class does not exist
+    if (classes.length !== classesIds.length) {
+      throw new NoItemsFound('classId')
+    }
+
+    // format the data
+    return classes.reduce<Record<string, Class>>((acc, curr) => {
+      acc[curr.id] = curr;
+      return acc;
+    }, {});
+  }
+
+  async getFullfilledDataByClassId(
+    classId: string,
+  ): Promise<{ professorId: number; possibilityId: string } | null> {
+    // Encontrar o item AvFullfilled relacionado à classe
+    const avFullfilled = this.avsFullfilled.find((av) => av.classId === classId)
+
+    if (!avFullfilled) {
+      // Retorna null se não houver dados completos para essa classe
+      return null
+    }
+
+    // Obter a disponibilidade associada para obter o professorId
+    const availability = await this.getAvailability(avFullfilled.availabilityId)
+
+    return {
+      professorId: availability.userId,
+      possibilityId: avFullfilled.possibilityId,
+    }
   }
 
   // #region Subject methods
@@ -721,21 +880,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   async getAllSubjects(): Promise<Subject[]> {
     return this.subjects
   }
-  async getProfessorsByClass(classId: string): Promise<User[]> {
-
-    const foundClass = this.getClass(classId);
-
-  
-    const subjectCode = (await foundClass).subjectCode;
-
-
-    const suitableUsers = this.suitabilities
-      .filter(suitability => suitability.codeSubject === subjectCode)
-      .map(suitability => this.users.find(user => user.id === suitability.userId))
-      .filter((user): user is User => user !== undefined); 
-
-    return suitableUsers;
-  }
 
   async createSubject(subject: Subject): Promise<Subject> {
     const exists = this.subjects.find((s) => s.code === subject.code)
@@ -748,10 +892,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   // #region Suitability methods
   getSuitabilitiesLength(): number {
     return this.suitabilities.length
-  }
-
-  async getAllSuitabilities(): Promise<Suitability[]> {
-    return this.suitabilities
   }
 
   async createSuitability(suitability: Suitability): Promise<Suitability> {
@@ -830,6 +970,11 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return schedule
   }
 
+  async getSchedulesByUserId(userId: number): Promise<Schedule[]> {
+    const schedules = this.schedules.filter((s) => s.userId === userId)
+    return schedules
+  }
+
   // #region Possibility methods
   getPossibilitiesLength(): number {
     return this.possibilities.length
@@ -845,8 +990,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return possibility
   }
 
-  async getAllPossibilities(): Promise<Possibility[]> {
-    return this.possibilities
+  async getPossibilitiesByScheduleId(
+    scheduleId: string,
+  ): Promise<Possibility[]> {
+    return this.possibilities.filter((p) => p.scheduleId === scheduleId)
   }
 
   async createPossibility(possibility: Possibility): Promise<Possibility> {
@@ -861,6 +1008,21 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     return possibility
   }
 
+  async getPossibilitiesByIds(possibilitiesIds: string[]): Promise<Record<string, Possibility>>{
+    const possibilities = this.possibilities.filter((p) => possibilitiesIds.includes(p.id))
+    
+    // check if some possibility does not exist
+    if (possibilities.length !== possibilitiesIds.length) {
+      throw new NoItemsFound('possibilityId')
+    }
+
+    // format the data
+    return possibilities.reduce<Record<string, Possibility>>((acc, curr) => {
+      acc[curr.id] = curr;
+      return acc;
+    }, {});
+  }
+  
   // #region Availability methods
   getAvailabilitiesLength(): number {
     return this.availabilities.length
@@ -874,10 +1036,6 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       throw new NoItemsFound('availabilityId')
     }
     return availability
-  }
-
-  async getAllAvailabilities(): Promise<Availability[]> {
-    return this.availabilities
   }
 
   async getAvailabilitiesByUserId(userId: number): Promise<Availability[]> {
@@ -955,5 +1113,27 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
     this.avsFullfilled.push(avFullfilled)
     return avFullfilled
+  }
+
+  async createAvsFullfilled(avsFullfilled: AvFullfilled[]): Promise<AvFullfilled[]>{
+    for (const avFullfilled of avsFullfilled) {
+      await this.createAvFullfilled(avFullfilled)
+    }
+    return avsFullfilled
+  }
+
+  async deleteAvsFullfilledByScheduleId(scheduleId: string): Promise<AvFullfilled[]>{
+    const avsFullfilled = this.avsFullfilled.filter((avFullfilled) => {
+      const possibility = this.possibilities.find((p) => p.id === avFullfilled.possibilityId)
+      return possibility?.scheduleId !== scheduleId
+    })
+    const avsFullfilledIds = avsFullfilled.map((avFullfilled) => avFullfilled.availabilityId)
+    this.availabilities.forEach((availability) => {
+      if (!avsFullfilledIds.includes(availability.availabilityId)) {
+        availability.isTaken = false
+      }
+    })
+    this.avsFullfilled = avsFullfilled
+    return avsFullfilled
   }
 }

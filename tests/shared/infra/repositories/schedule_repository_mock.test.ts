@@ -16,6 +16,7 @@ import { MAUA_END_TIME } from '../../../../src/shared/domain/enums/maua_end_time
 import { Availability } from '../../../../src/shared/domain/entities/availability'
 import { AvFullfilled } from '../../../../src/shared/domain/entities/avFullfilled'
 import { ACADEMIC_PERIOD } from '../../../../src/shared/domain/enums/academic_period_enum'
+import { av } from 'vitest/dist/chunks/reporters.DAfKSDh5.js'
 
 // #region User methods
 describe('Assert Schedule Repository Mock is correct at all for User methods', () => {
@@ -23,6 +24,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     const length = repo.getUsersLength()
 
+    expect(length).toEqual(7)
     expect(length).toEqual(7)
   })
   it('Should get user correctly', async () => {
@@ -34,19 +36,12 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     expect(user?.email).toEqual('user1@gmail.com')
     expect(user?.role).toEqual(ROLE.STAFF)
     expect(user?.RA).toEqual('21.00000-1')
-    expect(user?.password).toEqual('Password1@')
   })
   it('Should get user wrongly: userId does not exists', async () => {
     const repo = new ScheduleRepositoryMock()
     await expect(repo.getUser(repo.getUsersLength() + 1)).rejects.toThrowError(
       'No items found for userId',
     )
-  })
-  it('Should get all users correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const users = await repo.getAllUsers()
-
-    expect(users.length).toEqual(7)
   })
   it('Should create user correctly', async () => {
     const user = new User({
@@ -55,7 +50,6 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
       email: 'usuario10@gmail.com',
       role: ROLE.PROFESSOR,
       RA: '10.00000-1',
-      password: 'Password10@',
     })
 
     const repo = new ScheduleRepositoryMock()
@@ -72,7 +66,6 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
       email: 'ini@vifod.nc',
       role: ROLE.STAFF,
       RA: '21.00000-1',
-      password: 'Password1@',
     })
     const repo = new ScheduleRepositoryMock()
     expect(repo.createUser(user)).rejects.toThrowError('userId already exists')
@@ -83,9 +76,9 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const professors = await repo.getUsersByRole(ROLE.PROFESSOR)
     const staff = await repo.getUsersByRole(ROLE.STAFF)
 
-    expect(coordinators.length).toEqual(1)
+    expect(coordinators.length).toEqual(2)
     expect(professors.length).toEqual(4)
-    expect(staff.length).toEqual(2)
+    expect(staff.length).toEqual(1)
 
     for (const user of coordinators) {
       expect(user.role).toEqual(ROLE.COORDINATOR)
@@ -129,6 +122,47 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     await expect(
       repo.getRoleByEmail('nonexistent@gmail.com'),
     ).resolves.toBeNull()
+  })
+
+  it('should getUsersWithAvailabilitiesAndSuitabilities correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usersIds = [2, 3, 4]
+    const usersWithAvailabilitiesAndSuitabilities = await repo.getUsersWithAvailabilitiesAndSuitabilities(usersIds)
+    expect(Object.keys(usersWithAvailabilitiesAndSuitabilities).length).toEqual(usersIds.length)
+    expect(usersWithAvailabilitiesAndSuitabilities[2].user.id).toEqual(2)
+    expect(usersWithAvailabilitiesAndSuitabilities[2].user.role).toEqual(ROLE.COORDINATOR)
+    expect(usersWithAvailabilitiesAndSuitabilities[2].availabilities.length).toEqual(0)
+    expect(usersWithAvailabilitiesAndSuitabilities[2].suitabilities.length).toEqual(0)
+
+    expect(usersWithAvailabilitiesAndSuitabilities[3].user.id).toEqual(3)
+    expect(usersWithAvailabilitiesAndSuitabilities[3].user.role).toEqual(ROLE.PROFESSOR)
+    expect(usersWithAvailabilitiesAndSuitabilities[3].availabilities.length).toEqual(10)
+    expect(usersWithAvailabilitiesAndSuitabilities[3].availabilities[9].scheduleFullfilled).toEqual("2S-3CM-D5@2024(SCS)")
+    expect(usersWithAvailabilitiesAndSuitabilities[3].suitabilities.length).toEqual(2)
+
+    expect(usersWithAvailabilitiesAndSuitabilities[4].user.id).toEqual(4)
+    expect(usersWithAvailabilitiesAndSuitabilities[4].user.role).toEqual(ROLE.PROFESSOR)
+    expect(usersWithAvailabilitiesAndSuitabilities[4].availabilities.length).toEqual(8)
+    expect(usersWithAvailabilitiesAndSuitabilities[4].suitabilities.length).toEqual(1)
+  })
+
+  it('should getUsersWithAvailabilitiesAndSuitabilities correctly with usersIds length equals 0', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usersIds = []
+    const usersWithAvailabilitiesAndSuitabilities = await repo.getUsersWithAvailabilitiesAndSuitabilities(usersIds)
+    expect(Object.keys(usersWithAvailabilitiesAndSuitabilities).length).toEqual(usersIds.length)
+  })
+
+  it('should getUsersWithAvailabilitiesAndSuitabilities wrongly: userId does not exist', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usersIds = [2, 3, 4, repo.getUsersLength() + 1]
+    await expect(repo.getUsersWithAvailabilitiesAndSuitabilities(usersIds)).rejects.toThrowError('No items found for userId')
+  })
+
+  it('should getUsersWithAvailabilitiesAndSuitabilities wrongly: user is not a professor', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usersIds = [2, 3, 1]
+    await expect(repo.getUsersWithAvailabilitiesAndSuitabilities(usersIds)).rejects.toThrowError('The data rule "user must be a professor" was violated')
   })
 })
 
@@ -199,7 +233,7 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
     const repo = new ScheduleRepositoryMock()
     const length = repo.getClassesLength()
 
-    expect(length).toEqual(5)
+    expect(length).toEqual(6)
   })
   it('Should get class correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -222,9 +256,9 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
   })
   it('Should get all classes correctly', async () => {
     const repo = new ScheduleRepositoryMock()
-    const classes = await repo.getAllClasss()
+    const classes = await repo.getAllClasses()
 
-    expect(classes.length).toEqual(5)
+    expect(classes.length).toEqual(6)
   })
 
   it('Should create class correctly', async () => {
@@ -264,6 +298,34 @@ describe('Assert Schedule Repository Mock is correct at all for Class methods', 
 
     expect(newLength).toEqual(lastLength)
   })
+
+
+  it('Should get classes by scheduleId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const classes = await repo.getClassesByScheduleId('2S-4CM-D5@2024(SCS)')
+
+    expect(classes.length).toEqual(3)
+  })
+
+  it('Should return fullfilled data correctly for a class with associated data', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ac924' // Class with AvFullfilled data
+    const fullfilledData = await repo.getFullfilledDataByClassId(classId)
+
+    expect(fullfilledData).not.toBeNull()
+    expect(fullfilledData?.professorId).toBe(4) // Expected professorId from AvFullfilled data
+    expect(fullfilledData?.possibilityId).toBe(
+      '113e4567-e89b-12d3-a456-426614174000',
+    ) // Expected possibilityId from AvFullfilled data
+  })
+
+  it('Should return null for a class with no associated fullfilled data', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab923' // Class without AvFullfilled data
+    const fullfilledData = await repo.getFullfilledDataByClassId(classId)
+
+    expect(fullfilledData).toBeNull()
+  })
 })
 
 // #region Suitability methods
@@ -272,13 +334,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     const repo = new ScheduleRepositoryMock()
     const length = repo.getSuitabilitiesLength()
 
-    expect(length).toEqual(3)
-  })
-  it('Should get all suitabilities correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const users = await repo.getAllSuitabilities()
-
-    expect(users.length).toEqual(3)
+    expect(length).toEqual(5)
   })
   it('Should create suitability correctly', async () => {
     const userId = 5
@@ -356,7 +412,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     const repo = new ScheduleRepositoryMock()
     const suitabilities = await repo.getSuitabilitiesByUserId(4)
 
-    expect(suitabilities.length).toEqual(2)
+    expect(suitabilities.length).toEqual(1)
   })
   it('Should get suitabilities by userId correctly: empty list', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -371,7 +427,7 @@ describe('Assert Schedule Repository Mock is correct at all for Suitability meth
     await repo.deleteSuitabilityByUserId(userId)
     const newLength = repo.getSuitabilitiesLength()
 
-    expect(newLength).toEqual(lastLength - 2)
+    expect(newLength).toEqual(lastLength - 1)
   })
 })
 
@@ -485,6 +541,13 @@ describe('Assert Schedule Repository Mock is correct at all for Schedule methods
 
     expect(newLength).toEqual(lastLength)
   })
+
+  it('Should get schedules by coordinator correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const schedules = await repo.getSchedulesByUserId(2)
+
+    expect(schedules.length).toEqual(4)
+  })
 })
 
 // #region Possibility methods
@@ -509,12 +572,6 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
     await expect(
       repo.getPossibility('123e4567-e892d3-a456-426614174000'),
     ).rejects.toThrowError('No items found for possibilityId')
-  })
-  it('Should get all possibilities correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const possibilities = await repo.getAllPossibilities()
-
-    expect(possibilities.length).toEqual(33)
   })
   it('Should create possibility correctly', async () => {
     const possibility = new Possibility({
@@ -569,6 +626,44 @@ describe('Assert Schedule Repository Mock is correct at all for Possibility meth
 
     expect(newLength).toEqual(lastLength)
   })
+  
+  it('Should getPossibilitiesByIds correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const possibilityIds = [
+      '153e4567-e89b-12d3-a456-426614174001',
+      '163e4567-e89b-12d3-a456-426614174002',
+      '173e4567-e89b-12d3-a456-426614174000',
+    ]
+    const possibilities = await repo.getPossibilitiesByIds(possibilityIds)
+
+    expect(Object.keys(possibilities).length).toEqual(3)
+  })
+  it('Should getPossibilitiesByIds correctly: empty list', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const possibilityIds = []
+    const possibilities = await repo.getPossibilitiesByIds(possibilityIds)
+
+    expect(Object.keys(possibilities).length).toEqual(0)
+  })
+  it('Should getPossibilitiesByIds wrongly: no items found for certain possibilityId', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const possibilityIds = [
+      'a13e4567-e89b-12d3-a456-426614174000',
+      'wrong-uuid',
+    ]
+    await expect(repo.getPossibilitiesByIds(possibilityIds)).rejects.toThrowError(
+      'No items found for possibilityId',
+    )
+  })
+
+  it('Should get possibilities by scheduleId correctly', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const possibilities = await repo.getPossibilitiesByScheduleId(
+      '2S-4CM-D5@2024(SCS)',
+    )
+
+    expect(possibilities.length).toEqual(18)
+  })
 })
 
 // #region Availability methods
@@ -577,7 +672,7 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
     const repo = new ScheduleRepositoryMock()
     const length = repo.getAvailabilitiesLength()
 
-    expect(length).toEqual(18)
+    expect(length).toEqual(20)
   })
   it('Should get availability correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -595,12 +690,6 @@ describe('Assert Schedule Repository Mock is correct at all for Availability met
     await expect(
       repo.getAvailability('0a8c5357-0007-5b24-9845-9318c4000003'),
     ).rejects.toThrowError('No items found for availabilityId')
-  })
-  it('Should get all availabilities correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const availabilities = await repo.getAllAvailabilities()
-
-    expect(availabilities.length).toEqual(18)
   })
   it('Should get availabilities by userId correctly', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -719,13 +808,7 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
     const repo = new ScheduleRepositoryMock()
     const length = repo.getAvsFullfilledLength()
 
-    expect(length).toEqual(2)
-  })
-  it('Should get all AvFullfilled correctly', async () => {
-    const repo = new ScheduleRepositoryMock()
-    const avFullfilled = await repo.getAllAvsFullfilled()
-
-    expect(avFullfilled.length).toEqual(2)
+    expect(length).toEqual(4)
   })
   it('Should create AvFullfilled correctly', async () => {
     /*
@@ -907,30 +990,123 @@ describe('Assert Schedule Repository Mock is correct at all for AvFullfilled met
     expect(availabilityAfter.isTaken).toEqual(false)
   })
   it('should return professors for a valid class with suitable users', async () => {
-    const classId = '0a8c5357-1f07-5b24-9845-9318c47ac924';
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ac924'
     const repo = new ScheduleRepositoryMock()
-    const professors = repo.getProfessorsByClass(classId);
+    const professors = repo.getProfessorsByClass(classId)
 
-    expect((await professors).length).toBe(2);
-   
-    
-  });
+    expect((await professors).length).toBe(3)
+  })
 
   it('should return professors for a valid class with no suitable users', async () => {
-    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab9aa';
+    const classId = '0a8c5357-1f07-5b24-9845-9318c47ab9aa'
     const repo = new ScheduleRepositoryMock()
-    const professors = repo.getProfessorsByClass(classId);
+    const professors = repo.getProfessorsByClass(classId)
 
-    expect((await professors).length).toBe(0);
-  });
+    expect((await professors).length).toBe(0)
+  })
   it('should return error for a invalid classid with no suitable users', async () => {
-    const classId = '0a8c5357-1f07-5b24-9845-9318c4ab9aa';
+    const classId = '0a8c5357-1f07-5b24-9845-9318c4ab9aa'
     const repo = new ScheduleRepositoryMock()
-    const professors = repo.getProfessorsByClass(classId);
+    const professors = repo.getProfessorsByClass(classId)
 
     await expect(professors).rejects.toThrowError(
       'No items found for classId',
     )
   });
- 
+  it('Should create AvsFullfilled correctly', async () => {
+    /*
+      userId = 3
+      startTime = MAUA_START_TIME.H09_30_11_10
+      weekDay = WEEK_DAY.FRI
+      className = Physics I
+      subjectCode = EFB207
+      scheduleId = 2S-4CM-D5@2024(SCS)
+    */
+    /*
+      userId = 4
+      startTime = MAUA_START_TIME.H09_30_11_10
+      weekDay = WEEK_DAY.MON
+      className = Linguagens de Programacao II
+      classId = 0a8c5357-1f07-5b24-9845-9318c47ac927
+      subjectCode = ECM256
+      scheduleId = 2S-4CM-D5@2024(SCS)
+    */
+    const avFullfilled1 = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      possibilityId: '124e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
+    })
+    const avFullfilled2 = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c400000b',
+      possibilityId: '123e4567-e89b-12d3-a456-426614174001',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac927',
+    })
+    const avsFullfilled = [avFullfilled1, avFullfilled2]
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+    const availability1Before = await repo.getAvailability(avFullfilled1.availabilityId)
+    expect(availability1Before.isTaken).toEqual(false)
+    const availability2Before = await repo.getAvailability(avFullfilled2.availabilityId)
+    expect(availability2Before.isTaken).toEqual(false)
+
+    await repo.createAvsFullfilled(avsFullfilled)
+
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength + 2)
+
+    const availabilityAfter = await repo.getAvailability(avFullfilled1.availabilityId)
+    expect(availabilityAfter.isTaken).toEqual(true)
+    const availabilityAfter2 = await repo.getAvailability(avFullfilled2.availabilityId)
+    expect(availabilityAfter2.isTaken).toEqual(true)
+  })
+  it('Should create AvsFullfilled correctly: empty list', async () => {
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+
+    await repo.createAvsFullfilled([])
+
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength)
+  })
+  it('Should deleteAvsFullfilledByScheduleId correctly', async () => {
+
+    const repo = new ScheduleRepositoryMock()
+    const lastLength = repo.getAvsFullfilledLength()
+
+    const isTakenBerfore = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000009')
+    expect(isTakenBerfore.isTaken).toEqual(true)
+    await repo.deleteAvsFullfilledByScheduleId('2S-3CM-D5@2024(SCS)')
+    const isTakenAfter = await repo.getAvailability('0a8c5357-1f07-5b24-9845-9318c4000009')
+    expect(isTakenAfter.isTaken).toEqual(false)
+
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength - 1)
+  })
+  it('Should deleteAvsFullfilledByScheduleId correctly (adding more one availability to test more than 1 deletion', async () => {
+
+    const repo = new ScheduleRepositoryMock()
+    const avFullfilled = new AvFullfilled({
+      availabilityId: '0a8c5357-1f07-5b24-9845-9318c4000008',
+      possibilityId: '124e4567-e89b-12d3-a456-426614174000',
+      classId: '0a8c5357-1f07-5b24-9845-9318c47ac926',
+    })
+    await repo.createAvFullfilled(avFullfilled)
+    const availabilityBefore = await repo.getAvailability(
+      '0a8c5357-1f07-5b24-9845-9318c4000008',
+    )
+    expect(availabilityBefore.isTaken).toEqual(true)
+    const lastLength = repo.getAvsFullfilledLength()
+
+
+    await repo.deleteAvsFullfilledByScheduleId('2S-4CM-D5@2024(SCS)')
+    const availabilityAfter = await repo.getAvailability(
+      '0a8c5357-1f07-5b24-9845-9318c4000008',
+    )
+    expect(availabilityAfter.isTaken).toEqual(false)
+
+    const newLength = repo.getAvsFullfilledLength()
+    expect(newLength).toEqual(lastLength - 4)
+  })
 })
