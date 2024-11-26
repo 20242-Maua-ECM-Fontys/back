@@ -73,11 +73,13 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     const coordinators = await repo.getUsersByRole(ROLE.COORDINATOR)
     const professors = await repo.getUsersByRole(ROLE.PROFESSOR)
-    const staff = await repo.getUsersByRole(ROLE.STAFF)
+    const staffs = await repo.getUsersByRole(ROLE.STAFF)
+    const admins = await repo.getUsersByRole(ROLE.ADMIN)
 
-    expect(coordinators.length).toEqual(2)
-    expect(professors.length).toEqual(5)
-    expect(staff.length).toEqual(2)
+    expect(coordinators.length).toEqual(1)
+    expect(professors.length).toEqual(4)
+    expect(staffs.length).toEqual(2)
+    expect(admins.length).toEqual(2)
 
     for (const user of coordinators) {
       expect(user.role).toEqual(ROLE.COORDINATOR)
@@ -87,8 +89,12 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
       expect(user.role).toEqual(ROLE.PROFESSOR)
     }
 
-    for (const user of staff) {
+    for (const user of staffs) {
       expect(user.role).toEqual(ROLE.STAFF)
+    }
+
+    for (const user of admins) {
+      expect(user.role).toEqual(ROLE.ADMIN)
     }
   })
 
@@ -129,7 +135,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const usersWithAvailabilitiesAndSuitabilities = await repo.getUsersWithAvailabilitiesAndSuitabilities(usersIds)
     expect(Object.keys(usersWithAvailabilitiesAndSuitabilities).length).toEqual(usersIds.length)
     expect(usersWithAvailabilitiesAndSuitabilities[2].user.id).toEqual(2)
-    expect(usersWithAvailabilitiesAndSuitabilities[2].user.role).toEqual(ROLE.COORDINATOR)
+    expect(usersWithAvailabilitiesAndSuitabilities[2].user.role).toEqual(ROLE.ADMIN)
     expect(usersWithAvailabilitiesAndSuitabilities[2].availabilities.length).toEqual(0)
     expect(usersWithAvailabilitiesAndSuitabilities[2].suitabilities.length).toEqual(0)
 
@@ -140,7 +146,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     expect(usersWithAvailabilitiesAndSuitabilities[3].suitabilities.length).toEqual(2)
 
     expect(usersWithAvailabilitiesAndSuitabilities[4].user.id).toEqual(4)
-    expect(usersWithAvailabilitiesAndSuitabilities[4].user.role).toEqual(ROLE.PROFESSOR)
+    expect(usersWithAvailabilitiesAndSuitabilities[4].user.role).toEqual(ROLE.ADMIN)
     expect(usersWithAvailabilitiesAndSuitabilities[4].availabilities.length).toEqual(8)
     expect(usersWithAvailabilitiesAndSuitabilities[4].suitabilities.length).toEqual(1)
   })

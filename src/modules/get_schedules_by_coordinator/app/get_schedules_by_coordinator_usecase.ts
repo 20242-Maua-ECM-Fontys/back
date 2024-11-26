@@ -35,7 +35,7 @@ export class GetSchedulesByCoordinatorUsecase {
 
     // Check if user exists and if it's a coordinator
     const user = await this.repo.getUser(coordinatorId)
-    if (user.role !== ROLE.COORDINATOR) {
+    if (user.role !== ROLE.COORDINATOR && user.role !== ROLE.ADMIN) {
       throw new InvalidRole('COORDINATOR', user.role)
     }
 
