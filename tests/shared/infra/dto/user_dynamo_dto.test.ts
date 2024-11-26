@@ -1,5 +1,4 @@
-// prettier-ignore
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'vitest'
 import { UserDynamoDTO } from '../../../../src/shared/infra/dto/user_dynamo_dto'
 import { ROLE } from '../../../../src/shared/domain/enums/role_enum'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
