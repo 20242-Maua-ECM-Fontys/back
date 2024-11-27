@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { SubjectDynamoDTO } from '../../../../src/shared/infra/dto/subject_synamo_dto'
+import { SubjectDynamoDTO } from '../../../../src/shared/infra/dto/subject_dynamo_dto'
 import { PERIOD } from '../../../../src/shared/domain/enums/period_enum'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 
