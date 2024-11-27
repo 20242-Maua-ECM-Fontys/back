@@ -39,6 +39,8 @@ describe('Assert Suitability Dynamo DTO is correct at all', () => {
                 'userId': { 'S': '4' },
                 'codeSubject': { 'S': 'ECM256' },
                 'entity': { 'S': 'suitability' },
+                'PK': { 'S': 'suitability' },
+                'SK': { 'S': 'ECM256#4' },
             },
             'ResponseMetadata': {
                 'RequestId': 'aa6a5e5e-943f-4452-8c1f-4e5441ee6042',
@@ -82,6 +84,8 @@ describe('Assert Suitability Dynamo DTO is correct at all', () => {
                 'userId': { 'S': '4' },
                 'codeSubject': { 'S': 'ECM256' },
                 'entity': { 'S': 'suitability' },
+                'PK': { 'S': 'suitability' },
+                'SK': { 'S': 'ECM256#4' },
             },
         }
 

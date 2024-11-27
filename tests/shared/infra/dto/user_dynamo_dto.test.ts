@@ -45,12 +45,12 @@ describe('Assert User Dynamo DTO is correct at all', () => {
         const dynamo_dict = {
             'Item': {
                 'id': { 'S': '1' },
-                'name': { 'S': 'user1' },
-                'SK': { 'S': '#1' },
+                'name': { 'S': 'JOAO VITOR CHOUERI BRANCO' },
+                'SK': { 'S': 'PROFESSOR#1' },
                 'role': { 'S': 'PROFESSOR' },
-                'PK': { 'S': 'user#1' },
+                'PK': { 'S': 'user' },
                 'entity': { 'S': 'user' },
-                'email': { 'S': 'user1@gmail.com' },
+                'email': { 'S': '21.01075-7@maua.br' },
                 'RA': { 'S': '21-00188-7' },
             },
             'ResponseMetadata': {
@@ -71,8 +71,8 @@ describe('Assert User Dynamo DTO is correct at all', () => {
         const user = UserDynamoDTO.fromDynamo(dynamo_dict['Item'])
         const expectedUser = new UserDynamoDTO({
             id: '1',
-            name: 'user1',
-            email: 'user1@gmail.com',
+            name: 'JOAO VITOR CHOUERI BRANCO',
+            email: '21.01075-7@maua.br',
             role: ROLE.PROFESSOR,
             RA: '21-00188-7',
         })
@@ -99,9 +99,9 @@ describe('Assert User Dynamo DTO is correct at all', () => {
             'Item': {
                 'id': { 'S': '1' },
                 'name': { 'S': 'JOAO VITOR CHOUERI BRANCO' },
-                'SK': { 'S': '#1' },
+                'SK': { 'S': 'STAFF#1' },
                 'role': { 'S': 'STAFF' },
-                'PK': { 'S': 'user#1' },
+                'PK': { 'S': 'user' },
                 'entity': { 'S': 'user' },
                 'email': { 'S': '21.01075-7@maua.br' },
                 'RA': { 'S': '21.01075-7' },
