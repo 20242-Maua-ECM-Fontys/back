@@ -36,7 +36,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       id: 2,
       name: 'Pedro Henrique de Sousa Matumoto',
       email: 'pedromatumoto@gmail.com',
-      role: ROLE.COORDINATOR,
+      role: ROLE.ADMIN,
       RA: '22.00000-2',
     }),
     new User({
@@ -52,7 +52,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       id: 4,
       name: 'FLAVIO MURATA',
       email: '21.01192-3@maua.br',
-      role: ROLE.PROFESSOR,
+      role: ROLE.ADMIN,
       RA: '21.01192-3',
     }),
     new User({
@@ -976,7 +976,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     }
 
     const user = await this.getUser(schedule.userId)
-    if (user.role !== ROLE.COORDINATOR) {
+    if (user.role !== ROLE.COORDINATOR && user.role !== ROLE.ADMIN) {
       throw new ViolateDataRule('user must be a coordinator')
     }
 
@@ -1079,7 +1079,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
 
     const user = await this.getUser(availability.userId)
 
-    if (user.role !== ROLE.PROFESSOR && user.role !== ROLE.COORDINATOR) {
+    if (user.role === ROLE.STAFF) {
       throw new ViolateDataRule('user must be a professor')
     }
 
