@@ -11,7 +11,7 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     const professors = await usecase.execute()
 
     // Validate that three professors are returned
-    expect(professors.length).toEqual(7)
+    expect(professors.length).toEqual(8)
 
     // Validate first professor's data
     const firstProfessor = professors[0]
@@ -94,27 +94,19 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
 
     // Validate fifth professor's data
     const fifthProfessor = professors[4]
-    expect(fifthProfessor.professor.props.id).toEqual(6)
-    expect(fifthProfessor.professor.props.name).toEqual('Keith Thompson')
-    expect(fifthProfessor.professor.props.email).toEqual('udibon@tisim.sy')
-    expect(fifthProfessor.professor.props.role).toEqual('COORDINATOR')
-    expect(fifthProfessor.professor.props.RA).toEqual('66.00000-6')
-
-    // Validate the availabilities of the fifth professor
-    const fifthProfessorAvailabilities = fifthProfessor.availabilities
-    expect(fifthProfessorAvailabilities.length).toEqual(0)
-
-    // Validate the suitabilities of the fifth professor
-    const fifthProfessorSuitabilities = fifthProfessor.suitabilities
-    expect(fifthProfessorSuitabilities.length).toEqual(0)
+    expect(fifthProfessor.professor.props.id).toEqual(11)
+    expect(fifthProfessor.professor.props.name).toEqual('ANDREIA CRISTINA GRISOLIO MACHION')
+    expect(fifthProfessor.professor.props.email).toEqual('andreia.machion@maua.br')
+    expect(fifthProfessor.professor.props.role).toEqual('PROFESSOR')
+    expect(fifthProfessor.professor.props.RA).toEqual('11.11111-1')
 
     // Validate sixth professor's data
-    const sixthProfessor = professors[5]
-    expect(sixthProfessor.professor.props.id).toEqual(2)
-    expect(sixthProfessor.professor.props.name).toEqual('Pedro Henrique de Sousa Matumoto')
-    expect(sixthProfessor.professor.props.email).toEqual('pedromatumoto@gmail.com')
-    expect(sixthProfessor.professor.props.role).toEqual('ADMIN')
-    expect(sixthProfessor.professor.props.RA).toEqual('22.00000-2')
+    const sixthProfessor = professors[professors.length - 3]
+    expect(sixthProfessor.professor.props.id).toEqual(6)
+    expect(sixthProfessor.professor.props.name).toEqual('Keith Thompson')
+    expect(sixthProfessor.professor.props.email).toEqual('udibon@tisim.sy')
+    expect(sixthProfessor.professor.props.role).toEqual('COORDINATOR')
+    expect(sixthProfessor.professor.props.RA).toEqual('66.00000-6')
 
     // Validate the availabilities of the sixth professor
     const sixthProfessorAvailabilities = sixthProfessor.availabilities
@@ -125,17 +117,33 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     expect(sixthProfessorSuitabilities.length).toEqual(0)
 
     // Validate seventh professor's data
-    const seventhProfessor = professors[6]
-    expect(seventhProfessor.professor.props.id).toEqual(4)
-    expect(seventhProfessor.professor.props.name).toEqual('FLAVIO MURATA')
-    expect(seventhProfessor.professor.props.email).toEqual('21.01192-3@maua.br')
+    const seventhProfessor = professors[professors.length - 2]
+    expect(seventhProfessor.professor.props.id).toEqual(2)
+    expect(seventhProfessor.professor.props.name).toEqual('Pedro Henrique de Sousa Matumoto')
+    expect(seventhProfessor.professor.props.email).toEqual('pedromatumoto@gmail.com')
     expect(seventhProfessor.professor.props.role).toEqual('ADMIN')
-    expect(seventhProfessor.professor.props.RA).toEqual('21.01192-3')
+    expect(seventhProfessor.professor.props.RA).toEqual('22.00000-2')
+
+    // Validate the availabilities of the seventh professor
+    const seventhProfessorAvailabilities = seventhProfessor.availabilities
+    expect(seventhProfessorAvailabilities.length).toEqual(0)
+
+    // Validate the suitabilities of the seventh professor
+    const seventhProfessorSuitabilities = seventhProfessor.suitabilities
+    expect(seventhProfessorSuitabilities.length).toEqual(0)
+
+    // Validate eighth professor's data
+    const eighthProfessor = professors[professors.length - 1]
+    expect(eighthProfessor.professor.props.id).toEqual(4)
+    expect(eighthProfessor.professor.props.name).toEqual('FLAVIO MURATA')
+    expect(eighthProfessor.professor.props.email).toEqual('21.01192-3@maua.br')
+    expect(eighthProfessor.professor.props.role).toEqual('ADMIN')
+    expect(eighthProfessor.professor.props.RA).toEqual('21.01192-3')
 
     // Validate the availabilities of the second professor
-    const seventhProfessorAvailabilities = seventhProfessor.availabilities
-    expect(seventhProfessorAvailabilities.length).toEqual(8)
-    seventhProfessorAvailabilities.forEach((availability, index) => {
+    const eighthProfessorAvailabilities = eighthProfessor.availabilities
+    expect(eighthProfessorAvailabilities.length).toEqual(8)
+    eighthProfessorAvailabilities.forEach((availability, index) => {
       expect(availability.props.userId).toEqual(4)
       expect(availability.props.startTime).toBeGreaterThanOrEqual(460)
       expect(availability.props.endTime).toBeGreaterThan(
@@ -148,10 +156,10 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     })
 
     // Validate the suitabilities of the second professor
-    const seventhProfessorSuitabilities = seventhProfessor.suitabilities
-    expect(seventhProfessorSuitabilities.length).toEqual(1)
-    expect(seventhProfessorSuitabilities[0].codeSubject).toEqual("ECM256")
-    expect(seventhProfessorSuitabilities[0].subjectName).toEqual("Programming Languages II")
+    const eighthProfessorSuitabilities = eighthProfessor.suitabilities
+    expect(eighthProfessorSuitabilities.length).toEqual(1)
+    expect(eighthProfessorSuitabilities[0].codeSubject).toEqual("ECM256")
+    expect(eighthProfessorSuitabilities[0].subjectName).toEqual("Programming Languages II")
 
 
 
