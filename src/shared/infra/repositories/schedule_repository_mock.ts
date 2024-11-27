@@ -90,7 +90,21 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       email: '523464@student.fontys.nl',
       role: ROLE.PROFESSOR,
       RA: '00.52346-4',
-    })
+    }),
+    new User({
+      id: 10,
+      name: 'RODRIGO BOSSINI TAVARES MOREIRA',
+      email: 'rodrigo.moreira@maua.br',
+      role: ROLE.STAFF,
+      RA: '10.10101-0',
+    }),
+    new User({
+      id: 11,
+      name: 'ANDREIA CRISTINA GRISOLIO MACHION',
+      email: 'andreia.machion@maua.br',
+      role: ROLE.PROFESSOR,
+      RA: '11.11111-1',
+    }),
   ]
   // #region classes
   private classes: Class[] = [
