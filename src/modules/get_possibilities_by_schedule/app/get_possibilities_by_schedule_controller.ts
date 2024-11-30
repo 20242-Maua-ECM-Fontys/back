@@ -3,46 +3,52 @@ import {
   WrongTypeParameters,
 } from '../../../shared/helpers/errors/controller_errors'
 import { IRequest } from '../../../shared/helpers/external_interfaces/external_interface'
-import { GetSuitabilitiesByProfessorUsecase } from './get_suitabilities_by_professor_usecase'
 import {
   BadRequest,
   OK,
   InternalServerError,
   NotFound,
-  Forbidden,
 } from '../../../shared/helpers/external_interfaces/http_codes'
 import { NoItemsFound } from '../../../shared/helpers/errors/repo_error'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
-import { GetSuitabilitiesByProfessorViewmodel } from './get_suitabilities_by_professor_viewmodel'
-import { InvalidRole } from '../../../shared/helpers/errors/usecase_errors'
+import { GetPossibilitiesByScheduleUsecase } from './get_possibilities_by_schedule_usecase'
+import { GetPossibilitiesByScheduleViewmodel } from './get_possibilities_by_schedule_viewmodel'
 
-export class GetSuitabilitiesByProfessorController {
-  constructor(private usecase: GetSuitabilitiesByProfessorUsecase) {
+export class GetPossibilitiesByScheduleController {
+  constructor(private usecase: GetPossibilitiesByScheduleUsecase) {
     this.usecase = usecase
   }
 
   async execute(request: IRequest) {
     try {
-      // check userId
-      if (request.data.userId === undefined) {
-        throw new MissingParameters('userId')
+      if (request.data.scheduleId === undefined) {
+        throw new MissingParameters('scheduleId')
       }
-      if (typeof request.data.userId !== 'string') {
-        throw new WrongTypeParameters('userId', 'string', request.data.userId)
-      }
-      // check if this string is numeric
-      if (isNaN(Number(request.data.userId))) {
+      if (typeof request.data.scheduleId !== 'string') {
         throw new WrongTypeParameters(
-          'userId',
-          'numeric string',
-          request.data.userId,
+          'scheduleId',
+          'string',
+          typeof request.data.scheduleId,
         )
       }
-      const userId = Number(request.data.userId)
 
-      const suitabilities = await this.usecase.execute(userId)
+      if (request.data.groupNumber === undefined) {
+        throw new MissingParameters('groupNumber')
+      }
+      if (typeof request.data.groupNumber !== 'number') {
+        throw new WrongTypeParameters(
+          'groupNumber',
+          'number',
+          typeof request.data.groupNumber,
+        )
+      }
 
-      const viewmodel = new GetSuitabilitiesByProfessorViewmodel(suitabilities)
+      const scheduleId = request.data.scheduleId
+      const groupNumber = request.data.groupNumber
+
+      const possibilities = await this.usecase.execute(scheduleId, groupNumber)
+
+      const viewmodel = new GetPossibilitiesByScheduleViewmodel(possibilities)
 
       return new OK(viewmodel)
     } catch (error: unknown) {
@@ -54,9 +60,6 @@ export class GetSuitabilitiesByProfessorController {
       }
       if (error instanceof NoItemsFound) {
         return new NotFound(error.message)
-      }
-      if (error instanceof InvalidRole) {
-        return new Forbidden(error.message)
       }
       if (error instanceof EntityError) {
         return new BadRequest(error.message)
