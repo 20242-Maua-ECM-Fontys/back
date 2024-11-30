@@ -19,7 +19,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
 
 interface ParsedData {
-  type: 'professor' | 'subject' | 'class' | 'schedule'
+  type: 'professor' | 'subject' | 'class' | 'schedule' | 'coordinator'
   name: string
   classModality: string
   classType: string
@@ -59,15 +59,13 @@ export class UploadCSVUsecase {
     let possibleRowTypeError = ''
     let rowNumber = 0
     let rowError = 0
-    let entireRow: string[]
-    const schedulePromises: Promise<void>[] = []
 
     return new Promise((resolve, reject) => {
       bufferToStream(buffer)
         .pipe(csv())
         .on('data', (row: ParsedData) => {
           try {
-            if (row.type === 'professor') {
+            if (row.type === 'professor' || row.type === 'coordinator') {
               repo_len = repo_len + 1
               const newId = repo_len
               const newName = row.name
@@ -83,7 +81,7 @@ export class UploadCSVUsecase {
                 id: newId,
                 name: newName,
                 email: newEmail,
-                role: ROLE.PROFESSOR,
+                role: row.type === 'professor' ? ROLE.PROFESSOR : ROLE.COORDINATOR,
                 RA: newRA,
               })
               userList.push(newUser)
@@ -162,9 +160,6 @@ export class UploadCSVUsecase {
               noProblems = 'invalidCSVRowType'
               possibleRowTypeError = row.type
               rowError = rowNumber
-              entireRow = Object.entries(row).map(
-                ([key, value]) => `${key}: ${value}`,
-              )
             }
             rowNumber++
           } catch (error) {

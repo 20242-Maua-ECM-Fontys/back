@@ -8,13 +8,14 @@ import {
   BadRequest,
   OK,
   InternalServerError,
+  Forbidden,
 } from '../../../shared/helpers/external_interfaces/http_codes'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
-import { Express } from 'express'
 import {
   InvalidCSVRowType,
   InvalidCSVFormat,
 } from '../../../shared/helpers/errors/usecase_errors'
+import { ViolateDataRule } from '../../../shared/helpers/errors/repo_error'
 
 export class UploadCSVController {
   constructor(private usecase: UploadCSVUsecase) {}
@@ -52,6 +53,9 @@ export class UploadCSVController {
       }
       if (error instanceof InvalidCSVFormat) {
         return new BadRequest(error.message)
+      }
+      if (error instanceof ViolateDataRule) {
+        return new Forbidden(error.message)
       }
       if (error instanceof Error) {
         return new InternalServerError(error.message)

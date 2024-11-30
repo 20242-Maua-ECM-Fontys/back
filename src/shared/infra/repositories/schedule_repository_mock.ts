@@ -698,9 +698,14 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   }
 
   async createUser(user: User): Promise<User> {
-    const exists = this.users.find((u) => u.id === user.id)
+    const exists = this.users.find((u) => u.id === user.id || u.email === user.email)
     if (exists) {
-      throw new DuplicatedItem('userId')
+      if (exists.id === user.id) {
+        throw new DuplicatedItem('userId')
+      }
+      else {
+        throw new DuplicatedItem('email')
+      }
     }
     this.users.push(user)
     return user
