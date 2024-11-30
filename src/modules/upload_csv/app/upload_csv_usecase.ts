@@ -56,9 +56,10 @@ export class UploadCSVUsecase {
     const scheduleList: CourseSchedule[] = []
     let repo_len = this.repo.getUsersLength()
     let noProblems = ''
+    let messageError: string = ''
     let possibleRowTypeError = ''
     let rowNumber = 0
-    let rowError = 0
+    let rowErrorNumber = 0
 
     return new Promise((resolve, reject) => {
       bufferToStream(buffer)
@@ -159,11 +160,18 @@ export class UploadCSVUsecase {
             } else {
               noProblems = 'invalidCSVRowType'
               possibleRowTypeError = row.type
-              rowError = rowNumber
+              rowErrorNumber = rowNumber
             }
             rowNumber++
-          } catch (error) {
-            noProblems = 'invalidCSVFormat'
+          } catch (error: unknown) {
+            if (error instanceof Error) {
+              noProblems = 'invalidCSVFormat'
+              messageError = error.message
+            }
+            else {
+              noProblems = 'invalidCSVFormat'
+              messageError = 'Unknown error'
+            }
           }
         })
         .on('end', async () => {
@@ -204,9 +212,9 @@ export class UploadCSVUsecase {
               reject(error)
             }
           } else if (noProblems === 'invalidCSVRowType') {
-            reject(new InvalidCSVRowType(possibleRowTypeError, rowError))
-          } else if (noProblems === 'invalidCSVFormat') {
-            reject(new InvalidCSVFormat())
+            reject(new InvalidCSVRowType(possibleRowTypeError, rowErrorNumber))
+          } else if (noProblems === 'invalidCSVFormat' && messageError) {
+            reject(new InvalidCSVFormat(messageError))
           }
         })
         .on('error', (error) => {

@@ -2,6 +2,9 @@ import { describe, it, expect } from 'vitest'
 
 import { UploadCSVUsecase } from '../../../../src/modules/upload_csv/app/upload_csv_usecase'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
+import { InvalidCSVFormat, InvalidCSVRowType } from '../../../../src/shared/helpers/errors/usecase_errors'
+import { NoItemsFound, ViolateDataRule } from '../../../../src/shared/helpers/errors/repo_error'
+import { EntityError } from '../../../../src/shared/helpers/errors/domain_errors'
 
 describe('Assert Upload CSV usecase is correct at all', () => {
   it('Should activate usecase correctly', async () => {
@@ -93,8 +96,8 @@ class,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS),,,
 coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
 
     const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
-    await expect(usecase.execute(csvBuffer)).rejects.toThrowError(
-      'CSV file with invalid format',
+    await expect(usecase.execute(csvBuffer)).rejects.toThrow(
+      new InvalidCSVFormat("Field props.email is not valid")
     )
 
     const lenghtUserAfter = repo.getUsersLength()
@@ -125,7 +128,7 @@ coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
 
     const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
     await expect(usecase.execute(csvBuffer)).rejects.toThrowError(
-      'CSV file with invalid format',
+      new InvalidCSVFormat("Field props.subjectCode is not valid")
     )
 
     const lenghtUserAfter = repo.getUsersLength()
@@ -155,7 +158,7 @@ coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
 
     const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
     await expect(usecase.execute(csvBuffer)).rejects.toThrowError(
-      'CSV file with invalid format',
+      new InvalidCSVFormat("Invalid value")
     )
 
     const lenghtUserAfter = repo.getUsersLength()
@@ -186,7 +189,7 @@ room,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
 
     const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
     await expect(usecase.execute(csvBuffer)).rejects.toThrowError(
-      'CSV file with invalid row type: room at row 6',
+      new InvalidCSVRowType("room", 6)
     )
 
     const lenghtUserAfter = repo.getUsersLength()
@@ -213,7 +216,7 @@ coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
     const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
 
     await expect(usecase.execute(csvBuffer)).rejects.toThrowError(
-      'user must be a coordinator',
+      new ViolateDataRule("user must be a coordinator")
     )
   })
 
@@ -232,7 +235,26 @@ coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
     const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
 
     await expect(usecase.execute(csvBuffer)).rejects.toThrowError(
-      'Field scheduleId is not valid',
+      new EntityError("scheduleId")
+    )
+  })
+
+  it('Should raise error for not found coordinator email on schedule', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new UploadCSVUsecase(repo)
+
+    const csvContent =`type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,2S-CS),Computer Science,john.doe@e.com,ANNUAL
+professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,,,,
+subject,Data Structures,,,CSE103,EVENING,,,,,,,,
+class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS),,,
+subject,Algorithms,,,CSE203,AFTERNOON,,,,,,,,
+class,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS),,,
+coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
+    const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
+
+    await expect(usecase.execute(csvBuffer)).rejects.toThrowError(
+      new NoItemsFound("email")
     )
   })
 })
