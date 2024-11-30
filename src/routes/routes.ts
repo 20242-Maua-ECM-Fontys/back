@@ -15,6 +15,7 @@ import { UpdateSuitabilitiesPresenter } from '../modules/update_suitabilities/ap
 import { GetSchedulesByCoordinatorPresenter } from '../modules/get_schedules_by_coordinator/app/get_schedules_by_coordinator_presenter'
 import { CreatePossibilitiesPresenter } from '../modules/create_possibilities/app/create_possibilities_presenter'
 import { UpdateAvailabilitiesFullfilledPresenter } from '../modules/update_availabilities_fullfilled/app/update_availabilities_fullfilled_presenter'
+import { GetPossibilitiesBySchedulePresenter } from '../modules/get_possibilities_by_schedule/app/get_possibilities_by_schedule_presenter'
 const upload = multer()
 const routes = express.Router()
 
@@ -71,7 +72,12 @@ routes.get('/get_role_by_email', async (req: Request, res: Response) => {
 routes.get(
   '/get_suitabilities_by_professor',
   async (req: Request, res: Response) => {
-    const httpRequest: HttpRequest = new HttpRequest(req.query, {}, {}, req.file)
+    const httpRequest: HttpRequest = new HttpRequest(
+      req.query,
+      {},
+      {},
+      req.file,
+    )
     const response = await GetSuitabilitiesByProfessorPresenter(
       httpRequest,
       repo,
@@ -123,16 +129,41 @@ routes.get(
   },
 )
 
-routes.put('/update_availabilities_fullfilled', async (req: Request, res: Response) => {
-  const httpRequest: HttpRequest = new HttpRequest(req.body, {}, {}, req.file)
-  const response = await UpdateAvailabilitiesFullfilledPresenter(httpRequest, repo)
-  res.status(response.statusCode).json(response.body)
-})
+routes.put(
+  '/update_availabilities_fullfilled',
+  async (req: Request, res: Response) => {
+    const httpRequest: HttpRequest = new HttpRequest(req.body, {}, {}, req.file)
+    const response = await UpdateAvailabilitiesFullfilledPresenter(
+      httpRequest,
+      repo,
+    )
+    res.status(response.statusCode).json(response.body)
+  },
+)
 
 routes.post('/create_possibilities', async (req: Request, res: Response) => {
   const httpRequest: HttpRequest = new HttpRequest(req.body, {}, {}, req.file)
   const response = await CreatePossibilitiesPresenter(httpRequest, repo)
   res.status(response.statusCode).json(response.body)
 })
+
+routes.get(
+  '/get_possibilities_by_schedule',
+  async (req: Request, res: Response) => {
+    const { scheduleId, groupNumber } = req.query
+
+    const httpRequest: HttpRequest = new HttpRequest(
+      { scheduleId, groupNumber },
+      {},
+      {},
+      req.file,
+    )
+    const response = await GetPossibilitiesBySchedulePresenter(
+      httpRequest,
+      repo,
+    )
+    res.status(response.statusCode).json(response.body)
+  },
+)
 
 export default routes
