@@ -36,7 +36,6 @@ coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
     expect(response?.statusCode).toEqual(200)
     expect(response?.body.message).toEqual('the csv was uploaded successfully')
   })
-
   it('Should activate usecase wrongly: data is missing', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new UploadCSVUsecase(repo)
@@ -192,6 +191,37 @@ coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
     const response = await controller.execute(httpRequest)
     expect(response?.statusCode).toEqual(400)
     expect(response?.body).toEqual('CSV file with invalid format: Field props.subjectCode is not valid')
+  })
+  it('Should activate usecase wrongly: duplicated subjectCode', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new UploadCSVUsecase(repo)
+
+    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,2S-CS),Computer Science,john.doe@e.com,ANNUAL
+professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,,,,
+subject,Data Structures,,,CSE103,EVENING,,,,,,,,
+class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS),,,
+subject,Algorithms,,,ECM256,AFTERNOON,,,,,,,,
+class,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS),,,
+coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
+
+    const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
+
+    const csvFile = {
+      buffer: csvBuffer,
+    }
+
+    const controller = new UploadCSVController(usecase)
+    const httpRequest = new HttpRequest(
+      undefined,
+      undefined,
+      {},
+      csvFile as unknown as Express.Multer.File,
+    )
+
+    const response = await controller.execute(httpRequest)
+    expect(response?.statusCode).toEqual(409)
+    expect(response?.body).toEqual('Subject already exists')
   })
   it('Should activate usecase wrongly: not found coordinator email', async () => {
     const repo = new ScheduleRepositoryMock()

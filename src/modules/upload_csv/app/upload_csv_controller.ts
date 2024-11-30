@@ -10,13 +10,14 @@ import {
   InternalServerError,
   Forbidden,
   NotFound,
+  Conflict,
 } from '../../../shared/helpers/external_interfaces/http_codes'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
 import {
   InvalidCSVRowType,
   InvalidCSVFormat,
 } from '../../../shared/helpers/errors/usecase_errors'
-import { NoItemsFound, ViolateDataRule } from '../../../shared/helpers/errors/repo_error'
+import { DuplicatedItem, NoItemsFound, ViolateDataRule } from '../../../shared/helpers/errors/repo_error'
 
 export class UploadCSVController {
   constructor(private usecase: UploadCSVUsecase) {}
@@ -63,6 +64,9 @@ export class UploadCSVController {
       }
       if (error instanceof ViolateDataRule) {
         return new Forbidden(error.message)
+      }
+      if (error instanceof DuplicatedItem) {
+        return new Conflict(error.message)
       }
       if (error instanceof Error) {
         return new InternalServerError(error.message)

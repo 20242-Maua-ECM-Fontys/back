@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest'
 import { UploadCSVUsecase } from '../../../../src/modules/upload_csv/app/upload_csv_usecase'
 import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositories/schedule_repository_mock'
 import { InvalidCSVFormat, InvalidCSVRowType } from '../../../../src/shared/helpers/errors/usecase_errors'
-import { NoItemsFound, ViolateDataRule } from '../../../../src/shared/helpers/errors/repo_error'
+import { DuplicatedItem, NoItemsFound, ViolateDataRule } from '../../../../src/shared/helpers/errors/repo_error'
 import { EntityError } from '../../../../src/shared/helpers/errors/domain_errors'
 
 describe('Assert Upload CSV usecase is correct at all', () => {
@@ -255,6 +255,43 @@ coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
 
     await expect(usecase.execute(csvBuffer)).rejects.toThrowError(
       new NoItemsFound("email")
+    )
+  })
+
+  it('Should raise error for duplicated subjectCode on subject', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new UploadCSVUsecase(repo)
+
+    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,2S-4CM-D5@2024(SCS),Computer Science,udibon@tisim.sy,ANNUAL
+professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,,,,
+subject,Data Structures,,,CSE103,EVENING,,,,,,,,
+class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS),,,
+subject,Algorithms,,,CSE203,AFTERNOON,,,,,,,,
+class,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS),,,
+coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
+    const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
+
+    await expect(usecase.execute(csvBuffer)).rejects.toThrowError(
+      new DuplicatedItem("Schedule")
+    )
+  })
+  it('Should raise error for duplicated subjectCode on subject', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new UploadCSVUsecase(repo)
+
+    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,udibon@tisim.sy,ANNUAL
+professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,,,,
+subject,Data Structures,,,ECM256,EVENING,,,,,,,,
+class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS),,,
+subject,Algorithms,,,CSE203,AFTERNOON,,,,,,,,
+class,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS),,,
+coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
+    const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
+
+    await expect(usecase.execute(csvBuffer)).rejects.toThrowError(
+      new DuplicatedItem("Subject")
     )
   })
 })
