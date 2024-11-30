@@ -21,7 +21,7 @@ export class UpdateAvailabilitiesUsecase {
     const user = await this.repo.getUser(userId)
 
     // check if user is a professor
-    if (user.role !== ROLE.PROFESSOR && user.role !== ROLE.COORDINATOR) {
+    if (user.role === ROLE.STAFF) {
       throw new InvalidRole(`${ROLE.PROFESSOR} or ${ROLE.COORDINATOR}`, ROLE.STAFF)
     }
 
