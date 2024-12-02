@@ -97,10 +97,10 @@ describe('Assert User Dynamo DTO is correct at all', () => {
     it('Should get a correctly from dynamo to entity', async () => {
         const dynamo_item = {
             'Item': {
-                'id': { 'S': '1' },
+                'id': { 'S': '12' },
                 'name': { 'S': 'JOAO VITOR CHOUERI BRANCO' },
-                'SK': { 'S': 'STAFF#1' },
-                'role': { 'S': 'STAFF' },
+                'SK': { 'S': 'ADMIN#1' },
+                'role': { 'S': 'ADMIN' },
                 'PK': { 'S': 'user' },
                 'entity': { 'S': 'user' },
                 'email': { 'S': '21.01075-7@maua.br' },
@@ -112,7 +112,7 @@ describe('Assert User Dynamo DTO is correct at all', () => {
         const user = userDto.toEntity()
 
         const repo = new ScheduleRepositoryMock()
-        const userRepo = await repo.getUser(1)
+        const userRepo = await repo.getUser(12)
 
         expect(user).toEqual(userRepo)
     })
