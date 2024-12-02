@@ -66,7 +66,7 @@ describe('Tests for UpdateSuitabilitiesUsecase', () => {
   it('Should throw error for user not found', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new UpdateSuitabilitiesUsecase(repo)
-    const userId = 10
+    const userId = repo.getUsersLength() + 1
     const subjects = ['MC102', 'MC202']
 
     try {

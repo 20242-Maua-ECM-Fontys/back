@@ -189,6 +189,18 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
           "name": "UMUT",
           "suitabilities":  [],
         },
+        "11":  {
+          "availabilities":  [],
+          "email": "andreia.machion@maua.br",
+          "name": "ANDREIA CRISTINA GRISOLIO MACHION",
+          "suitabilities":  [],
+        },
+        "12":  {
+          "availabilities":  [],
+          "email": "21.01075-7@maua.br",
+          "name": "JOAO VITOR CHOUERI BRANCO",
+          "suitabilities":  [],
+        },
       },
     }
     expect(getAllProfessorsViewmodel).toEqual(expectedProfessors)

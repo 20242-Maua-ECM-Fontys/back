@@ -20,6 +20,8 @@ export class GetAllProfessorsUsecase {
     const professors = await this.repo.getUsersByRole(ROLE.PROFESSOR);
     const coordinators = await this.repo.getUsersByRole(ROLE.COORDINATOR);
     professors.push(...coordinators);
+    const admins = await this.repo.getUsersByRole(ROLE.ADMIN);
+    professors.push(...admins);
     const response: GetAllProfessorsUsecaseReturn[] = professors.map((professor) => {
       return {
         professor: professor,

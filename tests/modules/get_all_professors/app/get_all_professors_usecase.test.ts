@@ -11,7 +11,7 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     const professors = await usecase.execute()
 
     // Validate that three professors are returned
-    expect(professors.length).toEqual(7)
+    expect(professors.length).toEqual(9)
 
     // Validate first professor's data
     const firstProfessor = professors[0]
@@ -44,19 +44,89 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     expect(firstProfessorSuitabilities[1].codeSubject).toEqual("ECM256")
     expect(firstProfessorSuitabilities[1].subjectName).toEqual("Programming Languages II")
     
-
     // Validate second professor's data
     const secondProfessor = professors[1]
-    expect(secondProfessor.professor.props.id).toEqual(4)
-    expect(secondProfessor.professor.props.name).toEqual('FLAVIO MURATA')
-    expect(secondProfessor.professor.props.email).toEqual('21.01192-3@maua.br')
+    expect(secondProfessor.professor.props.id).toEqual(5)
+    expect(secondProfessor.professor.props.name).toEqual('user5')
+    expect(secondProfessor.professor.props.email).toEqual('user5@gmail.com')
     expect(secondProfessor.professor.props.role).toEqual('PROFESSOR')
-    expect(secondProfessor.professor.props.RA).toEqual('21.01192-3')
+    expect(secondProfessor.professor.props.RA).toEqual('55.00000-5')
 
-    // Validate the availabilities of the second professor
+    // Validate the availabilities of the third professor
     const secondProfessorAvailabilities = secondProfessor.availabilities
-    expect(secondProfessorAvailabilities.length).toEqual(8)
-    secondProfessorAvailabilities.forEach((availability, index) => {
+    expect(secondProfessorAvailabilities.length).toEqual(0)
+
+    // Validate the suitabilities of the third professor
+    const secondProfessorSuitabilities = secondProfessor.suitabilities
+    expect(secondProfessorSuitabilities.length).toEqual(0)
+    
+    // Validate third professor's data
+    const thirdProfessor = professors[2]
+    expect(thirdProfessor.professor.props.id).toEqual(7)
+    expect(thirdProfessor.professor.props.name).toEqual('Austin Green')
+    expect(thirdProfessor.professor.props.email).toEqual('viraw@mon.cm')
+    expect(thirdProfessor.professor.props.role).toEqual('PROFESSOR')
+    expect(thirdProfessor.professor.props.RA).toEqual('66.00000-6')
+
+    // Validate the availabilities of the third professor
+    const thirdProfessorAvailabilities = thirdProfessor.availabilities
+    expect(thirdProfessorAvailabilities.length).toEqual(2)
+
+    // Validate the suitabilities of the third professor
+    const thirdProfessorSuitabilities = thirdProfessor.suitabilities
+    expect(thirdProfessorSuitabilities.length).toEqual(2)
+
+    // Validate fourth professor's data
+    const fourthProfessor = professors[3]
+    expect(fourthProfessor.professor.props.id).toEqual(9)
+    expect(fourthProfessor.professor.props.name).toEqual('UMUT')
+    expect(fourthProfessor.professor.props.email).toEqual('523464@student.fontys.nl')
+    expect(fourthProfessor.professor.props.role).toEqual('PROFESSOR')
+    expect(fourthProfessor.professor.props.RA).toEqual('00.52346-4')
+
+    // Validate the availabilities of the fourth professor
+    const fourthProfessorAvailabilities = fourthProfessor.availabilities
+    expect(fourthProfessorAvailabilities.length).toEqual(0)
+
+    // Validate the suitabilities of the fourth professor
+    const fourthProfessorSuitabilities = fourthProfessor.suitabilities
+    expect(fourthProfessorSuitabilities.length).toEqual(0)
+
+    // Validate fifth professor's data
+    const fifthProfessor = professors[4]
+    expect(fifthProfessor.professor.props.id).toEqual(11)
+    expect(fifthProfessor.professor.props.name).toEqual('ANDREIA CRISTINA GRISOLIO MACHION')
+    expect(fifthProfessor.professor.props.email).toEqual('andreia.machion@maua.br')
+    expect(fifthProfessor.professor.props.role).toEqual('PROFESSOR')
+    expect(fifthProfessor.professor.props.RA).toEqual('11.11111-1')
+
+    // Validate sixth professor's data
+    const sixthProfessor = professors[professors.length - 3]
+    expect(sixthProfessor.professor.props.id).toEqual(2)
+    expect(sixthProfessor.professor.props.name).toEqual('Pedro Henrique de Sousa Matumoto')
+    expect(sixthProfessor.professor.props.email).toEqual('pedromatumoto@gmail.com')
+    expect(sixthProfessor.professor.props.role).toEqual('ADMIN')
+    expect(sixthProfessor.professor.props.RA).toEqual('22.00000-2')
+
+    // Validate the availabilities of the sixth professor
+    const sixthProfessorAvailabilities = sixthProfessor.availabilities
+    expect(sixthProfessorAvailabilities.length).toEqual(0)
+
+    // Validate the suitabilities of the sixth professor
+    const sixthProfessorSuitabilities = sixthProfessor.suitabilities
+    expect(sixthProfessorSuitabilities.length).toEqual(0)
+
+    // Validate seventh professor's data
+    const seventhProfessor = professors[professors.length - 2]
+    expect(seventhProfessor.professor.props.id).toEqual(4)
+    expect(seventhProfessor.professor.props.name).toEqual('FLAVIO MURATA')
+    expect(seventhProfessor.professor.props.email).toEqual('21.01192-3@maua.br')
+    expect(seventhProfessor.professor.props.role).toEqual('ADMIN')
+    expect(seventhProfessor.professor.props.RA).toEqual('21.01192-3')
+
+    // Validate the availabilities of the seventh professor
+    const seventhProfessorAvailabilities = seventhProfessor.availabilities
+    seventhProfessorAvailabilities.forEach((availability, index) => {
       expect(availability.props.userId).toEqual(4)
       expect(availability.props.startTime).toBeGreaterThanOrEqual(460)
       expect(availability.props.endTime).toBeGreaterThan(
@@ -68,43 +138,30 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
       expect(typeof availability.props.isTaken).toBe('boolean')
     })
 
-    // Validate the suitabilities of the second professor
-    const secondProfessorSuitabilities = secondProfessor.suitabilities
-    expect(secondProfessorSuitabilities.length).toEqual(1)
-    expect(secondProfessorSuitabilities[0].codeSubject).toEqual("ECM256")
-    expect(secondProfessorSuitabilities[0].subjectName).toEqual("Programming Languages II")
+    // Validate the suitabilities of the seventh professor
+    const seventhProfessorSuitabilities = seventhProfessor.suitabilities
+    expect(seventhProfessorSuitabilities.length).toEqual(1)
+    expect(seventhProfessorSuitabilities[0].codeSubject).toEqual("ECM256")
+    expect(seventhProfessorSuitabilities[0].subjectName).toEqual("Programming Languages II")
+
+    // Validate eighth professor's data
+    const eighthProfessor = professors[professors.length - 1]
+    expect(eighthProfessor.professor.props.id).toEqual(12)
+    expect(eighthProfessor.professor.props.name).toEqual('JOAO VITOR CHOUERI BRANCO')
+    expect(eighthProfessor.professor.props.email).toEqual('21.01075-7@maua.br')
+    expect(eighthProfessor.professor.props.role).toEqual('ADMIN')
+    expect(eighthProfessor.professor.props.RA).toEqual('21.01075-7')
+
+    // Validate the availabilities of the eighth professor
+    const eighthProfessorAvailabilities = eighthProfessor.availabilities
+    expect(eighthProfessorAvailabilities.length).toEqual(0)
+
+    // Validate the suitabilities of the eighth professor
+    const eighthProfessorSuitabilities = eighthProfessor.suitabilities
+    expect(eighthProfessorSuitabilities.length).toEqual(0)
+
     
 
-    // Validate third professor's data
-    const thirdProfessor = professors[2]
-    expect(thirdProfessor.professor.props.id).toEqual(5)
-    expect(thirdProfessor.professor.props.name).toEqual('user5')
-    expect(thirdProfessor.professor.props.email).toEqual('user5@gmail.com')
-    expect(thirdProfessor.professor.props.role).toEqual('PROFESSOR')
-    expect(thirdProfessor.professor.props.RA).toEqual('55.00000-5')
 
-    // Validate the availabilities of the third professor
-    const thirdProfessorAvailabilities = thirdProfessor.availabilities
-    expect(thirdProfessorAvailabilities.length).toEqual(0)
-
-    // Validate the suitabilities of the third professor
-    const thirdProfessorSuitabilities = thirdProfessor.suitabilities
-    expect(thirdProfessorSuitabilities.length).toEqual(0)
-
-    // Validate fourth professor's data
-    const fourthProfessor = professors[3]
-    expect(fourthProfessor.professor.props.id).toEqual(7)
-    expect(fourthProfessor.professor.props.name).toEqual('Austin Green')
-    expect(fourthProfessor.professor.props.email).toEqual('viraw@mon.cm')
-    expect(fourthProfessor.professor.props.role).toEqual('PROFESSOR')
-    expect(fourthProfessor.professor.props.RA).toEqual('66.00000-6')
-
-    // Validate the availabilities of the fourth professor
-    const fourthProfessorAvailabilities = fourthProfessor.availabilities
-    expect(fourthProfessorAvailabilities.length).toEqual(2)
-
-    // Validate the suitabilities of the fourth professor
-    const fourthProfessorSuitabilities = fourthProfessor.suitabilities
-    expect(fourthProfessorSuitabilities.length).toEqual(2)
   })
 })

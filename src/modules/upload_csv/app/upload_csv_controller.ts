@@ -8,13 +8,16 @@ import {
   BadRequest,
   OK,
   InternalServerError,
+  Forbidden,
+  NotFound,
+  Conflict,
 } from '../../../shared/helpers/external_interfaces/http_codes'
 import { EntityError } from '../../../shared/helpers/errors/domain_errors'
-import { Express } from 'express'
 import {
   InvalidCSVRowType,
   InvalidCSVFormat,
 } from '../../../shared/helpers/errors/usecase_errors'
+import { DuplicatedItem, NoItemsFound, ViolateDataRule } from '../../../shared/helpers/errors/repo_error'
 
 export class UploadCSVController {
   constructor(private usecase: UploadCSVUsecase) {}
@@ -27,6 +30,9 @@ export class UploadCSVController {
       let csvBuffer: Buffer | undefined
       try {
         csvBuffer = (request.data.file as Express.Multer.File).buffer
+        if (csvBuffer === undefined) {
+          throw new Error()
+        }
       } catch (error: unknown) {
         throw new WrongTypeParameters('data', 'csv', typeof request.data.file)
       }
@@ -44,6 +50,9 @@ export class UploadCSVController {
       if (error instanceof WrongTypeParameters) {
         return new BadRequest(error.message)
       }
+      if (error instanceof NoItemsFound) {
+        return new NotFound(error.message)
+      }
       if (error instanceof EntityError) {
         return new BadRequest(error.message)
       }
@@ -52,6 +61,12 @@ export class UploadCSVController {
       }
       if (error instanceof InvalidCSVFormat) {
         return new BadRequest(error.message)
+      }
+      if (error instanceof ViolateDataRule) {
+        return new Forbidden(error.message)
+      }
+      if (error instanceof DuplicatedItem) {
+        return new Conflict(error.message)
       }
       if (error instanceof Error) {
         return new InternalServerError(error.message)

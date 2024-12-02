@@ -117,6 +117,21 @@ describe('Assert UpdateAvailabilityUsecase is correct at all', () => {
 
     expect(availabilitiesForUser.length).toEqual(0)
   })
+  
+  it('Should activate usecase correctly for empty availabilities param to a ADMIN user', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new UpdateAvailabilitiesUsecase(repo)
+    const userId = 4
+    const availabilities : AvailabilitiesParam[] = [
+      
+    ]
+
+    await usecase.execute(userId, availabilities)
+
+    const availabilitiesForUser = await repo.getAvailabilitiesByUserId(userId)
+
+    expect(availabilitiesForUser.length).toEqual(0)
+  })
 
   it('Should raise error: user does not exists', async () => {
     const repo = new ScheduleRepositoryMock()
