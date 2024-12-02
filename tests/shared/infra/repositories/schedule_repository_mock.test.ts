@@ -58,7 +58,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
 
     expect(newLength).toEqual(lastLength + 1)
   })
-  it('Should not create user: user already exists', async () => {
+  it('Should not create user: user already exists with same ID', async () => {
     const user = new User({
       id: 1,
       name: 'Andrew Stuward',
@@ -68,6 +68,17 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     })
     const repo = new ScheduleRepositoryMock()
     expect(repo.createUser(user)).rejects.toThrowError('userId already exists')
+  })
+  it('Should not create user: user already exists with same email', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const user = new User({
+      id: repo.getUsersLength() + 1,
+      name: 'JOAO VITOR CHOUERI BRANCO',
+      email: '21.00784-5@maua.br',
+      role: ROLE.STAFF,
+      RA: '21.00784-5',
+    })
+    expect(repo.createUser(user)).rejects.toThrowError('email already exists')
   })
   it('Should get users by role correctly', async () => {
     const repo = new ScheduleRepositoryMock()

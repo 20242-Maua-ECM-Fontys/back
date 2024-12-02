@@ -22,8 +22,8 @@ export class DuplicatedId extends BaseError {
 }
 
 export class InvalidCSVFormat extends BaseError {
-  constructor() {
-    super('CSV file with invalid format')
+  constructor(message: string) {
+    super('CSV file with invalid format: ' + message)
   }
 }
 

@@ -6,14 +6,14 @@ import { ScheduleRepositoryMock } from '../../../../src/shared/infra/repositorie
 describe('Tests for Upload CSV Presenter', () => {
   it('Should call presenter and return status 200', async () => {
     const repo = new ScheduleRepositoryMock()
-    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,professorPassword,roomCode,scheduleId,courseName,coordEmail,academicPeriod
-schedule,,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,pedromatumoto@gmail.com,ANNUAL
-professor,Dr. John Doe,,,,,,john.doe@example.com,12345,S!q3T@pG9z,,
-subject,Data Structures,,,CSE103,EVENING,,,,,,
-class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,,2S-4CM-D5@2024(SCS)
-professor,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,Y@uP!zG6rX,,
-subject,Algorithms,,,CSE203,AFTERNOON,,,,,,
-class,Class 202,REMOTE,LAB,CSE204,,A02,,,,,2S-4CM-D5@2024(SCS)`
+    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,jane.smith@example.com,ANNUAL
+professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,,,,
+subject,Data Structures,,,CSE103,EVENING,,,,,,,,
+class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS),,,
+subject,Algorithms,,,CSE203,AFTERNOON,,,,,,,,
+class,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS),,,
+coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
 
     const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
 
@@ -31,5 +31,117 @@ class,Class 202,REMOTE,LAB,CSE204,,A02,,,,,2S-4CM-D5@2024(SCS)`
     const response = await UploadCSVPresenter(event, repo)
 
     expect(response?.statusCode).toEqual(200)
+  })
+  it('Should call presenter and return status 400', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,jane.smith@example.com,ANNUAL
+professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,,,,
+subject,Data Structures,,,CSE103,EVENING,,,,,,,,
+class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS),,,
+subject,Algorithms,,,CSE203,AFTERNOON,,,,,,,,
+room,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS),,,
+coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
+
+    const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
+
+    const csvFile = {
+      buffer: csvBuffer,
+    }
+
+    const event = new HttpRequest(
+      undefined,
+      undefined,
+      {},
+      csvFile as unknown as Express.Multer.File,
+    )
+
+    const response = await UploadCSVPresenter(event, repo)
+
+    expect(response?.statusCode).toEqual(400)
+  })
+  it('Should call presenter and return status 403', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,john.doe@example.com,ANNUAL
+professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,,,,
+subject,Data Structures,,,CSE103,EVENING,,,,,,,,
+class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS),,,
+subject,Algorithms,,,CSE203,AFTERNOON,,,,,,,,
+class,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS),,,
+coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
+
+    const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
+
+    const csvFile = {
+      buffer: csvBuffer,
+    }
+
+    const event = new HttpRequest(
+      undefined,
+      undefined,
+      {},
+      csvFile as unknown as Express.Multer.File,
+    )
+
+    const response = await UploadCSVPresenter(event, repo)
+
+    expect(response?.statusCode).toEqual(403)
+  })
+  it('Should call presenter and return status 409', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,jane.smith@example.com,ANNUAL
+professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,,,,
+subject,Data Structures,,,CSE103,EVENING,,,,,,,,
+class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS),,,
+subject,Algorithms,,,ECM256,AFTERNOON,,,,,,,,
+class,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS),,,
+coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
+
+    const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
+
+    const csvFile = {
+      buffer: csvBuffer,
+    }
+
+    const event = new HttpRequest(
+      undefined,
+      undefined,
+      {},
+      csvFile as unknown as Express.Multer.File,
+    )
+
+    const response = await UploadCSVPresenter(event, repo)
+
+    expect(response?.statusCode).toEqual(409)
+  })
+  it('Should call presenter and return status 404', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const csvContent = `type,name,classModality,classType,subjectCode,subjectPeriod,roomCode,professorEmail,professorRa,roomCode,scheduleId,courseName,coordEmail,academicPeriod
+schedule,,,,,,,,,,2S-4CM-D5@2023(SCS),Computer Science,john.doe@e.com,ANNUAL
+professor,Dr. John Doe,,,,,,john.doe@example.com,12345,,,,,
+subject,Data Structures,,,CSE103,EVENING,,,,,,,,
+class,Class 101,HYBRID,THEORY,CSE104,,A01,,,,2S-4CM-D5@2024(SCS),,,
+subject,Algorithms,,,CSE203,AFTERNOON,,,,,,,,
+class,Class 202,REMOTE,LAB,CSE204,,A02,,,,2S-4CM-D5@2024(SCS),,,
+coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
+
+    const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
+
+    const csvFile = {
+      buffer: csvBuffer,
+    }
+
+    const event = new HttpRequest(
+      undefined,
+      undefined,
+      {},
+      csvFile as unknown as Express.Multer.File,
+    )
+
+    const response = await UploadCSVPresenter(event, repo)
+
+    expect(response?.statusCode).toEqual(404)
   })
 })
