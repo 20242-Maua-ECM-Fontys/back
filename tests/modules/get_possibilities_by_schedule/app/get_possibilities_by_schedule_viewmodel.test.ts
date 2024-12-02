@@ -24,7 +24,6 @@ describe('GetPossibilitiesByScheduleViewmodel', () => {
       }),
     ]
     const viewModel = new GetPossibilitiesByScheduleViewmodel(possibilities)
-    console.log(viewModel.toJSON())
 
     expect(viewModel.toJSON()).toEqual({
       message: 'possibilities by schedule returned',
