@@ -24,17 +24,17 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const repo = new ScheduleRepositoryMock()
     const length = repo.getUsersLength()
 
-    expect(length).toEqual(11)
+    expect(length).toEqual(12)
   })
   it('Should get user correctly', async () => {
     const repo = new ScheduleRepositoryMock()
     const user = await repo.getUser(1)
 
     expect(user?.id).toEqual(1)
-    expect(user?.name).toEqual('JOAO VITOR CHOUERI BRANCO')
-    expect(user?.email).toEqual('21.01075-7@maua.br')
+    expect(user?.name).toEqual('Andrew Stuward')
+    expect(user?.email).toEqual('00.00000-0@maua.br')
     expect(user?.role).toEqual(ROLE.STAFF)
-    expect(user?.RA).toEqual('21.01075-7')
+    expect(user?.RA).toEqual('00.00000-0')
   })
   it('Should get user wrongly: userId does not exists', async () => {
     const repo = new ScheduleRepositoryMock()
@@ -61,10 +61,10 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
   it('Should not create user: user already exists', async () => {
     const user = new User({
       id: 1,
-      name: 'JOAO VITOR CHOUERI BRANCO',
+      name: 'Andrew Stuward',
       email: 'ini@vifod.nc',
       role: ROLE.STAFF,
-      RA: '21.01075-7',
+      RA: '00.00000-0',
     })
     const repo = new ScheduleRepositoryMock()
     expect(repo.createUser(user)).rejects.toThrowError('userId already exists')
@@ -79,7 +79,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     expect(coordinators.length).toEqual(1)
     expect(professors.length).toEqual(5)
     expect(staffs.length).toEqual(3)
-    expect(admins.length).toEqual(2)
+    expect(admins.length).toEqual(3)
 
     for (const user of coordinators) {
       expect(user.role).toEqual(ROLE.COORDINATOR)
@@ -100,7 +100,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
 
   it('Should get users by email correctly', async () => {
     const repo = new ScheduleRepositoryMock()
-    const user = await repo.getUserByEmail('21.01075-7@maua.br')
+    const user = await repo.getUserByEmail('00.00000-0@maua.br')
 
     expect(user?.id).toEqual(1)
   })
@@ -116,7 +116,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
   it('should get users by email correctly', async () => {
     const repo = new ScheduleRepositoryMock()
 
-    const role = await repo.getRoleByEmail('21.01075-7@maua.br')
+    const role = await repo.getRoleByEmail('00.00000-0@maua.br')
 
     expect(role).toEqual(ROLE.STAFF)
   })

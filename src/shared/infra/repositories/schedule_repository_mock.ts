@@ -27,10 +27,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
   private users: User[] = [
     new User({
       id: 1,
-      name: 'JOAO VITOR CHOUERI BRANCO',
-      email: '21.01075-7@maua.br',
+      name: 'Andrew Stuward',
+      email: '00.00000-0@maua.br',
       role: ROLE.STAFF,
-      RA: '21.01075-7',
+      RA: '00.00000-0',
     }),
     new User({
       id: 2,
@@ -104,6 +104,13 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       email: 'andreia.machion@maua.br',
       role: ROLE.PROFESSOR,
       RA: '11.11111-1',
+    }),
+    new User({
+      id: 12,
+      name: 'JOAO VITOR CHOUERI BRANCO',
+      email: '21.01075-7@maua.br',
+      role: ROLE.ADMIN,
+      RA: '21.01075-7',
     }),
   ]
   // #region classes

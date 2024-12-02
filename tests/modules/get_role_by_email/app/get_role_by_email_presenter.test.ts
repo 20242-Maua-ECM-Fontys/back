@@ -12,7 +12,7 @@ describe('Tests for GetRoleByEmailPresenter', () => {
 
   it('Should call presenter and return status 200', async () => {
     const event = new HttpRequest(
-      { email: '21.01075-7@maua.br' }, 
+      { email: '00.00000-0@maua.br' }, 
       undefined,
       {},
       undefined,
