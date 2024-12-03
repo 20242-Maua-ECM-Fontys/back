@@ -39,6 +39,39 @@ coordinator,Dr. Jane Smith,,,,,,jane.smith@example.com,54321,,,,,`
     expect(lenghtScheduleAfter).toEqual(lenghtScheduleBefore + 1)
   })
 
+  it('Should activate usecase correctly: validate ; delimiter', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new UploadCSVUsecase(repo)
+
+    const csvContent = `type;name;classModality;classType;subjectCode;subjectPeriod;roomCode;professorEmail;professorRa;roomCode;scheduleId;courseName;coordEmail;academicPeriod
+schedule;;;;;;;;;;2S-4CM-D5@2023(SCS);Computer Science;udibon@tisim.sy;ANNUAL
+professor;Dr. John Doe;;;;;;john.doe@example.com;12345;;;;;
+subject;Data Structures;;;CSE103;EVENING;;;;;;;;
+class;Class 101;HYBRID;THEORY;CSE104;;A01;;;;2S-4CM-D5@2024(SCS);;;
+subject;Algorithms;;;CSE203;AFTERNOON;;;;;;;;
+class;Class 202;REMOTE;LAB;CSE204;;A02;;;;2S-4CM-D5@2024(SCS);;;
+coordinator;Dr. Jane Smith;;;;;;jane.smith@example.com;54321;;;;;`
+
+    const csvBuffer: Buffer = Buffer.from(csvContent, 'utf-8')
+
+    const lenghtUserBefore = repo.getUsersLength()
+    const lenghtClassBefore = repo.getClassesLength()
+    const lenghtSubjectBefore = repo.getSubjectsLength()
+    const lenghtScheduleBefore = repo.getSchedulesLength()
+
+    await usecase.execute(csvBuffer, ';')
+
+    const lenghtUserAfter = repo.getUsersLength()
+    const lenghtClassAfter = repo.getClassesLength()
+    const lenghtSubjectAfter = repo.getSubjectsLength()
+    const lenghtScheduleAfter = repo.getSchedulesLength()
+
+    expect(lenghtUserAfter).toEqual(lenghtUserBefore + 2)
+    expect(lenghtClassAfter).toEqual(lenghtClassBefore + 2)
+    expect(lenghtSubjectAfter).toEqual(lenghtSubjectBefore + 2)
+    expect(lenghtScheduleAfter).toEqual(lenghtScheduleBefore + 1)
+  })
+
   it('Should activate usecase correctly: create a coordinator and assign it on a schedule in the same csv', async () => {
     const repo = new ScheduleRepositoryMock()
     const usecase = new UploadCSVUsecase(repo)
