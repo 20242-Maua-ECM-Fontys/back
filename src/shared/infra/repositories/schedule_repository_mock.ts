@@ -36,7 +36,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       id: 2,
       name: 'Pedro Henrique de Sousa Matumoto',
       email: 'pedromatumoto@gmail.com',
-      role: ROLE.ADMIN,
+      role: ROLE.ADMIN, 
       RA: '22.00000-2',
     }),
     new User({
@@ -1092,6 +1092,12 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     this.availabilities = this.availabilities.filter(
       (availability) => availability.availabilityId !== id,
     )
+    
+    // delete possible avFullfilled
+    this.avsFullfilled = this.avsFullfilled.filter(
+      (avFullfilled) => avFullfilled.availabilityId !== id,
+    )
+
     return availability
   }
 
