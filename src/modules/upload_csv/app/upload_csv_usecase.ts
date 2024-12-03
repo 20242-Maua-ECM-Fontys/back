@@ -49,7 +49,7 @@ type CourseSchedule = {
 export class UploadCSVUsecase {
   constructor(private repo: IScheduleRepository) {}
 
-  async execute(buffer: Buffer): Promise<string> {
+  async execute(buffer: Buffer, delimiter: string = ','): Promise<string> {
     const userList: User[] = []
     const subjectList: Subject[] = []
     const classList: Class[] = []
@@ -63,7 +63,7 @@ export class UploadCSVUsecase {
 
     return new Promise((resolve, reject) => {
       bufferToStream(buffer)
-        .pipe(csv())
+        .pipe(csv({ separator: delimiter }))
         .on('data', (row: ParsedData) => {
           try {
             if (row.type === 'professor' || row.type === 'coordinator') {

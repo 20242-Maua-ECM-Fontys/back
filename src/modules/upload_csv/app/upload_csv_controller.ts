@@ -36,7 +36,10 @@ export class UploadCSVController {
       } catch (error: unknown) {
         throw new WrongTypeParameters('data', 'csv', typeof request.data.file)
       }
-      await this.usecase.execute(csvBuffer)
+
+      const csvContent = csvBuffer.toString('utf-8')
+      const delimiter = csvContent.includes(';') ? ';' : ','
+      await this.usecase.execute(csvBuffer, delimiter)
 
       const viewmodel = { message: 'the csv was uploaded successfully' }
 
