@@ -17,7 +17,7 @@ export class UpdateAvailabilitiesUsecase {
   constructor(private repo: IScheduleRepository) {}
 
   async execute(userId: number, availabilities: AvailabilitiesParam[]): Promise<boolean> {
-    // check if user exists
+    // check if user exists 
     const user = await this.repo.getUser(userId)
 
     // check if user is a professor

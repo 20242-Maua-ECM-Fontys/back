@@ -117,6 +117,27 @@ describe('Assert UpdateAvailabilityUsecase is correct at all', () => {
 
     expect(availabilitiesForUser.length).toEqual(0)
   })
+
+  it('Should activate usecase correctly for a availability with availabilityFullfilled assign', async () => {
+    const repo = new ScheduleRepositoryMock()
+    const usecase = new UpdateAvailabilitiesUsecase(repo)
+    const userId = 4
+    const availabilities : AvailabilitiesParam[] = [
+      
+    ]
+
+    const avFullfilledBefore = await repo.getAllAvsFullfilled()
+
+    await usecase.execute(userId, availabilities)
+
+    const availabilitiesForUser = await repo.getAvailabilitiesByUserId(userId)
+    const avFullfilledAfter = await repo.getAllAvsFullfilled()
+
+    expect(availabilitiesForUser.length).toEqual(0)
+    expect(avFullfilledBefore.length).toEqual(avFullfilledAfter.length + 1)
+
+
+  })
   
   it('Should activate usecase correctly for empty availabilities param to a ADMIN user', async () => {
     const repo = new ScheduleRepositoryMock()
