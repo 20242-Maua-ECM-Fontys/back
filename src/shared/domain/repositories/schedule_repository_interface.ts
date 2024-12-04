@@ -10,6 +10,7 @@ import { ROLE } from '../enums/role_enum'
 
 export interface IScheduleRepository {
     // User methods
+    getUsersLength(): number
     getUser(id: number): Promise<User>
     getUsersByRole(role: ROLE): Promise<User[]>
     createUser(user: User): Promise<User>

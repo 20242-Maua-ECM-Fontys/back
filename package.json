@@ -19,6 +19,7 @@
     "@aws-sdk/lib-dynamodb": "^3.461.0",
     "@aws-sdk/util-dynamodb": "^3.461.0",
     "@types/uuid": "^10.0.0",
+    "aws-cdk-lib": "^2.171.1",
     "aws-sdk": "^2.1506.0",
     "aws-sdk-js-codemod": "^0.28.2",
     "cors": "^2.8.5",

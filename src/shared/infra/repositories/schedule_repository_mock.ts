@@ -1227,4 +1227,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
         this.avsFullfilled = avsFullfilled
         return avsFullfilled
     }
+
+    // region Mock to dynamo
+
+    async getAllUsers(): Promise<User[]> {
+        return this.users
+    }
 }
