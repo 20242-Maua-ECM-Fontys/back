@@ -52,7 +52,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       id: 4,
       name: 'FLAVIO MURATA',
       email: '21.01192-3@maua.br',
-      role: ROLE.ADMIN,
+      role: ROLE.COORDINATOR,
       RA: '21.01192-3',
     }),
     new User({
@@ -109,7 +109,7 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
       id: 12,
       name: 'JOAO VITOR CHOUERI BRANCO',
       email: '21.01075-7@maua.br',
-      role: ROLE.ADMIN,
+      role: ROLE.STAFF,
       RA: '21.01075-7',
     }),
   ]

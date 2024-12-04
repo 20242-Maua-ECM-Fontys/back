@@ -195,12 +195,12 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
           "name": "ANDREIA CRISTINA GRISOLIO MACHION",
           "suitabilities":  [],
         },
-        "12":  {
-          "availabilities":  [],
-          "email": "21.01075-7@maua.br",
-          "name": "JOAO VITOR CHOUERI BRANCO",
-          "suitabilities":  [],
-        },
+        // "12":  {
+        //   "availabilities":  [],
+        //   "email": "21.01075-7@maua.br",
+        //   "name": "JOAO VITOR CHOUERI BRANCO",
+        //   "suitabilities":  [],
+        // },
       },
     }
     expect(getAllProfessorsViewmodel).toEqual(expectedProfessors)
