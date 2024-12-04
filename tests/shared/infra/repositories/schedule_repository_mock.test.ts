@@ -87,10 +87,10 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     const staffs = await repo.getUsersByRole(ROLE.STAFF)
     const admins = await repo.getUsersByRole(ROLE.ADMIN)
 
-    expect(coordinators.length).toEqual(1)
+    expect(coordinators.length).toEqual(2)
     expect(professors.length).toEqual(5)
-    expect(staffs.length).toEqual(3)
-    expect(admins.length).toEqual(3)
+    expect(staffs.length).toEqual(4)
+    expect(admins.length).toEqual(1)
 
     for (const user of coordinators) {
       expect(user.role).toEqual(ROLE.COORDINATOR)
@@ -157,7 +157,7 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
     expect(usersWithAvailabilitiesAndSuitabilities[3].suitabilities.length).toEqual(2)
 
     expect(usersWithAvailabilitiesAndSuitabilities[4].user.id).toEqual(4)
-    expect(usersWithAvailabilitiesAndSuitabilities[4].user.role).toEqual(ROLE.ADMIN)
+    expect(usersWithAvailabilitiesAndSuitabilities[4].user.role).toEqual(ROLE.COORDINATOR)
     expect(usersWithAvailabilitiesAndSuitabilities[4].availabilities.length).toEqual(8)
     expect(usersWithAvailabilitiesAndSuitabilities[4].suitabilities.length).toEqual(1)
   })
