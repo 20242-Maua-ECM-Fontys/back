@@ -7,7 +7,7 @@ import {
   toEnum as EndTimeToEnum,
 } from '../enums/maua_end_time_enum'
 import { WEEK_DAY, toEnum as WeekDayToEnum } from '../enums/week_day_enum'
-import { EntityError } from '../../helpers/errors/domain_errors'
+import { EntityError, NullError, AvailabilityTimeError } from '../../helpers/errors/domain_errors'
 import { User } from './user'
 
 export type AvailabilityProps = {
@@ -82,17 +82,25 @@ export class Availability {
     startTime: MAUA_START_TIME,
     endTime: MAUA_END_TIME,
   ): string {
-    if (!Object.values(MAUA_START_TIME).includes(startTime)) {
-      return 'startTime'
+    if (!Object.values(MAUA_START_TIME).includes(startTime))
+    {
+      throw new EntityError('startTime')
     }
-    if (!Object.values(MAUA_END_TIME).includes(endTime)) {
-      return 'endTime'
+    if(startTime === null)
+    {
+      throw new NullError('startTime')
     }
-    if (startTime >= endTime) {
-      return 'startTime and endTime'
+    if (!Object.values(MAUA_END_TIME).includes(endTime))
+    {
+      throw new EntityError('endTime')
     }
-    if (!(MAUA_START_TIME[startTime] === MAUA_END_TIME[endTime])) {
-      return 'startTime and endTime'
+    if(endTime === null)
+    {
+      throw new NullError('endTime')
+    }
+    if (!(MAUA_START_TIME[startTime] === MAUA_END_TIME[endTime])) 
+    {
+      throw new AvailabilityTimeError()
     }
     return ''
   }
