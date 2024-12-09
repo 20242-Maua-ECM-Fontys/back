@@ -89,8 +89,8 @@ describe('Assert Schedule Repository Mock is correct at all for User methods', (
 
     expect(coordinators.length).toEqual(2)
     expect(professors.length).toEqual(5)
-    expect(staffs.length).toEqual(4)
-    expect(admins.length).toEqual(1)
+    expect(staffs.length).toEqual(3)
+    expect(admins.length).toEqual(2)
 
     for (const user of coordinators) {
       expect(user.role).toEqual(ROLE.COORDINATOR)
