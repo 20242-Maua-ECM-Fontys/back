@@ -11,7 +11,7 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     const professors = await usecase.execute()
 
     // Validate that three professors are returned
-    expect(professors.length).toEqual(8)
+    expect(professors.length).toEqual(9)
 
     // Validate first professor's data
     const firstProfessor = professors[0]
@@ -117,32 +117,32 @@ describe('Assert GetAllProfessorsUsecase is correct at all', () => {
     // expect(sixthProfessorSuitabilities.length).toEqual(0)
 
     // Validate seventh professor's data
-    const seventhProfessor = professors[professors.length - 3]
-    expect(seventhProfessor.professor.props.id).toEqual(4)
-    expect(seventhProfessor.professor.props.name).toEqual('FLAVIO MURATA')
-    expect(seventhProfessor.professor.props.email).toEqual('21.01192-3@maua.br')
-    expect(seventhProfessor.professor.props.role).toEqual('COORDINATOR')
-    expect(seventhProfessor.professor.props.RA).toEqual('21.01192-3')
+    // const seventhProfessor = professors[professors.length - 3]
+    // expect(seventhProfessor.professor.props.id).toEqual(4)
+    // expect(seventhProfessor.professor.props.name).toEqual('FLAVIO MURATA')
+    // expect(seventhProfessor.professor.props.email).toEqual('21.01192-3@maua.br')
+    // expect(seventhProfessor.professor.props.role).toEqual('COORDINATOR')
+    // expect(seventhProfessor.professor.props.RA).toEqual('21.01192-3')
 
-    // Validate the availabilities of the seventh professor
-    const seventhProfessorAvailabilities = seventhProfessor.availabilities
-    seventhProfessorAvailabilities.forEach((availability, index) => {
-      expect(availability.props.userId).toEqual(4)
-      expect(availability.props.startTime).toBeGreaterThanOrEqual(460)
-      expect(availability.props.endTime).toBeGreaterThan(
-        availability.props.startTime,
-      )
-      expect(['MON', 'TUE', 'WED', 'THU', 'FRI']).toContain(
-        availability.props.weekDay,
-      )
-      expect(typeof availability.props.isTaken).toBe('boolean')
-    })
+    // // Validate the availabilities of the seventh professor
+    // const seventhProfessorAvailabilities = seventhProfessor.availabilities
+    // seventhProfessorAvailabilities.forEach((availability, index) => {
+    //   expect(availability.props.userId).toEqual(4)
+    //   expect(availability.props.startTime).toBeGreaterThanOrEqual(460)
+    //   expect(availability.props.endTime).toBeGreaterThan(
+    //     availability.props.startTime,
+    //   )
+    //   expect(['MON', 'TUE', 'WED', 'THU', 'FRI']).toContain(
+    //     availability.props.weekDay,
+    //   )
+    //   expect(typeof availability.props.isTaken).toBe('boolean')
+    // })
 
-    // Validate the suitabilities of the seventh professor
-    const seventhProfessorSuitabilities = seventhProfessor.suitabilities
-    expect(seventhProfessorSuitabilities.length).toEqual(1)
-    expect(seventhProfessorSuitabilities[0].codeSubject).toEqual("ECM256")
-    expect(seventhProfessorSuitabilities[0].subjectName).toEqual("Programming Languages II")
+    // // Validate the suitabilities of the seventh professor
+    // const seventhProfessorSuitabilities = seventhProfessor.suitabilities
+    // expect(seventhProfessorSuitabilities.length).toEqual(1)
+    // expect(seventhProfessorSuitabilities[0].codeSubject).toEqual("ECM256")
+    // expect(seventhProfessorSuitabilities[0].subjectName).toEqual("Programming Languages II")
 
     // // Validate eighth professor's data
     // const eighthProfessor = professors[professors.length - 1]

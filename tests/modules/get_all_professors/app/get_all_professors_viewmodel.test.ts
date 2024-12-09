@@ -183,6 +183,12 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
             },
           ],
         },
+        "8":  {
+          "availabilities":  [],
+          "email": "537010@student.fontys.nl",
+          "name": "MISHA",
+          "suitabilities":  [],
+        },
         "9":  {
           "availabilities":  [],
           "email": "523464@student.fontys.nl",
