@@ -92,9 +92,9 @@ describe('Tests for GetProfessorsByClassPresenter', () => {
           },
         },
         "4": {
-          name: "FLAVIO MURATA",
-          email: "21.01192-3@maua.br",
-          RA: "21.01192-3",
+          name: "JHON DOE",
+          email: "93.10232-1@maua.br",
+          RA: "93.10232-1",
           availabilities: {
             "0a8c5357-1f07-5b24-9845-9318c400000a": {
               weekDay: "MON",

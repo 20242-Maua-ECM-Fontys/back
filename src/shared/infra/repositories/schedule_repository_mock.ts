@@ -50,10 +50,10 @@ export class ScheduleRepositoryMock implements IScheduleRepository {
     new User({
       // professor with 2 suitability
       id: 4,
-      name: 'FLAVIO MURATA',
-      email: '21.01192-3@maua.br',
+      name: 'JHON DOE',
+      email: '93.10232-1@maua.br',
       role: ROLE.COORDINATOR,
-      RA: '21.01192-3',
+      RA: '93.10232-1',
     }),
     new User({
       // professor with 0 suitability
