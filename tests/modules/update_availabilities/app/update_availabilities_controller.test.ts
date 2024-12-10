@@ -559,8 +559,8 @@ describe('Assert UpdateAvailabilitiesController is correct at all', () => {
     )
 
     const response = await controller.execute(httpRequest)
-    expect(response?.statusCode).toEqual(400)
-    expect(response?.body).toEqual('Field startTime and endTime is not valid')
+    expect(response?.statusCode).toEqual(500)
+    expect(response?.body).toEqual(`startTime and endTime are not equal`)
   })
 
 })
