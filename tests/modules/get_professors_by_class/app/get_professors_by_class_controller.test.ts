@@ -87,7 +87,7 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
         "name": "PEDRO HENRIQUE DE SOUSA MATUMOTO",
       },
       "4": {
-        "RA": "21.01192-3",
+        "RA": "93.10232-1",
         "availabilities": {
           "0a8c5357-1f07-5b24-9845-9318c400000a": {
             "endTime": 560,
@@ -138,8 +138,8 @@ describe('Assert GetProfessorsByClassController is correct at all', () => {
             "weekDay": "MON",
           },
         },
-        "email": "21.01192-3@maua.br",
-        "name": "FLAVIO MURATA",
+        "email": "93.10232-1@maua.br",
+        "name": "JHON DOE",
       },
       "7": {
         "RA": "66.00000-6",

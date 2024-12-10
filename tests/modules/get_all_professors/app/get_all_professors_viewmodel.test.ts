@@ -90,8 +90,8 @@ describe('Assert GetAllProfessorsViewmodel is correct', () => {
           ],
         },
         "4": {
-          name: "FLAVIO MURATA",
-          email: "21.01192-3@maua.br",
+          name: "JHON DOE",
+          email: "93.10232-1@maua.br",
           availabilities: [
             {
               startTime: 460,
