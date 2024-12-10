@@ -1,4 +1,4 @@
-# Clean Architecure Microservice Typescript + AWS CDK API REST 🧙‍♂️⚠   
+# Clean Architecure Microservice Typescript + AWS CDK API REST 🧙‍♂️⚠    
 
 This project was made by myself, together with a lot of researches. This is a project Typescript for you that  want to learn more about clean 
 architecture without a lot of problems that a lot of frameworks provides to us developers. You can use this project as a template to yours projects,
